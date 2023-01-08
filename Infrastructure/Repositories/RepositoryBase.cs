@@ -28,6 +28,15 @@ namespace Infrastructure.Repositories
         public T Get(Expression<Func<T, bool>> expression)
             => _context.Set<T>().FirstOrDefault(expression);
 
+        public async Task<T> GetAsync(Expression<Func<T, bool>> expression, CancellationToken cancellationToken = default)
+            => await _context.Set<T>().FirstOrDefaultAsync(expression, cancellationToken);
+
+        public T GetLast(Expression<Func<T, bool>> expression)
+            => _context.Set<T>().LastOrDefault(expression);
+
+        public async Task<T> GetLastAsync(Expression<Func<T, bool>> expression, CancellationToken cancellationToken = default)
+        => await _context.Set<T>().LastOrDefaultAsync(expression, cancellationToken);
+
         public IEnumerable<T> GetAll()
             => _context.Set<T>().AsEnumerable();
 
@@ -39,9 +48,6 @@ namespace Infrastructure.Repositories
 
         public async Task<IEnumerable<T>> GetAllAsync(Expression<Func<T, bool>> expression, CancellationToken cancellationToken = default)
             => await _context.Set<T>().Where(expression).ToListAsync(cancellationToken);
-
-        public async Task<T> GetAsync(Expression<Func<T, bool>> expression, CancellationToken cancellationToken = default)
-            => await _context.Set<T>().FirstOrDefaultAsync(expression, cancellationToken);
 
         public void Remove(T entity)
             => _context.Set<T>().Remove(entity);

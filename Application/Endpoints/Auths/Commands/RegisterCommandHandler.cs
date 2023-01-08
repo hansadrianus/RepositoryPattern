@@ -1,4 +1,3 @@
-using Application.Endpoints.Auths;
 using Application.Interfaces;
 using Application.Interfaces.Wrappers;
 using Application.Models;
@@ -8,7 +7,7 @@ using AutoMapper;
 using Domain.Entities;
 using MediatR;
 
-namespace Application.Endpoints.Identity.Commands
+namespace Application.Endpoints.Auths.Commands
 {
     public class RegisterCommandHandler : IRequestHandler<RegisterCommand, EndpointResult<RegisterViewModel>>
     {
@@ -37,6 +36,8 @@ namespace Application.Endpoints.Identity.Commands
                     return new EndpointResult<RegisterViewModel>(EndpointResultStatus.BadRequest, _mapper.Map<RegisterViewModel>(user), new string[] { "Username already taken." });
 
                 await _repository.Auth.RegisterUserAsync(user, cancellationToken);
+                await _repository.SaveAsync();
+
                 return new EndpointResult<RegisterViewModel>(EndpointResultStatus.Success, _mapper.Map<RegisterViewModel>(user));
             }
             catch (Exception ex)

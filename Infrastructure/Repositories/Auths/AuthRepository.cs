@@ -1,4 +1,4 @@
-﻿using Application.Endpoints.Auths;
+﻿using Application.Endpoints.Auths.Commands;
 using Application.Interfaces.Persistence;
 using Application.Interfaces.Persistence.Auths;
 using Application.ViewModels;
@@ -52,15 +52,11 @@ namespace Infrastructure.Repositories.Auths
             string accessToken = command.AccessToken;
             string refreshToken = command.RefreshToken;
             if (ValidateRefreshToken(refreshToken) || string.IsNullOrEmpty(accessToken))
-            {
                 return null;
-            }
 
             var user = _userManager.Users.FirstOrDefault(q => q.Token == accessToken);
             if (user == null)
-            {
                 return null;
-            }
 
             var signingCredentials = securityHelper.GetSigningCredentials();
             var claims = await securityHelper.GetClaimsAsync(user);
@@ -81,6 +77,7 @@ namespace Infrastructure.Repositories.Auths
         public async Task<ApplicationUser> RegisterUserAsync(ApplicationUser user, CancellationToken cancellationToken = default)
         {
             await _userManager.CreateAsync(user, user.PasswordHash);
+
             return user;
         }
 
@@ -88,9 +85,7 @@ namespace Infrastructure.Repositories.Auths
         {
             var user = await _userManager.FindByIdAsync(id.ToString());
             if (user == null)
-            {
                 return false;
-            }
 
             user.Token = null;
             user.RefreshToken = null;

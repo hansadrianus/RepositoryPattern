@@ -1,7 +1,9 @@
-﻿using Application.Interfaces.Persistence;
+﻿using Application.Interfaces.Attributes;
+using Application.Interfaces.Persistence;
 using Application.Interfaces.Services;
 using Application.Interfaces.Wrappers;
 using Domain.Entities;
+using Infrastructure.Attributes;
 using Infrastructure.Persistence;
 using Infrastructure.Persistence.Configurations;
 using Infrastructure.Services;
@@ -37,6 +39,7 @@ namespace Infrastructure
 
             services.AddSingleton<IDateTimeService, DateTimeService>();
             services.AddScoped(typeof(ILoggerService<>), typeof(LoggerService<>));
+            services.AddScoped<IQueryBuilderService, QueryBuilderService>();
             services.AddScoped<IRepositoryWrapper, RepositoryWrapper>();
 
             return services;

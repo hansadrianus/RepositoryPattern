@@ -1,8 +1,10 @@
 ﻿using Application.Interfaces.Persistence;
 using Application.Interfaces.Persistence.Auths;
+using Application.Interfaces.Persistence.Products;
 using Application.Interfaces.Wrappers;
 using Domain.Entities;
 using Infrastructure.Repositories.Auths;
+using Infrastructure.Repositories.Products;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 
@@ -14,6 +16,7 @@ namespace Infrastructure.Wrappers
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly IConfiguration _configuration;
         private IAuthRepository _auth;
+        private IProductRepository _product;
 
         public RepositoryWrapper(IApplicationContext context, UserManager<ApplicationUser> userManager, IConfiguration configuration)
         {
@@ -34,14 +37,20 @@ namespace Infrastructure.Wrappers
             }
         }
 
-        public void Save()
+        public IProductRepository Product
         {
-            _context.SaveChanges();
+            get
+            {
+                if (_product == null)
+                {
+                    _product = new ProductRepository(_context);
+                }
+                return _product;
+            }
         }
 
-        public async Task SaveAsync()
-        {
-            await _context.SaveChangesAsync();
-        }
+        public void Save() => _context.SaveChanges();
+
+        public async Task SaveAsync() => await _context.SaveChangesAsync();
     }
 }

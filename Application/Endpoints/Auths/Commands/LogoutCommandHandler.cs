@@ -5,7 +5,7 @@ using Application.Models.Enumerations;
 using AutoMapper;
 using MediatR;
 
-namespace Application.Endpoints.Auths
+namespace Application.Endpoints.Auths.Commands
 {
     public class LogoutCommandHandler : IRequestHandler<LogoutCommand, EndpointResult<string>>
     {

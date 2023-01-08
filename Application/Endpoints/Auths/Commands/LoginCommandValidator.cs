@@ -1,6 +1,6 @@
 using FluentValidation;
 
-namespace Application.Endpoints.Auths
+namespace Application.Endpoints.Auths.Commands
 {
     public class LoginCommandValidator : AbstractValidator<LoginCommand>
     {
@@ -8,7 +8,6 @@ namespace Application.Endpoints.Auths
         {
             RuleFor(x => x.Username)
                 .NotEmpty();
-
             RuleFor(x => x.Password)
                 .NotEmpty();
         }

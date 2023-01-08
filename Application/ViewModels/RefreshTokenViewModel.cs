@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Application.ViewModels
 {
-    public class RefreshTokenViewModel
+    public record RefreshTokenViewModel
     {
         public string AccessToken { get; set; }
     }

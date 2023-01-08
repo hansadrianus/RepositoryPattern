@@ -2,7 +2,7 @@ using Application.Models;
 using Application.ViewModels;
 using MediatR;
 
-namespace Application.Endpoints.Auths
+namespace Application.Endpoints.Auths.Commands
 {
     public class RefreshTokenCommand : IRequest<EndpointResult<RefreshTokenViewModel>>
     {

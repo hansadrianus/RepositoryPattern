@@ -1,5 +1,5 @@
 ﻿using API.Extensions;
-using Application.Endpoints.Auths;
+using Application.Endpoints.Auths.Commands;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;

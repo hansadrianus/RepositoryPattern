@@ -6,7 +6,7 @@ using Application.ViewModels;
 using AutoMapper;
 using MediatR;
 
-namespace Application.Endpoints.Auths
+namespace Application.Endpoints.Auths.Commands
 {
     public class RefreshTokenCommandHandler : IRequestHandler<RefreshTokenCommand, EndpointResult<RefreshTokenViewModel>>
     {

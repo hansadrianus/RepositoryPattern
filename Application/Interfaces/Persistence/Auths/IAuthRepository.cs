@@ -1,4 +1,4 @@
-﻿using Application.Endpoints.Auths;
+﻿using Application.Endpoints.Auths.Commands;
 using Application.ViewModels;
 using Domain.Entities;
 using System;

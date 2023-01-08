@@ -9,11 +9,13 @@ namespace Application.Interfaces.Persistence
         void AddRange(IEnumerable<T> entities);
         Task AddRangeAsync(IEnumerable<T> entities, CancellationToken cancellationToken = default);
         T Get(Expression<Func<T, bool>> expression);
+        Task<T> GetAsync(Expression<Func<T, bool>> expression, CancellationToken cancellationToken = default);
+        T GetLast(Expression<Func<T, bool>> expression);
+        Task<T> GetLastAsync(Expression<Func<T, bool>> expression, CancellationToken cancellationToken = default);
         IEnumerable<T> GetAll();
         IEnumerable<T> GetAll(Expression<Func<T, bool>> expression);
         Task<IEnumerable<T>> GetAllAsync(CancellationToken cancellationToken = default);
         Task<IEnumerable<T>> GetAllAsync(Expression<Func<T, bool>> expression, CancellationToken cancellationToken = default);
-        Task<T> GetAsync(Expression<Func<T, bool>> expression, CancellationToken cancellationToken = default);
         void Remove(T entity);
         void RemoveRange(IEnumerable<T> entities);
         void Update(T entity);

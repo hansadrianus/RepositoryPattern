@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using FluentValidation;
 
-namespace Application.Endpoints.Auths
+namespace Application.Endpoints.Auths.Commands
 {
     public class RefreshTokenCommandValidator : AbstractValidator<RefreshTokenCommand>
     {
@@ -13,7 +13,6 @@ namespace Application.Endpoints.Auths
         {
             RuleFor(x => x.AccessToken)
                 .NotEmpty();
-
             RuleFor(x => x.RefreshToken)
                 .NotEmpty();
         }

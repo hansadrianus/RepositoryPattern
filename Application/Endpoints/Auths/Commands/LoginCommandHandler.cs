@@ -1,4 +1,3 @@
-using Application.Endpoints.Auths;
 using Application.Interfaces;
 using Application.Interfaces.Wrappers;
 using Application.Models;
@@ -8,7 +7,7 @@ using AutoMapper;
 using Domain.Entities;
 using MediatR;
 
-namespace Aesir.Application.Endpoints.Identity.Commands
+namespace Application.Endpoints.Auths.Commands
 {
     public class LoginCommandHandler : IRequestHandler<LoginCommand, EndpointResult<UserLoginViewModel>>
     {
