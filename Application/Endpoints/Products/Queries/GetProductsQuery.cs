@@ -15,13 +15,13 @@ namespace Application.Endpoints.Products.Queries
         public decimal? Price { get; set; }
         public int? Stock { get; set; }
         public string? Type { get; set; }
-        public decimal? PriceGreaterThan { get; set; }
-        public decimal? PriceLessThan { get; set; }
-        public decimal? PriceGreaterThanEqual { get; set; }
-        public decimal? PriceLessThanEqual { get; set; }
-        public int? StockGreaterThan { get; set; }
-        public int? StockLessThan { get; set; }
-        public int? StockGreaterThanEqual { get; set; }
-        public int? StockLessThanEqual { get; set; }
+        public decimal? Price_GreaterThan { get; set; }
+        public decimal? Price_LessThan { get; set; }
+        public decimal? Price_GreaterThanEqual { get; set; }
+        public decimal? Price_LessThanEqual { get; set; }
+        public int? Stock_GreaterThan { get; set; }
+        public int? Stock_LessThan { get; set; }
+        public int? Stock_GreaterThanEqual { get; set; }
+        public int? Stock_LessThanEqual { get; set; }
     }
 }
