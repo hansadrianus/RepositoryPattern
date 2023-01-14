@@ -22,18 +22,18 @@ namespace Application.Endpoints.Auths.Commands
         {
             string rawUserId = request.HttpContext.User.FindFirstValue("id");
             if (!Guid.TryParse(rawUserId, out Guid userId))
-                return new EndpointResult<string>(EndpointResultStatus.Invalid, new string[] { "Invalid token." });
+                return new EndpointResult<string>(EndpointResultStatus.Invalid, "Invalid token.");
 
             try
             {
                 if (await _reposiroty.Auth.RemoveTokenAsync(userId, cancellationToken))
                     return new EndpointResult<string>(EndpointResultStatus.Success);
 
-                return new EndpointResult<string>(EndpointResultStatus.Invalid, new string[] { "Invalid token." });
+                return new EndpointResult<string>(EndpointResultStatus.Invalid, "Invalid token.");
             }
             catch (Exception ex)
             {
-                return new EndpointResult<string>(EndpointResultStatus.Invalid, new string[] { ex.Message });
+                return new EndpointResult<string>(EndpointResultStatus.Error, ex.Message);
             }
         }
     }

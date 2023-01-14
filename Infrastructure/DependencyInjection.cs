@@ -39,6 +39,7 @@ namespace Infrastructure
 
             services.AddSingleton<IDateTimeService, DateTimeService>();
             services.AddScoped(typeof(ILoggerService<>), typeof(LoggerService<>));
+            services.AddScoped<IEntityMapperService, EntityMapperService>();
             services.AddScoped<IQueryBuilderService, QueryBuilderService>();
             services.AddScoped<IRepositoryWrapper, RepositoryWrapper>();
 

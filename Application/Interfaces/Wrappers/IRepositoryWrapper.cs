@@ -9,6 +9,6 @@ namespace Application.Interfaces.Wrappers
         IProductRepository Product { get; }
 
         void Save();
-        Task SaveAsync();
+        Task SaveAsync(CancellationToken cancellationToken);
     }
 }

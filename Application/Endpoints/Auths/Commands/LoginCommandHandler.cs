@@ -26,7 +26,7 @@ namespace Application.Endpoints.Auths.Commands
         {
             var validationErrors = _requestValidator.ValidateRequest(request);
             if (validationErrors.Count() > 0)
-                return new EndpointResult<UserLoginViewModel>(EndpointResultStatus.Invalid, validationErrors.ToArray());
+                return new EndpointResult<UserLoginViewModel>(EndpointResultStatus.BadRequest, validationErrors.ToArray());
 
             try
             {
@@ -38,11 +38,11 @@ namespace Application.Endpoints.Auths.Commands
                     return new EndpointResult<UserLoginViewModel>(EndpointResultStatus.Success, _mapper.Map<UserLoginViewModel>(userToken));
                 }
 
-                return new EndpointResult<UserLoginViewModel>(EndpointResultStatus.Unauthorized, new string[] { "Invalid login attempt." });
+                return new EndpointResult<UserLoginViewModel>(EndpointResultStatus.Unauthorized, "Invalid login attempt." );
             }
             catch (Exception ex)
             {
-                return new EndpointResult<UserLoginViewModel>(EndpointResultStatus.Error, new string[] { ex.Message });
+                return new EndpointResult<UserLoginViewModel>(EndpointResultStatus.Error, ex.Message);
             }
         }
     }

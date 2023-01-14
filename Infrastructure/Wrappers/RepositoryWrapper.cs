@@ -29,10 +29,7 @@ namespace Infrastructure.Wrappers
         {
             get
             {
-                if (_auth == null)
-                {
-                    _auth = new AuthRepository(_context, _userManager, _configuration);
-                }
+                _auth ??= new AuthRepository(_context, _userManager, _configuration);
                 return _auth;
             }
         }
@@ -41,16 +38,13 @@ namespace Infrastructure.Wrappers
         {
             get
             {
-                if (_product == null)
-                {
-                    _product = new ProductRepository(_context);
-                }
+                _product ??= new ProductRepository(_context);
                 return _product;
             }
         }
 
         public void Save() => _context.SaveChanges();
 
-        public async Task SaveAsync() => await _context.SaveChangesAsync();
+        public async Task SaveAsync(CancellationToken cancellationToken) => await _context.SaveChangesAsync(cancellationToken);
     }
 }

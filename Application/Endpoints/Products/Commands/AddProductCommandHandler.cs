@@ -9,7 +9,7 @@ using MediatR;
 
 namespace Application.Endpoints.Products.Commands
 {
-    internal class AddProductCommandHandler : IRequestHandler<AddProductCommand, EndpointResult<ProductViewModel>>
+    public class AddProductCommandHandler : IRequestHandler<AddProductCommand, EndpointResult<ProductViewModel>>
     {
         private readonly IRequestValidator<AddProductCommand> _requestValidator;
         private readonly IRepositoryWrapper _repository;
@@ -26,19 +26,19 @@ namespace Application.Endpoints.Products.Commands
         {
             var validationErrors = _requestValidator.ValidateRequest(request);
             if (validationErrors.Count() > 0)
-                return new EndpointResult<ProductViewModel>(EndpointResultStatus.Invalid, validationErrors.ToArray());
+                return new EndpointResult<ProductViewModel>(EndpointResultStatus.BadRequest, validationErrors.ToArray());
 
             try
             {
                 var product = _mapper.Map<Product>(request);
                 await _repository.Product.AddAsync(product, cancellationToken);
-                await _repository.SaveAsync();
+                await _repository.SaveAsync(cancellationToken);
 
                 return new EndpointResult<ProductViewModel>(EndpointResultStatus.Success, _mapper.Map<ProductViewModel>(product));
             }
             catch (Exception ex)
             {
-                return new EndpointResult<ProductViewModel>(EndpointResultStatus.Error, new string[] { ex.Message });
+                return new EndpointResult<ProductViewModel>(EndpointResultStatus.Error, ex.Message);
             }
         }
     }

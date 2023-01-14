@@ -26,23 +26,23 @@ namespace Application.Endpoints.Auths.Commands
         {
             var validationErrors = _requestValidator.ValidateRequest(request);
             if (validationErrors.Count() > 0)
-                return new EndpointResult<RegisterViewModel>(EndpointResultStatus.Invalid, validationErrors.ToArray());
+                return new EndpointResult<RegisterViewModel>(EndpointResultStatus.BadRequest, validationErrors.ToArray());
 
             try
             {
                 var user = _mapper.Map<ApplicationUser>(request);
                 var usersFound = await _repository.Auth.GetAsync(q => q.UserName == user.UserName, cancellationToken: cancellationToken);
                 if (usersFound != null)
-                    return new EndpointResult<RegisterViewModel>(EndpointResultStatus.BadRequest, _mapper.Map<RegisterViewModel>(user), new string[] { "Username already taken." });
+                    return new EndpointResult<RegisterViewModel>(EndpointResultStatus.BadRequest, _mapper.Map<RegisterViewModel>(user), "Username already taken.");
 
                 await _repository.Auth.RegisterUserAsync(user, cancellationToken);
-                await _repository.SaveAsync();
+                await _repository.SaveAsync(cancellationToken);
 
                 return new EndpointResult<RegisterViewModel>(EndpointResultStatus.Success, _mapper.Map<RegisterViewModel>(user));
             }
             catch (Exception ex)
             {
-                return new EndpointResult<RegisterViewModel>(EndpointResultStatus.Error, new string[] { ex.Message });
+                return new EndpointResult<RegisterViewModel>(EndpointResultStatus.Error, ex.Message);
             }
         }
     }

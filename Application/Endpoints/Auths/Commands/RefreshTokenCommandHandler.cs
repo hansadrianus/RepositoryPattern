@@ -25,19 +25,19 @@ namespace Application.Endpoints.Auths.Commands
         {
             var validationErrors = _requestValidator.ValidateRequest(request);
             if (validationErrors.Count() > 0)
-                return new EndpointResult<RefreshTokenViewModel>(EndpointResultStatus.Invalid, validationErrors.ToArray());
+                return new EndpointResult<RefreshTokenViewModel>(EndpointResultStatus.BadRequest, validationErrors.ToArray());
 
             try
             {
                 var refreshedToken = await _reposiroty.Auth.RefreshTokenAsync(request, cancellationToken);
                 if (refreshedToken == null)
-                    return new EndpointResult<RefreshTokenViewModel>(EndpointResultStatus.Invalid, new string[] { "Invalid token." });
+                    return new EndpointResult<RefreshTokenViewModel>(EndpointResultStatus.Invalid, "Invalid token.");
 
                 return new EndpointResult<RefreshTokenViewModel>(EndpointResultStatus.Success, _mapper.Map<RefreshTokenViewModel>(refreshedToken));
             }
             catch (Exception ex)
             {
-                return new EndpointResult<RefreshTokenViewModel>(EndpointResultStatus.Success, new string[] { ex.Message });
+                return new EndpointResult<RefreshTokenViewModel>(EndpointResultStatus.Error, ex.Message);
             }
         }
     }

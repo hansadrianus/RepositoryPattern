@@ -23,5 +23,21 @@ namespace API.Controllers
         [HttpPost]
         public async Task<IActionResult> AddProductAsync([FromBody]AddProductCommand command)
             => (await _mediator.Send(command)).ToActionResult();
+
+        [HttpPut("{id}")]
+        public async Task<IActionResult> UpdateProductAsync(int id, [FromBody]UpdateProductCommand command)
+        {
+            command.Id = id;
+
+            return (await _mediator.Send(command)).ToActionResult();
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteProductAsync(int id)
+        {
+            DeleteProductCommand command = new DeleteProductCommand() { Id = id };
+
+            return (await _mediator.Send(command)).ToActionResult();
+        }
     }
 }

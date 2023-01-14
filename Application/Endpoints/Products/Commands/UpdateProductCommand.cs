@@ -1,12 +1,15 @@
-﻿using System;
+﻿using Application.Models;
+using Application.ViewModels;
+using MediatR;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Application.ViewModels
+namespace Application.Endpoints.Products.Commands
 {
-    public record ProductViewModel
+    public class UpdateProductCommand : IRequest<EndpointResult<ProductViewModel>>
     {
         public int? Id { get; set; }
         public string Name { get; set; }
