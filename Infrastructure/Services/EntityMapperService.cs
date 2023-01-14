@@ -41,9 +41,7 @@ namespace Infrastructure.Services
             IList<string> propertyNames = new List<string>();
             PropertyInfo[] auditableEntityPropertyInfos = typeof(AuditableEntity).GetProperties();
             foreach (PropertyInfo property in auditableEntityPropertyInfos)
-            {
                 propertyNames.Add(property.Name);
-            }
 
             return propertyNames;
         }
