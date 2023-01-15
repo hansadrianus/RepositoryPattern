@@ -19,7 +19,7 @@ jobs:
     - name: Deploy to GitHub Pages
       run: |
         dotnet publish --configuration Release --output ./.deploy
-        cp .deploy/* .
+        cp -r ./.deploy/* .
         rm -rf .deploy
         git add .
         git commit -m "Deploy to GitHub Pages"
