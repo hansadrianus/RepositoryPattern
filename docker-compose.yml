@@ -2,7 +2,7 @@ version: '3.4'
 
 services:
   api:
-    image: ${DOCKER_REGISTRY-}api
+    image: ${DOCKER_REGISTRY-}repository-pattern
     build:
       context: .
       dockerfile: API/Dockerfile
