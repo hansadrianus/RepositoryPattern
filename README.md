@@ -24,3 +24,16 @@ This layer contains all application logic. It is dependent on the domain layer, 
 ### Infrastructure
 
 This layer contains classes for accessing external resources such as file systems, web services, smtp, and so on. These classes should be based on interfaces defined within the application layer.
+
+## Support :star:
+
+Has this Project helped you learn something New? or Helped you at work?
+Here are a few ways by which you can support.
+
+-   Leave a star! :star:
+-   Recommend this awesome project to your colleagues. 🥇
+-   Or, If you want to support this project in the long run, [consider buying me a coffee](https://www.buymeacoffee.com/hansadrianus)! ☕
+
+<br>
+
+<a href="https://www.buymeacoffee.com/hansadrianus"><img width="250" alt="black-button" src="https://user-images.githubusercontent.com/31455818/138557309-27587d91-7b82-4cab-96bb-90f4f4e600f1.png" ></a>
