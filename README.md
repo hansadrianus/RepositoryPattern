@@ -31,7 +31,7 @@ Has this Project helped you learn something New? or Helped you at work?
 Here are a few ways by which you can support.
 
 -   Leave a star! :star:
--   Recommend this awesome project to your colleagues. 🥇
+-   Recommend this project. 🥇
 -   Or, If you want to support this project in the long run, [consider buying me a coffee](https://www.buymeacoffee.com/hansadrianus)! ☕
 
 <br>
