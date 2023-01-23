@@ -9,6 +9,8 @@ namespace Application.Interfaces.Persistence
     public interface IApplicationContext
     {
         DbSet<Product> Product { get; set; }
+        DbSet<SalesOrderHeader> SalesOrderHeader { get; set; }
+        DbSet<SalesOrderDetail> SalesOrderDetail { get; set; }
 
         EntityEntry Add(object entity);
         EntityEntry<TEntity> Add<TEntity>(TEntity entity) where TEntity : class;

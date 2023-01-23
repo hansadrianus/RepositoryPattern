@@ -32,6 +32,8 @@ namespace Infrastructure.Persistence
         }
 
         public DbSet<Product> Product { get; set; }
+        public DbSet<SalesOrderHeader> SalesOrderHeader { get; set; }
+        public DbSet<SalesOrderDetail> SalesOrderDetail { get; set; }
 
         public override EntityEntry<TEntity> Add<TEntity>(TEntity entity)
         {
