@@ -12,7 +12,7 @@ pool:
   vmImage: 'ubuntu-latest'
  
 variables:
-  ImageName: 'hansadrianus/repository-pattern:$(Build.BuildId)'
+  ImageName: 'hansadrianus/repository-pattern:latest'
  
 stages:
 - stage: Build
