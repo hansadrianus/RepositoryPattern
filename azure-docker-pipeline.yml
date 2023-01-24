@@ -12,7 +12,8 @@ pool:
   vmImage: 'ubuntu-latest'
  
 variables:
-  ImageName: 'hansadrianus/repository-pattern:latest'
+- ImageName: 'hansadrianus/repository-pattern:$(Build.BuildId)'
+- ImageNameLatest: 'hansadrianus/repository-pattern:latest'
  
 stages:
 - stage: Build
@@ -40,4 +41,25 @@ stages:
         dockerRegistryEndpoint: 'Docker Hub'
         command: 'Push an image'
         imageName: '$(ImageName)'
+      condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest'))
+
+    - task: Docker@2
+      displayName: 'Build the Docker image for latest version'
+      inputs:
+        containerregistrytype: 'Container Registry'
+        dockerRegistryEndpoint: 'Docker Hub'
+        command: 'Build an image'
+        dockerFile: '**/Dockerfile'
+        imageName: '$(ImageNameLatest)'
+        includeLatestTag: true
+        useDefaultContext: false
+        buildContext: '.'
+     
+    - task: Docker@2
+      displayName: 'Push the Docker image to Dockerhub for latest version'
+      inputs:
+        containerregistrytype: 'Container Registry'
+        dockerRegistryEndpoint: 'Docker Hub'
+        command: 'Push an image'
+        imageName: '$(ImageNameLatest)'
       condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest'))
