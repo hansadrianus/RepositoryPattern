@@ -43,7 +43,7 @@ stages:
         imageName: '$(ImageName):$(Build.BuildId)'
       condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest'))
 
-    - task: Docker@2
+    - task: Docker@1
       displayName: 'Build the Docker image for latest version'
       inputs:
         containerregistrytype: 'Container Registry'
@@ -55,7 +55,7 @@ stages:
         useDefaultContext: false
         buildContext: '.'
      
-    - task: Docker@2
+    - task: Docker@1
       displayName: 'Push the Docker image to Dockerhub for latest version'
       inputs:
         containerregistrytype: 'Container Registry'
