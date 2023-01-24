@@ -36,7 +36,7 @@ namespace Application.Endpoints.Products.Commands
             try
             {
                 var product = _mapper.Map<Product>(request);
-                var productToDelete = await _repository.Product.GetAsync(q => q.Id == product.Id && q.RowStatus == 0);
+                var productToDelete = await _repository.Product.GetAsync(q => q.Id == product.Id && q.RowStatus == 0, cancellationToken);
                 if (productToDelete == null)
                     return new EndpointResult<ProductViewModel>(EndpointResultStatus.Invalid, "Data not found");
 

@@ -39,7 +39,7 @@ namespace Application.Endpoints.Products.Commands
             try
             {
                 var productToUpdate = _mapper.Map<Product>(request);
-                var sourceProduct = await _repository.Product.GetAsync(q => q.Id == productToUpdate.Id && q.RowStatus == 0);
+                var sourceProduct = await _repository.Product.GetAsync(q => q.Id == productToUpdate.Id && q.RowStatus == 0, cancellationToken);
                 if (sourceProduct == null)
                     return new EndpointResult<ProductViewModel>(EndpointResultStatus.Invalid, "Data not found.");
 
@@ -47,7 +47,7 @@ namespace Application.Endpoints.Products.Commands
                 _repository.Product.Update(updatedProduct);
                 await _repository.SaveAsync(cancellationToken);
 
-                return new EndpointResult<ProductViewModel>(EndpointResultStatus.Success, _mapper.Map<ProductViewModel>(productToUpdate));
+                return new EndpointResult<ProductViewModel>(EndpointResultStatus.Success, _mapper.Map<ProductViewModel>(updatedProduct));
             }
             catch (Exception ex)
             {

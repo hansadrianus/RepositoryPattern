@@ -25,7 +25,7 @@ namespace Application.Endpoints.Products.Commands
         public async Task<EndpointResult<ProductViewModel>> Handle(AddProductCommand request, CancellationToken cancellationToken)
         {
             var validationErrors = _requestValidator.ValidateRequest(request);
-            if (validationErrors.Count() > 0)
+            if (validationErrors.Any())
                 return new EndpointResult<ProductViewModel>(EndpointResultStatus.BadRequest, validationErrors.ToArray());
 
             try
