@@ -25,7 +25,7 @@ namespace Application.Endpoints.Auths.Commands
         public async Task<EndpointResult<UserLoginViewModel>> Handle(LoginCommand request, CancellationToken cancellationToken)
         {
             var validationErrors = _requestValidator.ValidateRequest(request);
-            if (validationErrors.Count() > 0)
+            if (validationErrors.Any())
                 return new EndpointResult<UserLoginViewModel>(EndpointResultStatus.BadRequest, validationErrors.ToArray());
 
             try
