@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Infrastructure.Migrations
 {
     /// <inheritdoc />
-    public partial class UpdateColumns : Migration
+    public partial class RefreshSchema : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -22,6 +22,7 @@ namespace Infrastructure.Migrations
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Price = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     Stock = table.Column<int>(type: "int", nullable: false),
+                    Type = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     CreatedTime = table.Column<DateTime>(type: "datetime2", nullable: false),
                     ModifiedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -46,6 +47,30 @@ namespace Infrastructure.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Role", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "SalesOrderHeader",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    OrderNumber = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    OrderType = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    OrderDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    CustomerName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CustomerAddress = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    PaymentType = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CreatedTime = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    ModifiedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ModifiedTime = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    RowVersion = table.Column<byte[]>(type: "rowversion", rowVersion: true, nullable: false),
+                    RowStatus = table.Column<short>(type: "smallint", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_SalesOrderHeader", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -101,6 +126,42 @@ namespace Infrastructure.Migrations
                         name: "FK_RoleClaim_Role_RoleId",
                         column: x => x.RoleId,
                         principalTable: "Role",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "SalesOrderDetail",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    OrderId = table.Column<int>(type: "int", nullable: false),
+                    ProductId = table.Column<int>(type: "int", nullable: false),
+                    Price = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    Quantity = table.Column<int>(type: "int", nullable: false),
+                    DeliveryDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Notes = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CreatedTime = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    ModifiedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ModifiedTime = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    RowVersion = table.Column<byte[]>(type: "rowversion", rowVersion: true, nullable: false),
+                    RowStatus = table.Column<short>(type: "smallint", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_SalesOrderDetail", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_SalesOrderDetail_Product_ProductId",
+                        column: x => x.ProductId,
+                        principalTable: "Product",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_SalesOrderDetail_SalesOrderHeader_OrderId",
+                        column: x => x.OrderId,
+                        principalTable: "SalesOrderHeader",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -195,8 +256,8 @@ namespace Infrastructure.Migrations
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "CreatedBy", "CreatedTime", "DateOfBirth", "Email", "EmailConfirmed", "FirstName", "LastName", "LockoutEnabled", "LockoutEnd", "ModifiedBy", "ModifiedTime", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "RefreshToken", "RowStatus", "SecurityStamp", "Token", "TwoFactorEnabled", "UserName" },
                 values: new object[,]
                 {
-                    { "5bb4b514-1b30-4862-841d-c25c06567d51", 0, "1130da8d-955d-48fe-ae6c-2ab4b23fd2fd", "", new DateTime(2023, 1, 6, 4, 5, 3, 685, DateTimeKind.Utc).AddTicks(7364), null, "user@user.com", false, "User", "User", false, null, null, null, "USER@USER.COM", "USER", "AQAAAAIAAYagAAAAECNCbf0G97AtGr/b0wxHcYu/4D+VU6pOjGHt7YpUFaY3cOb0S9JTziNyHBnT+CJ9Ew==", null, false, null, (short)0, "4e53d750-98e2-4a1b-9a85-85eb2607532a", null, false, "user" },
-                    { "b051e6f9-3ea7-430b-95d9-f80bbb967860", 0, "4b73136a-438f-48d5-bc07-16efe70810f5", "", new DateTime(2023, 1, 6, 4, 5, 3, 462, DateTimeKind.Utc).AddTicks(6613), null, "admin@admin.com", false, "Admin", "Admin", false, null, null, null, "ADMIN@ADMIN.COM", "ADMIN", "AQAAAAIAAYagAAAAEK1c6rennFg0CG+HXBnPgxn6syghyQHN5vuxROfTM2lXq+sR5pm0Og1gSWYCrKbRwQ==", null, false, null, (short)0, "c9daa821-ab26-4e8e-8726-450f36547bd9", null, false, "admin" }
+                    { "3504c8e3-a138-4b7d-bb65-6405aeb22d11", 0, "7229a7b4-1c66-496c-ab7a-16a7ba85b00b", "", new DateTime(2023, 1, 27, 11, 27, 45, 703, DateTimeKind.Utc).AddTicks(7838), null, "user@user.com", false, "User", "User", false, null, null, null, "USER@USER.COM", "USER", "AQAAAAIAAYagAAAAEGWFVrPs9sMl9ITIAoH23oAl6eHZjTyUW00M+3ntOOmpajrZSLAknNJELyAqdzTnVQ==", null, false, null, (short)0, "b11d36c0-c725-4e96-b898-abe651a1909f", null, false, "user" },
+                    { "eb5a05ab-e82f-429f-9421-3f2a0f18e4a9", 0, "60ea8a94-adbd-456b-9c6a-7782279e86f0", "", new DateTime(2023, 1, 27, 11, 27, 45, 571, DateTimeKind.Utc).AddTicks(6319), null, "admin@admin.com", false, "Admin", "Admin", false, null, null, null, "ADMIN@ADMIN.COM", "ADMIN", "AQAAAAIAAYagAAAAEGeWzTbw1Jqw5nWYWqTttK4d47WR5IPmhWkz3T/T874EZzVRxa77ecwNCclEw+A0JQ==", null, false, null, (short)0, "742f5a39-1db9-4828-b334-2224060a6fe4", null, false, "admin" }
                 });
 
             migrationBuilder.CreateIndex(
@@ -217,6 +278,16 @@ namespace Infrastructure.Migrations
                 name: "IX_RoleClaim_RoleId",
                 table: "RoleClaim",
                 column: "RoleId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_SalesOrderDetail_OrderId",
+                table: "SalesOrderDetail",
+                column: "OrderId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_SalesOrderDetail_ProductId",
+                table: "SalesOrderDetail",
+                column: "ProductId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_UserClaims_UserId",
@@ -264,10 +335,10 @@ namespace Infrastructure.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Product");
+                name: "RoleClaim");
 
             migrationBuilder.DropTable(
-                name: "RoleClaim");
+                name: "SalesOrderDetail");
 
             migrationBuilder.DropTable(
                 name: "UserClaims");
@@ -280,6 +351,12 @@ namespace Infrastructure.Migrations
 
             migrationBuilder.DropTable(
                 name: "UserToken");
+
+            migrationBuilder.DropTable(
+                name: "Product");
+
+            migrationBuilder.DropTable(
+                name: "SalesOrderHeader");
 
             migrationBuilder.DropTable(
                 name: "Role");

@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    [Migration("20230123025436_AddedSalesOrderEntity")]
-    partial class AddedSalesOrderEntity
+    [Migration("20230128011718_SetOptionalProductForSalesOrderDetailEntity")]
+    partial class SetOptionalProductForSalesOrderDetailEntity
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -139,11 +139,11 @@ namespace Infrastructure.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "673a6f0a-74e1-422b-bb62-918620818dcf",
+                            Id = "23020204-6369-4475-9bcb-dfc2c769920f",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "3940b103-ed06-48da-9f3d-aefa58d8b8fb",
+                            ConcurrencyStamp = "ae2ae0e7-a87e-43fd-8a12-811becfc13dc",
                             CreatedBy = "",
-                            CreatedTime = new DateTime(2023, 1, 23, 2, 54, 36, 51, DateTimeKind.Utc).AddTicks(6328),
+                            CreatedTime = new DateTime(2023, 1, 28, 1, 17, 18, 122, DateTimeKind.Utc).AddTicks(5971),
                             Email = "admin@admin.com",
                             EmailConfirmed = false,
                             FirstName = "Admin",
@@ -151,20 +151,20 @@ namespace Infrastructure.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@ADMIN.COM",
                             NormalizedUserName = "ADMIN",
-                            PasswordHash = "AQAAAAIAAYagAAAAEJlK6RTyMMjm5AXHFlyq1HC6PVGbKYMQteCyl9RfG2gEdcAoelp0DmR3nlx24Tb4tQ==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEML5/cImLpTJcmVyjWnmPjUiEZFKwQvJePBlEB4cQ6F/zeLReTS4EuS6SZIoIdWtQQ==",
                             PhoneNumberConfirmed = false,
                             RowStatus = (short)0,
-                            SecurityStamp = "6e7a647f-1f19-4eec-bef1-8b5cfad0d291",
+                            SecurityStamp = "6a4583b1-dce4-4ad3-b963-926fc307f739",
                             TwoFactorEnabled = false,
                             UserName = "admin"
                         },
                         new
                         {
-                            Id = "fa21278a-440a-48e7-ab8d-c3073657ae82",
+                            Id = "945fd4ef-088b-47ab-aac1-df9860ab4d4d",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "8f6f149c-1e1a-4b64-a8b3-a3bc55c9924c",
+                            ConcurrencyStamp = "721246f1-21ea-4f4b-868c-1fe4fe4a542d",
                             CreatedBy = "",
-                            CreatedTime = new DateTime(2023, 1, 23, 2, 54, 36, 240, DateTimeKind.Utc).AddTicks(2649),
+                            CreatedTime = new DateTime(2023, 1, 28, 1, 17, 18, 293, DateTimeKind.Utc).AddTicks(8704),
                             Email = "user@user.com",
                             EmailConfirmed = false,
                             FirstName = "User",
@@ -172,10 +172,10 @@ namespace Infrastructure.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "USER@USER.COM",
                             NormalizedUserName = "USER",
-                            PasswordHash = "AQAAAAIAAYagAAAAEBlKvaMxVyqFaKbnOHOlt4AFSshxRj6eXblzkG6LZWa87ePRZ3h15oDdLYcjhTLULg==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEL+q5/qgEuikA7T3fnOviry4vrUYYwARgKam7qlv6Hhk1Tl2Tlr368XfZC6netKMPg==",
                             PhoneNumberConfirmed = false,
                             RowStatus = (short)0,
-                            SecurityStamp = "bfe52a36-45c0-451c-ae10-7bdc49962727",
+                            SecurityStamp = "fdb4761e-5091-44d5-aebd-59a9c933756b",
                             TwoFactorEnabled = false,
                             UserName = "user"
                         });
@@ -285,7 +285,7 @@ namespace Infrastructure.Migrations
 
                     b.HasIndex("ProductId");
 
-                    b.ToTable("SalesOrderDetail");
+                    b.ToTable("SalesOrderDetail", (string)null);
                 });
 
             modelBuilder.Entity("Domain.Entities.SalesOrderHeader", b =>
@@ -343,7 +343,7 @@ namespace Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("SalesOrderHeader");
+                    b.ToTable("SalesOrderHeader", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -492,9 +492,9 @@ namespace Infrastructure.Migrations
                         .IsRequired();
 
                     b.HasOne("Domain.Entities.Product", "Product")
-                        .WithMany()
+                        .WithMany("SalesOrderDetails")
                         .HasForeignKey("ProductId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("OrderHeader");
@@ -551,6 +551,11 @@ namespace Infrastructure.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("Domain.Entities.Product", b =>
+                {
+                    b.Navigation("SalesOrderDetails");
                 });
 
             modelBuilder.Entity("Domain.Entities.SalesOrderHeader", b =>

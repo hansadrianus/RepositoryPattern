@@ -24,7 +24,8 @@ namespace Infrastructure.Services
                 {
                     bool isContainIgnoredProp = ignoredProperties.Contains(newValuePropertyInfos[i].Name);
                     bool isSimilarValue = newValuePropertyInfos[i].GetValue(entity) == entityPropertyInfos[i].GetValue(newValue);
-                    if (!isContainIgnoredProp && !isSimilarValue)
+                    bool isNull = newValuePropertyInfos[i].GetValue(newValue) is null;
+                    if (!isContainIgnoredProp && !isSimilarValue && !isNull)
                         entityPropertyInfos[i].SetValue(entity, newValuePropertyInfos[i].GetValue(newValue));
                 }
 

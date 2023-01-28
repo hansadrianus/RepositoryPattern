@@ -42,6 +42,7 @@ namespace Infrastructure
             services.AddScoped<IEntityMapperService, EntityMapperService>();
             services.AddScoped<IQueryBuilderService, QueryBuilderService>();
             services.AddScoped<IRepositoryWrapper, RepositoryWrapper>();
+            services.AddScoped<IAutoGenerateNumberService, AutoGenerateNumberService>();
 
             return services;
         }

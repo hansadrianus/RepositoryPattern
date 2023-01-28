@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    [Migration("20230108111631_AddColumnForProductEntity")]
-    partial class AddColumnForProductEntity
+    [Migration("20230127112746_RefreshSchema")]
+    partial class RefreshSchema
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -139,11 +139,11 @@ namespace Infrastructure.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "af9bdff2-db79-4070-bb9d-c4649f17968e",
+                            Id = "eb5a05ab-e82f-429f-9421-3f2a0f18e4a9",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "c1acc183-7159-4563-a700-e287879d26ec",
+                            ConcurrencyStamp = "60ea8a94-adbd-456b-9c6a-7782279e86f0",
                             CreatedBy = "",
-                            CreatedTime = new DateTime(2023, 1, 8, 11, 16, 31, 19, DateTimeKind.Utc).AddTicks(8544),
+                            CreatedTime = new DateTime(2023, 1, 27, 11, 27, 45, 571, DateTimeKind.Utc).AddTicks(6319),
                             Email = "admin@admin.com",
                             EmailConfirmed = false,
                             FirstName = "Admin",
@@ -151,20 +151,20 @@ namespace Infrastructure.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@ADMIN.COM",
                             NormalizedUserName = "ADMIN",
-                            PasswordHash = "AQAAAAIAAYagAAAAEOkEePcecPLnNOEE14vTAMb6wDiL3UwaLmp4QTbmsNJemufJx7IPGyOidck2ydbIIg==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEGeWzTbw1Jqw5nWYWqTttK4d47WR5IPmhWkz3T/T874EZzVRxa77ecwNCclEw+A0JQ==",
                             PhoneNumberConfirmed = false,
                             RowStatus = (short)0,
-                            SecurityStamp = "2c819da7-9298-4228-9141-ab270d4331e5",
+                            SecurityStamp = "742f5a39-1db9-4828-b334-2224060a6fe4",
                             TwoFactorEnabled = false,
                             UserName = "admin"
                         },
                         new
                         {
-                            Id = "aad62da3-19ca-4c82-885e-e532e46133bf",
+                            Id = "3504c8e3-a138-4b7d-bb65-6405aeb22d11",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "7ff7af1b-2a90-417d-b20a-6ff1cab789b8",
+                            ConcurrencyStamp = "7229a7b4-1c66-496c-ab7a-16a7ba85b00b",
                             CreatedBy = "",
-                            CreatedTime = new DateTime(2023, 1, 8, 11, 16, 31, 105, DateTimeKind.Utc).AddTicks(4762),
+                            CreatedTime = new DateTime(2023, 1, 27, 11, 27, 45, 703, DateTimeKind.Utc).AddTicks(7838),
                             Email = "user@user.com",
                             EmailConfirmed = false,
                             FirstName = "User",
@@ -172,10 +172,10 @@ namespace Infrastructure.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "USER@USER.COM",
                             NormalizedUserName = "USER",
-                            PasswordHash = "AQAAAAIAAYagAAAAEFIUeHry+oH3VceELH7MxMPhkOi7tU7DkP4U3qphquJsYzhpuOlqUeThiIAkH/FP4g==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEGWFVrPs9sMl9ITIAoH23oAl6eHZjTyUW00M+3ntOOmpajrZSLAknNJELyAqdzTnVQ==",
                             PhoneNumberConfirmed = false,
                             RowStatus = (short)0,
-                            SecurityStamp = "a05e7519-b668-4087-a4e5-e4b46865cbd2",
+                            SecurityStamp = "b11d36c0-c725-4e96-b898-abe651a1909f",
                             TwoFactorEnabled = false,
                             UserName = "user"
                         });
@@ -228,6 +228,122 @@ namespace Infrastructure.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Product", (string)null);
+                });
+
+            modelBuilder.Entity("Domain.Entities.SalesOrderDetail", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("CreatedBy")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreatedTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("DeliveryDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("ModifiedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("ModifiedTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Notes")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("OrderId")
+                        .HasColumnType("int");
+
+                    b.Property<decimal>("Price")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<int>("ProductId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Quantity")
+                        .HasColumnType("int");
+
+                    b.Property<short>("RowStatus")
+                        .HasColumnType("smallint");
+
+                    b.Property<byte[]>("RowVersion")
+                        .IsConcurrencyToken()
+                        .IsRequired()
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("rowversion");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("OrderId");
+
+                    b.HasIndex("ProductId");
+
+                    b.ToTable("SalesOrderDetail", (string)null);
+                });
+
+            modelBuilder.Entity("Domain.Entities.SalesOrderHeader", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("CreatedBy")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreatedTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("CustomerAddress")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CustomerName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ModifiedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("ModifiedTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("OrderDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("OrderNumber")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("OrderType")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PaymentType")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<short>("RowStatus")
+                        .HasColumnType("smallint");
+
+                    b.Property<byte[]>("RowVersion")
+                        .IsConcurrencyToken()
+                        .IsRequired()
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("rowversion");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("SalesOrderHeader", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -367,6 +483,25 @@ namespace Infrastructure.Migrations
                     b.ToTable("UserToken", (string)null);
                 });
 
+            modelBuilder.Entity("Domain.Entities.SalesOrderDetail", b =>
+                {
+                    b.HasOne("Domain.Entities.SalesOrderHeader", "OrderHeader")
+                        .WithMany("SalesOrderDetails")
+                        .HasForeignKey("OrderId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Domain.Entities.Product", "Product")
+                        .WithMany()
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("OrderHeader");
+
+                    b.Navigation("Product");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
@@ -416,6 +551,11 @@ namespace Infrastructure.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("Domain.Entities.SalesOrderHeader", b =>
+                {
+                    b.Navigation("SalesOrderDetails");
                 });
 #pragma warning restore 612, 618
         }

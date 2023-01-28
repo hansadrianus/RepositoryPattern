@@ -18,8 +18,8 @@ namespace Domain.Entities
         public string Notes { get; set; }
 
         [ForeignKey("OrderId")]
-        public SalesOrderHeader OrderHeader { get; set; }
+        public virtual SalesOrderHeader OrderHeader { get; set; }
         [ForeignKey("ProductId")]
-        public Product Product { get; set; }
+        public virtual Product Product { get; set; }
     }
 }

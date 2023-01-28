@@ -1,5 +1,6 @@
 ﻿using Application.Interfaces.Persistence;
 using Microsoft.EntityFrameworkCore;
+using System.Linq;
 using System.Linq.Expressions;
 
 namespace Infrastructure.Repositories
@@ -32,10 +33,10 @@ namespace Infrastructure.Repositories
             => await _context.Set<T>().FirstOrDefaultAsync(expression, cancellationToken);
 
         public T GetLast(Expression<Func<T, bool>> expression)
-            => _context.Set<T>().LastOrDefault(expression);
+            => _context.Set<T>().Where(expression).AsEnumerable().LastOrDefault();
 
         public async Task<T> GetLastAsync(Expression<Func<T, bool>> expression, CancellationToken cancellationToken = default)
-            => await _context.Set<T>().LastOrDefaultAsync(expression, cancellationToken);
+            => (await _context.Set<T>().Where(expression).ToListAsync(cancellationToken)).LastOrDefault();
 
         public IEnumerable<T> GetAll()
             => _context.Set<T>().AsEnumerable();

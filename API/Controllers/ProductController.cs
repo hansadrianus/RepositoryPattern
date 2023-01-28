@@ -17,15 +17,15 @@ namespace API.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetProductAsync([FromQuery]GetProductsQuery query) 
+        public async Task<IActionResult> GetProductAsync([FromQuery] GetProductsQuery query) 
             => (await _mediator.Send(query)).ToActionResult();
 
         [HttpPost]
-        public async Task<IActionResult> AddProductAsync([FromBody]AddProductCommand command)
+        public async Task<IActionResult> AddProductAsync([FromBody] AddProductCommand command)
             => (await _mediator.Send(command)).ToActionResult();
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateProductAsync(int id, [FromBody]UpdateProductCommand command)
+        public async Task<IActionResult> UpdateProductAsync(int id, [FromBody] UpdateProductCommand command)
         {
             command.Id = id;
 

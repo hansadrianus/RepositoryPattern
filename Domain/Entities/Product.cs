@@ -13,5 +13,7 @@ namespace Domain.Entities
         public decimal Price { get; set; }
         public int Stock { get; set; }
         public string Type { get; set; }
+
+        public virtual ICollection<SalesOrderDetail> SalesOrderDetails { get; set; }
     }
 }

@@ -14,11 +14,15 @@ namespace Infrastructure.Persistence.EntityConfigurations
         public void Configure(EntityTypeBuilder<SalesOrderHeader> builder)
         {
             builder.ToTable("SalesOrderHeader");
+            builder.HasIndex(q => q.OrderNumber).IsUnique();
+            builder.Navigation(q => q.SalesOrderDetails).AutoInclude();
         }
 
         public void Configure(EntityTypeBuilder<SalesOrderDetail> builder)
         {
             builder.ToTable("SalesOrderDetail");
+            builder.HasOne(q => q.Product).WithMany(q => q.SalesOrderDetails).OnDelete(DeleteBehavior.NoAction);
+            builder.Navigation(q => q.OrderHeader).AutoInclude();
         }
     }
 }
