@@ -20,6 +20,6 @@ namespace Domain.Entities
         [ForeignKey("OrderId")]
         public virtual SalesOrderHeader OrderHeader { get; set; }
         [ForeignKey("ProductId")]
-        public virtual Product Product { get; set; }
+        public virtual Product? Product { get; set; }
     }
 }
