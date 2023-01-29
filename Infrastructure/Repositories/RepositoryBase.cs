@@ -32,8 +32,14 @@ namespace Infrastructure.Repositories
         public async Task<T> GetAsync(Expression<Func<T, bool>> expression, CancellationToken cancellationToken = default)
             => await _context.Set<T>().FirstOrDefaultAsync(expression, cancellationToken);
 
+        public T GetLast()
+            => _context.Set<T>().AsEnumerable().LastOrDefault();
+
         public T GetLast(Expression<Func<T, bool>> expression)
             => _context.Set<T>().Where(expression).AsEnumerable().LastOrDefault();
+
+        public async Task<T> GetLastAsync(CancellationToken cancellationToken = default)
+            => (await _context.Set<T>().ToListAsync(cancellationToken)).LastOrDefault();
 
         public async Task<T> GetLastAsync(Expression<Func<T, bool>> expression, CancellationToken cancellationToken = default)
             => (await _context.Set<T>().Where(expression).ToListAsync(cancellationToken)).LastOrDefault();

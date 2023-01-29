@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    [Migration("20230128011718_SetOptionalProductForSalesOrderDetailEntity")]
-    partial class SetOptionalProductForSalesOrderDetailEntity
+    [Migration("20230129081206_RefreshMigration")]
+    partial class RefreshMigration
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -139,11 +139,11 @@ namespace Infrastructure.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "23020204-6369-4475-9bcb-dfc2c769920f",
+                            Id = "3903c9c3-4c17-4aa5-b6df-bc1ea64c2dc6",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "ae2ae0e7-a87e-43fd-8a12-811becfc13dc",
+                            ConcurrencyStamp = "d2b1c255-932b-4233-b7d9-75ea15dca67b",
                             CreatedBy = "",
-                            CreatedTime = new DateTime(2023, 1, 28, 1, 17, 18, 122, DateTimeKind.Utc).AddTicks(5971),
+                            CreatedTime = new DateTime(2023, 1, 29, 8, 12, 6, 108, DateTimeKind.Utc).AddTicks(2513),
                             Email = "admin@admin.com",
                             EmailConfirmed = false,
                             FirstName = "Admin",
@@ -151,20 +151,20 @@ namespace Infrastructure.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@ADMIN.COM",
                             NormalizedUserName = "ADMIN",
-                            PasswordHash = "AQAAAAIAAYagAAAAEML5/cImLpTJcmVyjWnmPjUiEZFKwQvJePBlEB4cQ6F/zeLReTS4EuS6SZIoIdWtQQ==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEPPR+GUreLqEU3+/iNPaBbCXbk+cpE3s3eRSkYwUi431BocPp/kcMbDR01fpvcSzDw==",
                             PhoneNumberConfirmed = false,
                             RowStatus = (short)0,
-                            SecurityStamp = "6a4583b1-dce4-4ad3-b963-926fc307f739",
+                            SecurityStamp = "0501b4e8-fd51-4c21-b95f-01d774f355fe",
                             TwoFactorEnabled = false,
                             UserName = "admin"
                         },
                         new
                         {
-                            Id = "945fd4ef-088b-47ab-aac1-df9860ab4d4d",
+                            Id = "baab8e17-1d62-4ce4-afd8-ef7816b5d092",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "721246f1-21ea-4f4b-868c-1fe4fe4a542d",
+                            ConcurrencyStamp = "adde98b8-08d3-4e88-b423-7273a779bcda",
                             CreatedBy = "",
-                            CreatedTime = new DateTime(2023, 1, 28, 1, 17, 18, 293, DateTimeKind.Utc).AddTicks(8704),
+                            CreatedTime = new DateTime(2023, 1, 29, 8, 12, 6, 264, DateTimeKind.Utc).AddTicks(5706),
                             Email = "user@user.com",
                             EmailConfirmed = false,
                             FirstName = "User",
@@ -172,10 +172,10 @@ namespace Infrastructure.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "USER@USER.COM",
                             NormalizedUserName = "USER",
-                            PasswordHash = "AQAAAAIAAYagAAAAEL+q5/qgEuikA7T3fnOviry4vrUYYwARgKam7qlv6Hhk1Tl2Tlr368XfZC6netKMPg==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEAztv6+F0kl0yjrbKtrAn29mtBfoSd7NYKYl772YCilmJ0VOuwl0bZ2CSvSZwGfAzg==",
                             PhoneNumberConfirmed = false,
                             RowStatus = (short)0,
-                            SecurityStamp = "fdb4761e-5091-44d5-aebd-59a9c933756b",
+                            SecurityStamp = "a1abfe64-7905-4eec-a0bb-109099cbf92e",
                             TwoFactorEnabled = false,
                             UserName = "user"
                         });
@@ -209,6 +209,10 @@ namespace Infrastructure.Migrations
                     b.Property<decimal>("Price")
                         .HasColumnType("decimal(18,2)");
 
+                    b.Property<string>("ProductCode")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
                     b.Property<short>("RowStatus")
                         .HasColumnType("smallint");
 
@@ -226,6 +230,9 @@ namespace Infrastructure.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("ProductCode")
+                        .IsUnique();
 
                     b.ToTable("Product", (string)null);
                 });
@@ -322,7 +329,7 @@ namespace Infrastructure.Migrations
 
                     b.Property<string>("OrderNumber")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("OrderType")
                         .IsRequired()
@@ -342,6 +349,9 @@ namespace Infrastructure.Migrations
                         .HasColumnType("rowversion");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("OrderNumber")
+                        .IsUnique();
 
                     b.ToTable("SalesOrderHeader", (string)null);
                 });

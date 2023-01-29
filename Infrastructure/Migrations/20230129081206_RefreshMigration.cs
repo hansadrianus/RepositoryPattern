@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Infrastructure.Migrations
 {
     /// <inheritdoc />
-    public partial class RefreshSchema : Migration
+    public partial class RefreshMigration : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -19,6 +19,7 @@ namespace Infrastructure.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
+                    ProductCode = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Price = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     Stock = table.Column<int>(type: "int", nullable: false),
@@ -55,7 +56,7 @@ namespace Infrastructure.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    OrderNumber = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    OrderNumber = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     OrderType = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     OrderDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     CustomerName = table.Column<string>(type: "nvarchar(max)", nullable: false),
@@ -156,8 +157,7 @@ namespace Infrastructure.Migrations
                         name: "FK_SalesOrderDetail_Product_ProductId",
                         column: x => x.ProductId,
                         principalTable: "Product",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_SalesOrderDetail_SalesOrderHeader_OrderId",
                         column: x => x.OrderId,
@@ -256,9 +256,15 @@ namespace Infrastructure.Migrations
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "CreatedBy", "CreatedTime", "DateOfBirth", "Email", "EmailConfirmed", "FirstName", "LastName", "LockoutEnabled", "LockoutEnd", "ModifiedBy", "ModifiedTime", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "RefreshToken", "RowStatus", "SecurityStamp", "Token", "TwoFactorEnabled", "UserName" },
                 values: new object[,]
                 {
-                    { "3504c8e3-a138-4b7d-bb65-6405aeb22d11", 0, "7229a7b4-1c66-496c-ab7a-16a7ba85b00b", "", new DateTime(2023, 1, 27, 11, 27, 45, 703, DateTimeKind.Utc).AddTicks(7838), null, "user@user.com", false, "User", "User", false, null, null, null, "USER@USER.COM", "USER", "AQAAAAIAAYagAAAAEGWFVrPs9sMl9ITIAoH23oAl6eHZjTyUW00M+3ntOOmpajrZSLAknNJELyAqdzTnVQ==", null, false, null, (short)0, "b11d36c0-c725-4e96-b898-abe651a1909f", null, false, "user" },
-                    { "eb5a05ab-e82f-429f-9421-3f2a0f18e4a9", 0, "60ea8a94-adbd-456b-9c6a-7782279e86f0", "", new DateTime(2023, 1, 27, 11, 27, 45, 571, DateTimeKind.Utc).AddTicks(6319), null, "admin@admin.com", false, "Admin", "Admin", false, null, null, null, "ADMIN@ADMIN.COM", "ADMIN", "AQAAAAIAAYagAAAAEGeWzTbw1Jqw5nWYWqTttK4d47WR5IPmhWkz3T/T874EZzVRxa77ecwNCclEw+A0JQ==", null, false, null, (short)0, "742f5a39-1db9-4828-b334-2224060a6fe4", null, false, "admin" }
+                    { "3903c9c3-4c17-4aa5-b6df-bc1ea64c2dc6", 0, "d2b1c255-932b-4233-b7d9-75ea15dca67b", "", new DateTime(2023, 1, 29, 8, 12, 6, 108, DateTimeKind.Utc).AddTicks(2513), null, "admin@admin.com", false, "Admin", "Admin", false, null, null, null, "ADMIN@ADMIN.COM", "ADMIN", "AQAAAAIAAYagAAAAEPPR+GUreLqEU3+/iNPaBbCXbk+cpE3s3eRSkYwUi431BocPp/kcMbDR01fpvcSzDw==", null, false, null, (short)0, "0501b4e8-fd51-4c21-b95f-01d774f355fe", null, false, "admin" },
+                    { "baab8e17-1d62-4ce4-afd8-ef7816b5d092", 0, "adde98b8-08d3-4e88-b423-7273a779bcda", "", new DateTime(2023, 1, 29, 8, 12, 6, 264, DateTimeKind.Utc).AddTicks(5706), null, "user@user.com", false, "User", "User", false, null, null, null, "USER@USER.COM", "USER", "AQAAAAIAAYagAAAAEAztv6+F0kl0yjrbKtrAn29mtBfoSd7NYKYl772YCilmJ0VOuwl0bZ2CSvSZwGfAzg==", null, false, null, (short)0, "a1abfe64-7905-4eec-a0bb-109099cbf92e", null, false, "user" }
                 });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Product_ProductCode",
+                table: "Product",
+                column: "ProductCode",
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_Role_Name",
@@ -288,6 +294,12 @@ namespace Infrastructure.Migrations
                 name: "IX_SalesOrderDetail_ProductId",
                 table: "SalesOrderDetail",
                 column: "ProductId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_SalesOrderHeader_OrderNumber",
+                table: "SalesOrderHeader",
+                column: "OrderNumber",
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_UserClaims_UserId",

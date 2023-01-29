@@ -14,6 +14,7 @@ namespace Infrastructure.Persistence.EntityConfigurations
         public void Configure(EntityTypeBuilder<Product> builder)
         {
             builder.ToTable("Product");
+            builder.HasIndex(q => q.ProductCode).IsUnique();
         }
     }
 }
