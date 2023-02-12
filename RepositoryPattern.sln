@@ -13,6 +13,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Infrastructure", "Infrastru
 EndProject
 Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{3D7EAD7A-DB9B-413C-86EA-1EB2DC653255}"
 EndProject
+Project("{54A90642-561A-4BB1-A94E-469ADEE60C69}") = "WebUI", "WebUI\WebUI.esproj", "{55B5B1F2-2564-4938-8BCE-ED654E805185}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,12 @@ Global
 		{3D7EAD7A-DB9B-413C-86EA-1EB2DC653255}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3D7EAD7A-DB9B-413C-86EA-1EB2DC653255}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3D7EAD7A-DB9B-413C-86EA-1EB2DC653255}.Release|Any CPU.Build.0 = Release|Any CPU
+		{55B5B1F2-2564-4938-8BCE-ED654E805185}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{55B5B1F2-2564-4938-8BCE-ED654E805185}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{55B5B1F2-2564-4938-8BCE-ED654E805185}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{55B5B1F2-2564-4938-8BCE-ED654E805185}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{55B5B1F2-2564-4938-8BCE-ED654E805185}.Release|Any CPU.Build.0 = Release|Any CPU
+		{55B5B1F2-2564-4938-8BCE-ED654E805185}.Release|Any CPU.Deploy.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
