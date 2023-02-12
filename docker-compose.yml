@@ -6,3 +6,8 @@ services:
     build:
       context: .
       dockerfile: API/Dockerfile
+  mvc:
+    image: ${DOCKER_REGISTRY-}repository-pattern-mvc
+    build:
+      context: .
+      dockerfile: WebMVC/Dockerfile

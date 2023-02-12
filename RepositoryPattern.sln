@@ -15,6 +15,10 @@ Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-co
 EndProject
 Project("{54A90642-561A-4BB1-A94E-469ADEE60C69}") = "WebUI", "WebUI\WebUI.esproj", "{55B5B1F2-2564-4938-8BCE-ED654E805185}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebMVC", "WebMVC\WebMVC.csproj", "{E6BF184A-A9F5-4E01-9BED-54D32A0887E8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PresentationLibrary", "PresentationLibrary\PresentationLibrary.csproj", "{44A8DE63-67CE-45CA-B679-8688395FEB50}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -47,6 +51,14 @@ Global
 		{55B5B1F2-2564-4938-8BCE-ED654E805185}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{55B5B1F2-2564-4938-8BCE-ED654E805185}.Release|Any CPU.Build.0 = Release|Any CPU
 		{55B5B1F2-2564-4938-8BCE-ED654E805185}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{E6BF184A-A9F5-4E01-9BED-54D32A0887E8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E6BF184A-A9F5-4E01-9BED-54D32A0887E8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E6BF184A-A9F5-4E01-9BED-54D32A0887E8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E6BF184A-A9F5-4E01-9BED-54D32A0887E8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{44A8DE63-67CE-45CA-B679-8688395FEB50}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{44A8DE63-67CE-45CA-B679-8688395FEB50}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{44A8DE63-67CE-45CA-B679-8688395FEB50}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{44A8DE63-67CE-45CA-B679-8688395FEB50}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
