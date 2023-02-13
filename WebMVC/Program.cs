@@ -1,9 +1,11 @@
 using Application;
 using Application.Interfaces.Services;
 using Infrastructure;
-using Microsoft.AspNetCore.Mvc;
-using PresentationLibrary;
 using WebMVC.Services;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
+using Infrastructure.Persistence;
+using Domain.Entities;
 
 namespace WebMVC
 {
@@ -17,19 +19,33 @@ namespace WebMVC
             builder.Services.AddSingleton(builder.Configuration);
             builder.Services.AddApplication(builder.Configuration);
             builder.Services.AddInfrastructure(builder.Configuration);
-            builder.Services.AddAdminLTEDependency();
-            builder.Services.AddAuthentication();
             builder.Services.ConfigureIdentity();
+            builder.Services.ConfigureApplicationCookie(options =>
+            {
+                options.LoginPath = "/Identity/Account/Login";
+            });
+            builder.Services.AddAdminLTE(o => {
+                o.Aside = true;
+                o.Breadcrumbs = true;
+                o.Footer = true;
+                o.Messages = true;
+                o.NavBarLinks = true;;
+                o.Notifications = true;
+                o.Search = true;
+                o.SideBarCollapsed = false;
+                o.SiteName = "Repository Pattern";
+                o.UserPanel = true;
+            });
+            builder.Services.AddAuthentication();
             builder.Services.AddHttpContextAccessor();
             builder.Services.AddControllersWithViews();
             builder.Services.AddScoped<IPrincipalService, PrincipalService>();
             builder.Services.Configure<CookiePolicyOptions>(options =>
             {
-                // This lambda determines whether user consent for non-essential cookies is needed for a given request.
                 options.CheckConsentNeeded = context => false;
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
-            builder.Services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+            builder.Services.AddMvc();
 
             var app = builder.Build();
 
@@ -52,6 +68,7 @@ namespace WebMVC
             app.MapControllerRoute(
                 name: "default",
                 pattern: "{controller=Home}/{action=Index}/{id?}");
+            app.MapRazorPages();
 
             app.Run();
         }

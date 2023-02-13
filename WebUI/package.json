@@ -16,6 +16,11 @@
       "prettier --write"
     ]
   },
+  "husky": {
+    "hooks": {
+      "pre-commit": "pretty-quick --staged && ng lint && lint-staged"
+    }
+  },
   "dependencies": {
     "@angular/animations": "^15.0.1",
     "@angular/common": "15.0.1",
