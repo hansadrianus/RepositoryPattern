@@ -8,6 +8,7 @@ namespace PresentationLibrary.Extensions
         public static IServiceCollection AddAdminLTEStatics(this IServiceCollection services)
         {
             services.ConfigureOptions<AdminLTEStaticsConfigureOptions>();
+
             return services;
         }
     }

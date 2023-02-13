@@ -1,7 +1,9 @@
 using Application;
+using Application.Interfaces.Services;
 using Infrastructure;
 using Microsoft.AspNetCore.Mvc;
 using PresentationLibrary;
+using WebMVC.Services;
 
 namespace WebMVC
 {
@@ -12,10 +14,15 @@ namespace WebMVC
             var builder = WebApplication.CreateBuilder(args);
 
             // Add services to the container.
+            builder.Services.AddSingleton(builder.Configuration);
             builder.Services.AddApplication(builder.Configuration);
             builder.Services.AddInfrastructure(builder.Configuration);
             builder.Services.AddAdminLTEDependency();
+            builder.Services.AddAuthentication();
+            builder.Services.ConfigureIdentity();
+            builder.Services.AddHttpContextAccessor();
             builder.Services.AddControllersWithViews();
+            builder.Services.AddScoped<IPrincipalService, PrincipalService>();
             builder.Services.Configure<CookiePolicyOptions>(options =>
             {
                 // This lambda determines whether user consent for non-essential cookies is needed for a given request.

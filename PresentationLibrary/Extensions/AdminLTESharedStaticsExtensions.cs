@@ -10,6 +10,7 @@ namespace PresentationLibrary.Extensions
             services.ConfigureOptions<AdminLTESharedStaticsConfigureOptions>();
             if (configure != null)
                 services.Configure(configure);
+
             return services;
         }
     }

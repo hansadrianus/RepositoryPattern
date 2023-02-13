@@ -20,6 +20,7 @@ namespace PresentationLibrary.Extensions
             if (configure != null)
                 services.Configure(configure);
             services.TryAddScoped<IAdminLTE, AdminLTE>();
+
             return services;
         }
     }
