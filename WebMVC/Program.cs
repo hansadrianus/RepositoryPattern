@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Infrastructure.Persistence;
 using Domain.Entities;
+using Microsoft.AspNetCore.Identity.UI.Services;
 
 namespace WebMVC
 {
@@ -19,7 +20,10 @@ namespace WebMVC
             builder.Services.AddSingleton(builder.Configuration);
             builder.Services.AddApplication(builder.Configuration);
             builder.Services.AddInfrastructure(builder.Configuration);
+            builder.Services.AddAuthentication();
             builder.Services.ConfigureIdentity();
+            builder.Services.ConfigureSession(builder.Configuration);
+            builder.Services.ConfigureCookies(builder.Configuration);
             builder.Services.ConfigureApplicationCookie(options =>
             {
                 options.LoginPath = "/Identity/Account/Login";
@@ -36,7 +40,6 @@ namespace WebMVC
                 o.SiteName = "Repository Pattern";
                 o.UserPanel = true;
             });
-            builder.Services.AddAuthentication();
             builder.Services.AddHttpContextAccessor();
             builder.Services.AddControllersWithViews();
             builder.Services.AddScoped<IPrincipalService, PrincipalService>();

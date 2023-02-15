@@ -19,7 +19,7 @@ namespace Infrastructure.Persistence.Configurations
 
         public TokenValidationParameters DefaultTokenConfiguration()
         {
-            var jwtConfig = _configuration.GetSection("JwtConfig");
+            var jwtConfig = _configuration.GetSection("AuthConfig");
             var secretKey = jwtConfig["tokenSecret"];
             var tokenValidationParameters = new TokenValidationParameters
             {
@@ -38,7 +38,7 @@ namespace Infrastructure.Persistence.Configurations
 
         public TokenValidationParameters DefaultRefreshTokenConfiguration()
         {
-            var jwtConfig = _configuration.GetSection("JwtConfig");
+            var jwtConfig = _configuration.GetSection("AuthConfig");
             var secretKey = jwtConfig["refreshTokenSecret"];
             var tokenValidationParameters = new TokenValidationParameters
             {

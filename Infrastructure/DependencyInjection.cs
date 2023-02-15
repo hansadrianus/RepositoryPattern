@@ -8,10 +8,13 @@ using Infrastructure.Persistence;
 using Infrastructure.Persistence.Configurations;
 using Infrastructure.Services;
 using Infrastructure.Wrappers;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Options;
+using System.Configuration;
 using System.Text.RegularExpressions;
 
 namespace Infrastructure
@@ -37,6 +40,7 @@ namespace Infrastructure
              }).ToList()
             .ForEach(x => services.AddScoped(x.Contract, x.Implementation));
 
+            services.AddTransient<IEmailService, EmailService>();
             services.AddSingleton<IDateTimeService, DateTimeService>();
             services.AddScoped(typeof(ILoggerService<>), typeof(LoggerService<>));
             services.AddScoped<IEntityMapperService, EntityMapperService>();
@@ -47,16 +51,40 @@ namespace Infrastructure
             return services;
         }
 
+        public static void ConfigureCookies(this IServiceCollection services, IConfiguration configuration)
+        {
+            var config = configuration.GetSection("AuthConfig");
+            double expireTime = (string.IsNullOrEmpty(config["tokenExpiresInMinutes"])) ? 5 : double.Parse(config["tokenExpiresInMinutes"]);
+            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+                .AddCookie(opt =>
+                {
+                    opt.ExpireTimeSpan = TimeSpan.FromMinutes(expireTime);
+                    opt.Cookie.MaxAge = opt.ExpireTimeSpan;
+                    opt.SlidingExpiration = true;
+                    opt.EventsType = typeof(CookiesAuthenticationConfiguration);
+                });
+            services.AddTransient<CookiesAuthenticationConfiguration>();
+        }
+
         public static void ConfigureIdentity(this IServiceCollection services)
         {
-            var builder = services.AddIdentity<ApplicationUser, IdentityRole>(q =>
+            var builder = services.AddIdentity<ApplicationUser, IdentityRole>(opt =>
             {
-                q.Password.RequireDigit = true;
-                q.Password.RequireLowercase = true;
-                q.Password.RequireUppercase = true;
-                q.Password.RequireNonAlphanumeric = true;
-                q.User.RequireUniqueEmail = true;
+                opt.Password.RequireDigit = true;
+                opt.Password.RequireLowercase = true;
+                opt.Password.RequireUppercase = true;
+                opt.Password.RequireNonAlphanumeric = true;
+                opt.Password.RequiredLength = 8;
+                opt.Password.RequiredUniqueChars = 1;
+                opt.User.RequireUniqueEmail = true;
+                opt.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromDays(3650);
+                opt.Lockout.MaxFailedAccessAttempts = 3;
+                opt.Lockout.AllowedForNewUsers = false;
+                opt.User.AllowedUserNameCharacters =
+                    "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-._@+";
+                opt.User.RequireUniqueEmail = true;
             })
+            .AddRoles<IdentityRole>()
             .AddEntityFrameworkStores<ApplicationContext>()
             .AddDefaultTokenProviders();
         }
@@ -68,9 +96,21 @@ namespace Infrastructure
                 opt.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
                 opt.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
             })
-            .AddJwtBearer(options =>
+            .AddJwtBearer(opt =>
             {
-                options.TokenValidationParameters = new TokenValidationConfiguration(configuration).DefaultTokenConfiguration();
+                opt.TokenValidationParameters = new TokenValidationConfiguration(configuration).DefaultTokenConfiguration();
+            });
+        }
+
+        public static void ConfigureSession(this IServiceCollection services, IConfiguration configuration)
+        {
+            var config = configuration.GetSection("AuthConfig");
+            double expireTime = (string.IsNullOrEmpty(config["tokenExpiresInMinutes"])) ? 5 : double.Parse(config["tokenExpiresInMinutes"]);
+            services.AddSession(options =>
+            {
+                options.IdleTimeout = TimeSpan.FromMinutes(expireTime);
+                options.Cookie.HttpOnly = true;
+                options.Cookie.IsEssential = true;
             });
         }
     }

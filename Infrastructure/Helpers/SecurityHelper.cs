@@ -26,7 +26,7 @@ namespace Infrastructure.Helpers
 
         public SigningCredentials GetSigningCredentials()
         {
-            var jwtConfig = _configuration.GetSection("JwtConfig");
+            var jwtConfig = _configuration.GetSection("AuthConfig");
             var key = Encoding.UTF8.GetBytes(jwtConfig["tokenSecret"]);
             var secret = new SymmetricSecurityKey(key);
 
@@ -53,7 +53,7 @@ namespace Infrastructure.Helpers
 
         public JwtSecurityToken GenerateTokenOptions(SigningCredentials signingCredentials, List<Claim> claims)
         {
-            var jwtConfig = _configuration.GetSection("JwtConfig");
+            var jwtConfig = _configuration.GetSection("AuthConfig");
             DateTime expireTime = DateTime.Now.AddMinutes(Convert.ToDouble(jwtConfig["tokenExpiresInMinutes"]));
             var tokenOptions = new JwtSecurityToken
             (
@@ -69,7 +69,7 @@ namespace Infrastructure.Helpers
 
         public JwtSecurityToken GenerateRefreshToken(SigningCredentials signingCredentials)
         {
-            var jwtConfig = _configuration.GetSection("JwtConfig");
+            var jwtConfig = _configuration.GetSection("AuthConfig");
             DateTime expireTime = DateTime.Now.AddMinutes(Convert.ToDouble(jwtConfig["refreshTokenExpiresInMinutes"]));
             var tokenOptions = new JwtSecurityToken
             (
