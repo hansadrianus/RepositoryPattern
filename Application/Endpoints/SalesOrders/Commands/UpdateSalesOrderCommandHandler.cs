@@ -38,8 +38,8 @@ namespace Application.Endpoints.SalesOrders.Commands
 
             try
             {
-                var orderToUpdate = _mapper.Map<SalesOrderHeader>(request);
-                orderToUpdate.SalesOrderDetails = _mapper.Map<IList<SalesOrderDetail>>(request.OrderDetails);
+                var orderToUpdate = _mapper.Map<SalesOrderHeader<int>>(request);
+                orderToUpdate.SalesOrderDetails = _mapper.Map<IList<SalesOrderDetail<int>>>(request.OrderDetails);
                 var sourceOrder = await _repository.SalesOrder.GetAsync(q => q.Id == orderToUpdate.Id && q.RowStatus == 0, cancellationToken);
                 if (sourceOrder == null)
                     return new EndpointResult<SalesOrderViewModel>(EndpointResultStatus.Invalid, "Data not found.");

@@ -9,6 +9,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Areas\Identity\Pages\Account\xj2lzfco.rs1~" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Include="Views\Shared\Error.cshtml" />
     <None Include="Views\Shared\_Breadcrumb.cshtml" />
     <None Include="Views\Shared\_CookieConsentPartial.cshtml" />

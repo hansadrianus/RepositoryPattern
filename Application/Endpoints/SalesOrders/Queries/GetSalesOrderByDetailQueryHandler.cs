@@ -30,7 +30,7 @@ namespace Application.Endpoints.SalesOrders.Queries
 
         public async Task<EndpointResult<IEnumerable<SalesOrderViewModel>>> Handle(GetSalesOrderByDetailQuery request, CancellationToken cancellationToken)
         {
-            var predicates = _queryBuilder.BuildPredicate<SalesOrderDetail, GetSalesOrderByDetailQuery>(request);
+            var predicates = _queryBuilder.BuildPredicate<SalesOrderDetail<int>, GetSalesOrderByDetailQuery>(request);
             var orders = (await _repository.SalesOrder.GetAllAsync(q => q.SalesOrderDetails.AsQueryable().Any(predicates), cancellationToken)).Where(q => q.RowStatus == 0);
 
             return new EndpointResult<IEnumerable<SalesOrderViewModel>>(EndpointResultStatus.Success, _mapper.Map<SalesOrderViewModel[]>(orders));

@@ -69,7 +69,7 @@ namespace Infrastructure
 
         public static void ConfigureIdentity(this IServiceCollection services)
         {
-            var builder = services.AddIdentity<ApplicationUser, ApplicationRole>(opt =>
+            var builder = services.AddIdentity<ApplicationUser<string>, ApplicationRole<string>>(opt =>
             {
                 opt.Password.RequireDigit = true;
                 opt.Password.RequireLowercase = true;
@@ -84,7 +84,7 @@ namespace Infrastructure
                 opt.User.AllowedUserNameCharacters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-._@+";
                 opt.User.RequireUniqueEmail = true;
             })
-            .AddRoles<ApplicationRole>()
+            .AddRoles<ApplicationRole<string>>()
             .AddEntityFrameworkStores<ApplicationContext>()
             .AddDefaultUI()
             .AddDefaultTokenProviders();

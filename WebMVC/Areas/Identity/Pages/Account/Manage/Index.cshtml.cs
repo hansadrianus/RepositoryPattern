@@ -13,13 +13,13 @@ namespace WebMVC.Areas.Identity.Pages.Account.Manage
 {
     public partial class IndexModel : PageModel
     {
-        private readonly UserManager<ApplicationUser> _userManager;
-        private readonly SignInManager<ApplicationUser> _signInManager;
+        private readonly UserManager<ApplicationUser<string>> _userManager;
+        private readonly SignInManager<ApplicationUser<string>> _signInManager;
         private readonly IMapper _mapper;
 
         public IndexModel(
-            UserManager<ApplicationUser> userManager,
-            SignInManager<ApplicationUser> signInManager,
+            UserManager<ApplicationUser<string>> userManager,
+            SignInManager<ApplicationUser<string>> signInManager,
             IMapper mapper)
         {
             _userManager = userManager;
@@ -52,7 +52,7 @@ namespace WebMVC.Areas.Identity.Pages.Account.Manage
             public string PhoneNumber { get; set; }
         }
 
-        private async Task LoadAsync(ApplicationUser user)
+        private async Task LoadAsync(ApplicationUser<string> user)
         {
             var userName = await _userManager.GetUserNameAsync(user);
             var phoneNumber = await _userManager.GetPhoneNumberAsync(user);

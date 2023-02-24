@@ -30,7 +30,7 @@ namespace Application.Endpoints.Auths.Commands
 
             try
             {
-                var user = _mapper.Map<ApplicationUser>(request);
+                var user = _mapper.Map<ApplicationUser<string>>(request);
                 var usersFound = await _repository.Auth.GetAsync(q => q.UserName == user.UserName, cancellationToken: cancellationToken);
                 if (usersFound != null)
                     return new EndpointResult<RegisterViewModel>(EndpointResultStatus.BadRequest, _mapper.Map<RegisterViewModel>(user), "Username already taken.");

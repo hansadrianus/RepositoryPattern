@@ -9,8 +9,8 @@ namespace WebMVC.Helpers
         public static string renderMenu(this IHtmlHelper html, IApplicationContext context)
         {
             string htmlTag = "";
-            List<AppMenu> menuList = context.AppMenu.Where(menu => menu.MenuLevel == 0).OrderBy(menu => menu.MenuOrder).ToList();
-            foreach (AppMenu menu in menuList)
+            List<AppMenu<int>> menuList = context.AppMenu.Where(menu => menu.MenuLevel == 0).OrderBy(menu => menu.MenuOrder).ToList();
+            foreach (AppMenu<int> menu in menuList)
             {
                 htmlTag += string.Format(@"<li class='nav-item {4}'>
                                                 <a {1} class='nav-link'>
@@ -27,7 +27,7 @@ namespace WebMVC.Helpers
             return htmlTag;
         }
 
-        private static string setAnchorRef(AppMenu menu)
+        private static string setAnchorRef(AppMenu<int> menu)
         {
             string anchorRefString = "href='#'";
             if (menu.MenuLevel != 0 && !string.IsNullOrEmpty(menu.MenuAction))
@@ -38,13 +38,13 @@ namespace WebMVC.Helpers
             return anchorRefString;
         }
 
-        private static string setChildMenu(this IHtmlHelper html, IApplicationContext context, AppMenu menu)
+        private static string setChildMenu(this IHtmlHelper html, IApplicationContext context, AppMenu<int> menu)
         {
             string childMenuString = "<ul class='nav nav-treeview'>";
-            List<AppMenu> childMenuList = context.AppMenu.Where(child => child.MenuParent == menu.Id).OrderBy(child => child.MenuOrder).ToList();
+            List<AppMenu<int>> childMenuList = context.AppMenu.Where(child => child.MenuParent == menu.Id).OrderBy(child => child.MenuOrder).ToList();
             if (childMenuList != null || childMenuList.Count > 0)
             {
-                foreach (AppMenu childMenu in childMenuList)
+                foreach (AppMenu<int> childMenu in childMenuList)
                 {
                     childMenuString += string.Format(@"<li class='nav-item'>
                                                             <a {1} class='nav-link'>

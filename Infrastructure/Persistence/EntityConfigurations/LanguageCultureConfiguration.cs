@@ -9,9 +9,9 @@ using System.Threading.Tasks;
 
 namespace Infrastructure.Persistence.EntityConfigurations
 {
-    public class LanguageCultureConfiguration : IEntityTypeConfiguration<LanguageCulture>
+    public class LanguageCultureConfiguration : IEntityTypeConfiguration<LanguageCulture<int>>
     {
-        public void Configure(EntityTypeBuilder<LanguageCulture> builder)
+        public void Configure(EntityTypeBuilder<LanguageCulture<int>> builder)
         {
             builder.ToTable("LanguageCulture");
             builder.HasIndex(q => q.LCID).IsUnique();

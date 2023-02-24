@@ -30,7 +30,7 @@ namespace Application.Endpoints.Auths.Commands
 
             try
             {
-                var user = _mapper.Map<ApplicationUser>(request);
+                var user = _mapper.Map<ApplicationUser<string>>(request);
                 var refreshedToken = await _reposiroty.Auth.RefreshTokenAsync(user, request.Lcid, cancellationToken);
                 if (refreshedToken == null)
                     return new EndpointResult<RefreshTokenViewModel>(EndpointResultStatus.Invalid, "Invalid token.");

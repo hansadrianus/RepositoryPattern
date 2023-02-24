@@ -30,7 +30,7 @@ namespace Application.Endpoints.Auths.Commands
 
             try
             {
-                var user = _mapper.Map<ApplicationUser>(request);
+                var user = _mapper.Map<ApplicationUser<string>>(request);
                 bool isAuthenticated = await _repository.Auth.ValidateUserAsync(user, cancellationToken);
                 if (isAuthenticated)
                 {

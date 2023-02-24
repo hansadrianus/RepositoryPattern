@@ -24,7 +24,7 @@ namespace Application.Endpoints.Products.Queries
 
         public async Task<EndpointResult<IEnumerable<ProductViewModel>>> Handle(GetProductsQuery request, CancellationToken cancellationToken)
         {
-            var predicates = _queryBuilder.BuildPredicate<Product, GetProductsQuery>(request);
+            var predicates = _queryBuilder.BuildPredicate<Product<int>, GetProductsQuery>(request);
             var products = (await _repository.Product.GetAllAsync(predicates, cancellationToken)).Where(q => q.RowStatus == 0);
 
             return new EndpointResult<IEnumerable<ProductViewModel>>(EndpointResultStatus.Success, _mapper.Map<ProductViewModel[]>(products));

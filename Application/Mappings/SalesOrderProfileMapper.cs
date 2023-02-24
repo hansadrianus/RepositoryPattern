@@ -14,9 +14,9 @@ namespace Application.Mappings
     {
         public SalesOrderProfileMapper()
         {
-            CreateMap<SalesOrderHeader, SalesOrderViewModel>()
+            CreateMap<SalesOrderHeader<int>, SalesOrderViewModel>()
                 .ReverseMap();
-            CreateMap<AddSalesOrderCommand, SalesOrderHeader>()
+            CreateMap<AddSalesOrderCommand, SalesOrderHeader<int>>()
                 .ForMember(dest => dest.Id, opt => opt.Ignore())
                 .ForMember(dest => dest.OrderNumber, opt => opt.Ignore())
                 .ForMember(dest => dest.CreatedBy, opt => opt.Ignore())
@@ -26,7 +26,7 @@ namespace Application.Mappings
                 .ForMember(dest => dest.RowVersion, opt => opt.Ignore());
                 //.AfterMap((src, dest) =>
                 //{
-                //    dest.SalesOrderDetails = new List<SalesOrderDetail>();
+                //    dest.SalesOrderDetails = new List<SalesOrderDetail<int>>();
                 //    foreach (var srcItem in src.OrderDetails)
                 //    {
                 //        SalesOrderDetail orderDetail = new SalesOrderDetail()
@@ -40,7 +40,7 @@ namespace Application.Mappings
                 //        dest.SalesOrderDetails.Add(orderDetail);
                 //    }
                 //});
-            CreateMap<UpdateSalesOrderCommand, SalesOrderHeader>()
+            CreateMap<UpdateSalesOrderCommand, SalesOrderHeader<int>>()
                 .ForMember(dest => dest.CreatedBy, opt => opt.Ignore())
                 .ForMember(dest => dest.CreatedTime, opt => opt.Ignore())
                 .ForMember(dest => dest.ModifiedBy, opt => opt.Ignore())
@@ -48,7 +48,7 @@ namespace Application.Mappings
                 .ForMember(dest => dest.RowVersion, opt => opt.Ignore());
                 //.AfterMap((src, dest) =>
                 //{
-                //    dest.SalesOrderDetails = new List<SalesOrderDetail>();
+                //    dest.SalesOrderDetails = new List<SalesOrderDetail<int>>();
                 //    foreach (var srcItem in src.OrderDetails)
                 //    {
                 //        SalesOrderDetail orderDetail = new SalesOrderDetail()
@@ -63,13 +63,13 @@ namespace Application.Mappings
                 //        dest.SalesOrderDetails.Add(orderDetail);
                 //    }
                 //});
-            CreateMap<DeleteSalesOrderCommand, SalesOrderHeader>()
+            CreateMap<DeleteSalesOrderCommand, SalesOrderHeader<int>>()
                 .ForMember(dest => dest.CreatedBy, opt => opt.Ignore())
                 .ForMember(dest => dest.CreatedTime, opt => opt.Ignore())
                 .ForMember(dest => dest.ModifiedBy, opt => opt.Ignore())
                 .ForMember(dest => dest.ModifiedTime, opt => opt.Ignore())
                 .ForMember(dest => dest.RowVersion, opt => opt.Ignore());
-            CreateMap<OrderDetailCommand, SalesOrderDetail>()
+            CreateMap<OrderDetailCommand, SalesOrderDetail<int>>()
                 .ForMember(dest => dest.Product, opt => opt.Ignore())
                 .ForMember(dest => dest.CreatedBy, opt => opt.Ignore())
                 .ForMember(dest => dest.CreatedTime, opt => opt.Ignore())

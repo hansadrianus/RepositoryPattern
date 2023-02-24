@@ -8,11 +8,11 @@ using System.Threading.Tasks;
 
 namespace Domain.Entities
 {
-    public class ApplicationUserRole : AuditableUserRoleEntity
+    public class ApplicationUserRole<TKey> : AuditableUserRoleEntity<TKey> where TKey : IEquatable<TKey>
     {
         [ForeignKey("UserId")]
-        public ApplicationUser User { get; set; }
+        public ApplicationUser<TKey> User { get; set; }
         [ForeignKey("RoleId")]
-        public ApplicationRole Role { get; set; }
+        public ApplicationRole<TKey> Role { get; set; }
     }
 }

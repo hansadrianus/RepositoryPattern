@@ -13,18 +13,18 @@ using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
 namespace Infrastructure.Repositories.Auths
 {
-    public class AuthRepository : RepositoryBase<ApplicationUser>, IAuthRepository
+    public class AuthRepository : RepositoryBase<ApplicationUser<string>>, IAuthRepository
     {
-        private readonly UserManager<ApplicationUser> _userManager;
+        private readonly UserManager<ApplicationUser<string>> _userManager;
         private readonly IConfiguration _configuration;
 
-        public AuthRepository(IApplicationContext context, UserManager<ApplicationUser> userManager, IConfiguration configuration) : base(context)
+        public AuthRepository(IApplicationContext context, UserManager<ApplicationUser<string>> userManager, IConfiguration configuration) : base(context)
         {
             _userManager = userManager;
             _configuration = configuration;
         }
 
-        public async Task<UserLoginViewModel> CreateTokenAsync(ApplicationUser user, string lcid, CancellationToken cancellationToken)
+        public async Task<UserLoginViewModel> CreateTokenAsync(ApplicationUser<string> user, string lcid, CancellationToken cancellationToken)
         {
             SecurityHelper securityHelper = new SecurityHelper(_userManager, _configuration);
             var signingCredentials = securityHelper.GetSigningCredentials();
@@ -47,7 +47,7 @@ namespace Infrastructure.Repositories.Auths
             return model;
         }
 
-        public async Task<RefreshTokenViewModel> RefreshTokenAsync(ApplicationUser user, string lcid, CancellationToken cancellationToken)
+        public async Task<RefreshTokenViewModel> RefreshTokenAsync(ApplicationUser<string> user, string lcid, CancellationToken cancellationToken)
         {
             SecurityHelper securityHelper = new SecurityHelper(_userManager, _configuration);
             string accessToken = user.Token;
@@ -75,7 +75,7 @@ namespace Infrastructure.Repositories.Auths
             return refreshTokenViewModel;
         }
 
-        public async Task<ApplicationUser> RegisterUserAsync(ApplicationUser user, CancellationToken cancellationToken = default)
+        public async Task<ApplicationUser<string>> RegisterUserAsync(ApplicationUser<string> user, CancellationToken cancellationToken = default)
         {
             await _userManager.CreateAsync(user, user.PasswordHash);
 
@@ -95,7 +95,7 @@ namespace Infrastructure.Repositories.Auths
             return true;
         }
 
-        public async Task<bool> ValidateUserAsync(ApplicationUser user, CancellationToken cancellationToken)
+        public async Task<bool> ValidateUserAsync(ApplicationUser<string> user, CancellationToken cancellationToken)
         {
             var selectedUser = await _userManager.FindByNameAsync(user.UserName);
 

@@ -8,11 +8,11 @@ namespace Application.Interfaces.Persistence
 {
     public interface IApplicationContext
     {
-        DbSet<AppMenu> AppMenu { get; set; }
-        DbSet<LanguageCulture> LanguageCulture { get; set; }
-        DbSet<Product> Product { get; set; }
-        DbSet<SalesOrderHeader> SalesOrderHeader { get; set; }
-        DbSet<SalesOrderDetail> SalesOrderDetail { get; set; }
+        DbSet<AppMenu<int>> AppMenu { get; set; }
+        DbSet<LanguageCulture<int>> LanguageCulture { get; set; }
+        DbSet<Product<int>> Product { get; set; }
+        DbSet<SalesOrderHeader<int>> SalesOrderHeader { get; set; }
+        DbSet<SalesOrderDetail<int>> SalesOrderDetail { get; set; }
 
         EntityEntry Add(object entity);
         EntityEntry<TEntity> Add<TEntity>(TEntity entity) where TEntity : class;

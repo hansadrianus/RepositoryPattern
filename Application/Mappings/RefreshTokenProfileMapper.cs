@@ -9,9 +9,9 @@ namespace Application.Mappings
     {
         public RefreshTokenProfileMapper()
         {
-            CreateMap<ApplicationUser, RefreshTokenViewModel>()
+            CreateMap<ApplicationUser<string>, RefreshTokenViewModel>()
                 .ReverseMap();
-            CreateMap<RefreshTokenCommand, ApplicationUser>()
+            CreateMap<RefreshTokenCommand, ApplicationUser<string>>()
                 .ForMember(dest => dest.Id, opt => opt.Ignore())
                 .ForMember(dest => dest.FirstName, opt => opt.Ignore())
                 .ForMember(dest => dest.LastName, opt => opt.Ignore())

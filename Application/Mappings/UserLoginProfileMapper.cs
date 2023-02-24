@@ -9,9 +9,9 @@ namespace Application.Mappings
     {
         public UserLoginProfileMapper()
         {
-            CreateMap<ApplicationUser, UserLoginViewModel>()
+            CreateMap<ApplicationUser<string>, UserLoginViewModel>()
                 .ReverseMap();
-            CreateMap<LoginCommand, ApplicationUser>()
+            CreateMap<LoginCommand, ApplicationUser<string>>()
                 .ForMember(dest => dest.Id, opt => opt.Ignore())
                 .ForMember(dest => dest.FirstName, opt => opt.Ignore())
                 .ForMember(dest => dest.LastName, opt => opt.Ignore())

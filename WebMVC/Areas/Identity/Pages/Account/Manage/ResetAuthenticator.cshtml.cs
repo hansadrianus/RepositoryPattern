@@ -12,13 +12,13 @@ namespace WebMVC.Areas.Identity.Pages.Account.Manage
 {
     public class ResetAuthenticatorModel : PageModel
     {
-        UserManager<ApplicationUser> _userManager;
-        private readonly SignInManager<ApplicationUser> _signInManager;
+        UserManager<ApplicationUser<string>> _userManager;
+        private readonly SignInManager<ApplicationUser<string>> _signInManager;
         ILogger<ResetAuthenticatorModel> _logger;
 
         public ResetAuthenticatorModel(
-            UserManager<ApplicationUser> userManager,
-            SignInManager<ApplicationUser> signInManager,
+            UserManager<ApplicationUser<string>> userManager,
+            SignInManager<ApplicationUser<string>> signInManager,
             ILogger<ResetAuthenticatorModel> logger)
         {
             _userManager = userManager;

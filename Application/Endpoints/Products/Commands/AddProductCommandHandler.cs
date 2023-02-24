@@ -33,7 +33,7 @@ namespace Application.Endpoints.Products.Commands
 
             try
             {
-                var product = _mapper.Map<Product>(request);
+                var product = _mapper.Map<Product<int>>(request);
                 var lastProduct = await _repository.Product.GetLastAsync(q => q.Type == request.Type, cancellationToken);
                 product.ProductCode = _autoGenerateNumberService.GenerateCode(request.Type, (lastProduct is null) ? null : lastProduct.ProductCode, 4);
                 await _repository.Product.AddAsync(product, cancellationToken); 

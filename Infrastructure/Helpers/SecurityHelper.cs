@@ -15,10 +15,10 @@ namespace Infrastructure.Helpers
 {
     public class SecurityHelper
     {
-        private readonly UserManager<ApplicationUser> _userManager;
+        private readonly UserManager<ApplicationUser<string>> _userManager;
         private readonly IConfiguration _configuration;
 
-        public SecurityHelper(UserManager<ApplicationUser> userManager, IConfiguration configuration)
+        public SecurityHelper(UserManager<ApplicationUser<string>> userManager, IConfiguration configuration)
         {
             _userManager = userManager;
             _configuration = configuration;
@@ -33,7 +33,7 @@ namespace Infrastructure.Helpers
             return new SigningCredentials(secret, SecurityAlgorithms.HmacSha256);
         }
 
-        public async Task<List<Claim>> GetClaimsAsync(ApplicationUser user, string lcid)
+        public async Task<List<Claim>> GetClaimsAsync(ApplicationUser<string> user, string lcid)
         {
             var selectedUser = await _userManager.FindByNameAsync(user.UserName);
             List<Claim> claims = new List<Claim>()

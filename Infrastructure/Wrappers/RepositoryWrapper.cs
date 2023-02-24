@@ -19,7 +19,7 @@ namespace Infrastructure.Wrappers
     public class RepositoryWrapper : IRepositoryWrapper
     {
         private readonly IApplicationContext _context;
-        private readonly UserManager<ApplicationUser> _userManager;
+        private readonly UserManager<ApplicationUser<string>> _userManager;
         private readonly IConfiguration _configuration;
         private IAppMenuRepository _appMenu;
         private ILanguageCultureRepository _languageCulture;
@@ -27,7 +27,7 @@ namespace Infrastructure.Wrappers
         private IProductRepository _product;
         private ISalesOrderRepository _salesOrder;
 
-        public RepositoryWrapper(IApplicationContext context, UserManager<ApplicationUser> userManager, IConfiguration configuration)
+        public RepositoryWrapper(IApplicationContext context, UserManager<ApplicationUser<string>> userManager, IConfiguration configuration)
         {
             _context = context;
             _userManager = userManager;

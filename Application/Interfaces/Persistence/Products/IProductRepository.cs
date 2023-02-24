@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Application.Interfaces.Persistence.Products
 {
-    public interface IProductRepository : IRepositoryBase<Product>
+    public interface IProductRepository : IRepositoryBase<Product<int>>
     {
     }
 }

@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Application.Interfaces.Persistence.SalesOrders
 {
-    public interface ISalesOrderRepository : IRepositoryBase<SalesOrderHeader>
+    public interface ISalesOrderRepository : IRepositoryBase<SalesOrderHeader<int>>
     {
     }
 }

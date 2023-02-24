@@ -12,12 +12,12 @@ namespace WebMVC.Areas.Identity.Pages.Account.Manage
 {
     public class SetPasswordModel : PageModel
     {
-        private readonly UserManager<ApplicationUser> _userManager;
-        private readonly SignInManager<ApplicationUser> _signInManager;
+        private readonly UserManager<ApplicationUser<string>> _userManager;
+        private readonly SignInManager<ApplicationUser<string>> _signInManager;
 
         public SetPasswordModel(
-            UserManager<ApplicationUser> userManager,
-            SignInManager<ApplicationUser> signInManager)
+            UserManager<ApplicationUser<string>> userManager,
+            SignInManager<ApplicationUser<string>> signInManager)
         {
             _userManager = userManager;
             _signInManager = signInManager;

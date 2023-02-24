@@ -8,10 +8,10 @@ using System.Threading.Tasks;
 
 namespace Domain.Common
 {
-    public abstract class AuditableEntity : IAuditableEntity
+    public abstract class AuditableEntity<TKey> : IAuditableEntity where TKey : IEquatable<TKey>
     {
         [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int Id { get; set; }
+        public TKey Id { get; set; }
         public string CreatedBy { get; set; }
         public DateTime CreatedTime { get; set; }
         public string? ModifiedBy { get; set; }

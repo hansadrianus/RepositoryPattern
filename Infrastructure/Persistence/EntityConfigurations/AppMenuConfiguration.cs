@@ -9,15 +9,15 @@ using System.Threading.Tasks;
 
 namespace Infrastructure.Persistence.EntityConfigurations
 {
-    public class AppMenuConfiguration : IEntityTypeConfiguration<AppMenu>, IEntityTypeConfiguration<AppMenuRole>
+    public class AppMenuConfiguration : IEntityTypeConfiguration<AppMenu<int>>, IEntityTypeConfiguration<AppMenuRole<int>>
     {
-        public void Configure(EntityTypeBuilder<AppMenu> builder)
+        public void Configure(EntityTypeBuilder<AppMenu<int>> builder)
         {
             builder.ToTable("Menu");
             builder.Navigation(q => q.MenuRoles).AutoInclude();
         }
 
-        public void Configure(EntityTypeBuilder<AppMenuRole> builder)
+        public void Configure(EntityTypeBuilder<AppMenuRole<int>> builder)
         {
             builder.ToTable("MenuRoles");
             builder.Navigation(q => q.Role).AutoInclude();

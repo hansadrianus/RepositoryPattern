@@ -14,10 +14,10 @@ namespace Infrastructure.Services
     {
         private readonly IStringLocalizer _localizer;
         private readonly IHttpContextAccessor _httpContextAccessor;
-        private readonly UserManager<ApplicationUser> _userManager;
+        private readonly UserManager<ApplicationUser<string>> _userManager;
         private readonly IApplicationContext _context;
 
-        public LocalizeService(IStringLocalizerFactory factory, IHttpContextAccessor httpContextAccessor, UserManager<ApplicationUser> userManager, IApplicationContext context)
+        public LocalizeService(IStringLocalizerFactory factory, IHttpContextAccessor httpContextAccessor, UserManager<ApplicationUser<string>> userManager, IApplicationContext context)
         {
             Type type = typeof(GlobalResource);
             AssemblyName assemblyName = new AssemblyName(type.GetTypeInfo().Assembly.FullName);

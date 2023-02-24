@@ -11,15 +11,15 @@ using Domain.Entities;
 namespace Infrastructure.Persistence.EntityConfigurations
 {
     public class IdentityConfiguration :
-        IEntityTypeConfiguration<ApplicationUser>,
-        IEntityTypeConfiguration<ApplicationRole>,
-        IEntityTypeConfiguration<ApplicationUserRole>,
+        IEntityTypeConfiguration<ApplicationUser<string>>,
+        IEntityTypeConfiguration<ApplicationRole<string>>,
+        IEntityTypeConfiguration<ApplicationUserRole<string>>,
         IEntityTypeConfiguration<IdentityUserClaim<string>>,
         IEntityTypeConfiguration<IdentityUserLogin<string>>,
         IEntityTypeConfiguration<IdentityUserToken<string>>,
         IEntityTypeConfiguration<IdentityRoleClaim<string>>
     {
-        public void Configure(EntityTypeBuilder<ApplicationUser> builder)
+        public void Configure(EntityTypeBuilder<ApplicationUser<string>> builder)
         {
             builder.ToTable("UserLoginInfo");
             builder.HasIndex(q => q.UserName).IsUnique();
@@ -30,7 +30,7 @@ namespace Infrastructure.Persistence.EntityConfigurations
             builder.Navigation(q => q.UserLogins).AutoInclude();
         }
 
-        public void Configure(EntityTypeBuilder<ApplicationRole> builder)
+        public void Configure(EntityTypeBuilder<ApplicationRole<string>> builder)
         {
             builder.ToTable("Role");
             builder.HasIndex(q => q.Name).IsUnique();
@@ -39,7 +39,7 @@ namespace Infrastructure.Persistence.EntityConfigurations
             builder.Navigation(q => q.MenuRoles).AutoInclude();
         }
 
-        public void Configure(EntityTypeBuilder<ApplicationUserRole> builder)
+        public void Configure(EntityTypeBuilder<ApplicationUserRole<string>> builder)
         {
             builder.ToTable("UserRoles");
             builder.Navigation(q => q.User).AutoInclude();

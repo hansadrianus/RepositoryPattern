@@ -9,14 +9,14 @@ using System.Threading.Tasks;
 
 namespace Domain.Entities
 {
-    public class AppMenuRole : AuditableEntity
+    public class AppMenuRole<TKey> : AuditableEntity<TKey> where TKey : IEquatable<TKey>
     {
-        public string RoleId { get; set; }
-        public int AppMenuId { get; set; }
+        public TKey RoleId { get; set; }
+        public TKey AppMenuId { get; set; }
 
         [ForeignKey("RoleId")]
-        public ApplicationRole Role { get; set; }
+        public ApplicationRole<TKey> Role { get; set; }
         [ForeignKey("AppMenuId")]
-        public AppMenu Menu { get; set; }
+        public AppMenu<TKey> Menu { get; set; }
     }
 }

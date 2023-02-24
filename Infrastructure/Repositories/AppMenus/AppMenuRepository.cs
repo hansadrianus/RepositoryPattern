@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Infrastructure.Repositories.AppMenus
 {
-    public class AppMenuRepository : RepositoryBase<AppMenu>, IAppMenuRepository
+    public class AppMenuRepository : RepositoryBase<AppMenu<int>>, IAppMenuRepository
     {
         public AppMenuRepository(IApplicationContext context) : base(context)
         {
