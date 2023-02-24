@@ -4,6 +4,7 @@ using Application.Models;
 using Application.Models.Enumerations;
 using Application.ViewModels;
 using AutoMapper;
+using Domain.Entities;
 using MediatR;
 
 namespace Application.Endpoints.Auths.Commands
@@ -29,7 +30,8 @@ namespace Application.Endpoints.Auths.Commands
 
             try
             {
-                var refreshedToken = await _reposiroty.Auth.RefreshTokenAsync(request, cancellationToken);
+                var user = _mapper.Map<ApplicationUser>(request);
+                var refreshedToken = await _reposiroty.Auth.RefreshTokenAsync(user, request.Lcid, cancellationToken);
                 if (refreshedToken == null)
                     return new EndpointResult<RefreshTokenViewModel>(EndpointResultStatus.Invalid, "Invalid token.");
 

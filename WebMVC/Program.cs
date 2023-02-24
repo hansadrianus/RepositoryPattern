@@ -1,12 +1,13 @@
 using Application;
 using Application.Interfaces.Services;
 using Infrastructure;
+using Infrastructure.Persistence.Localizations;
+using Infrastructure.Services;
+using Microsoft.AspNetCore.Localization;
+using Microsoft.Extensions.Options;
+using System.Globalization;
+using System.Reflection;
 using WebMVC.Services;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
-using Infrastructure.Persistence;
-using Domain.Entities;
-using Microsoft.AspNetCore.Identity.UI.Services;
 
 namespace WebMVC
 {
@@ -28,27 +29,40 @@ namespace WebMVC
             {
                 options.LoginPath = "/Identity/Account/Login";
             });
-            builder.Services.AddAdminLTE(o => {
-                o.Aside = true;
-                o.Breadcrumbs = true;
-                o.Footer = true;
-                o.Messages = true;
-                o.NavBarLinks = true;;
-                o.Notifications = true;
-                o.Search = true;
-                o.SideBarCollapsed = false;
-                o.SiteName = "Repository Pattern";
-                o.UserPanel = true;
-            });
             builder.Services.AddHttpContextAccessor();
             builder.Services.AddControllersWithViews();
             builder.Services.AddScoped<IPrincipalService, PrincipalService>();
+            builder.Services.AddScoped<ILocalizeService, LocalizeService>();
             builder.Services.Configure<CookiePolicyOptions>(options =>
             {
                 options.CheckConsentNeeded = context => false;
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
-            builder.Services.AddMvc();
+            builder.Services.AddLocalization(options => options.ResourcesPath = "Resources");
+
+            builder.Services.Configure<RequestLocalizationOptions>(
+                options =>
+                {
+                    List<CultureInfo> supportedCultures = new List<CultureInfo>
+                    {
+                        new CultureInfo("en-US"),
+                        new CultureInfo("id-ID")
+                    };
+
+                    options.DefaultRequestCulture = new RequestCulture(culture: "en-US", uiCulture: "en-US");
+                    options.SupportedCultures = supportedCultures;
+                    options.SupportedUICultures = supportedCultures;
+                });
+            builder.Services.AddMvc()
+                .AddViewLocalization()
+                .AddDataAnnotationsLocalization(options =>
+                {
+                    options.DataAnnotationLocalizerProvider = (type, factory) =>
+                    {
+                        AssemblyName assemblyName = new AssemblyName(typeof(GlobalResource).GetTypeInfo().Assembly.FullName);
+                        return factory.Create("GlobalResource", assemblyName.Name);
+                    };
+                }); ;
 
             var app = builder.Build();
 
@@ -59,6 +73,8 @@ namespace WebMVC
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
+            IOptions<RequestLocalizationOptions> localizeOptions = app.Services.GetService<IOptions<RequestLocalizationOptions>>();
+            app.UseRequestLocalization(localizeOptions.Value);
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
@@ -67,6 +83,7 @@ namespace WebMVC
 
             app.UseAuthentication();
             app.UseAuthorization();
+            app.UseSession();
 
             app.MapControllerRoute(
                 name: "default",

@@ -1,9 +1,11 @@
 ﻿using API.Extensions;
 using Application.Endpoints.SalesOrders.Commands;
+using Application.Endpoints.SalesOrders.Queries;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Runtime.CompilerServices;
 
 namespace API.Controllers
 {
@@ -15,6 +17,14 @@ namespace API.Controllers
         {
             _mediator = mediator;
         }
+
+        [HttpGet]
+        public async Task<IActionResult> GetSalesOrderAsync([FromQuery] GetSalesOrderQuery query)
+            => (await _mediator.Send(query)).ToActionResult();
+
+        [HttpGet]
+        public async Task<IActionResult> GetSalesOrderByDetailAsync([FromQuery] GetSalesOrderByDetailQuery query)
+            => (await _mediator.Send(query)).ToActionResult();
 
         [HttpPost]
         public async Task<IActionResult> AddSalesOrderAsync([FromBody] AddSalesOrderCommand command)

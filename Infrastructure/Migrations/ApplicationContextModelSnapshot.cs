@@ -17,10 +17,128 @@ namespace Infrastructure.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "7.0.1")
+                .HasAnnotation("ProductVersion", "7.0.2")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
+
+            modelBuilder.Entity("Domain.Entities.AppMenu", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("CreatedBy")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreatedTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("CssClass")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("MenuAction")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("MenuController")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("MenuLevel")
+                        .HasColumnType("int");
+
+                    b.Property<string>("MenuName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("MenuOrder")
+                        .HasColumnType("int");
+
+                    b.Property<int>("MenuParent")
+                        .HasColumnType("int");
+
+                    b.Property<string>("ModifiedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("ModifiedTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<short>("RowStatus")
+                        .HasColumnType("smallint");
+
+                    b.Property<byte[]>("RowVersion")
+                        .IsConcurrencyToken()
+                        .IsRequired()
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("rowversion");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("AppMenu");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            CreatedBy = "",
+                            CreatedTime = new DateTime(2023, 2, 23, 15, 55, 1, 975, DateTimeKind.Utc).AddTicks(5885),
+                            CssClass = "fas fa-dollar-sign",
+                            MenuAction = "",
+                            MenuController = "Sales",
+                            MenuLevel = 0,
+                            MenuName = "Sales",
+                            MenuOrder = 0,
+                            MenuParent = 0,
+                            RowStatus = (short)0
+                        },
+                        new
+                        {
+                            Id = 2,
+                            CreatedBy = "",
+                            CreatedTime = new DateTime(2023, 2, 23, 15, 55, 1, 975, DateTimeKind.Utc).AddTicks(5889),
+                            CssClass = "",
+                            MenuAction = "CreateSalesOrder",
+                            MenuController = "Sales",
+                            MenuLevel = 1,
+                            MenuName = "Create Sales Order",
+                            MenuOrder = 1,
+                            MenuParent = 1,
+                            RowStatus = (short)0
+                        },
+                        new
+                        {
+                            Id = 3,
+                            CreatedBy = "",
+                            CreatedTime = new DateTime(2023, 2, 23, 15, 55, 1, 975, DateTimeKind.Utc).AddTicks(5891),
+                            CssClass = "",
+                            MenuAction = "ChangeSalesOrder",
+                            MenuController = "Sales",
+                            MenuLevel = 1,
+                            MenuName = "Change Sales Order",
+                            MenuOrder = 2,
+                            MenuParent = 1,
+                            RowStatus = (short)0
+                        },
+                        new
+                        {
+                            Id = 4,
+                            CreatedBy = "",
+                            CreatedTime = new DateTime(2023, 2, 23, 15, 55, 1, 975, DateTimeKind.Utc).AddTicks(5894),
+                            CssClass = "",
+                            MenuAction = "DisplaySalesOrder",
+                            MenuController = "Sales",
+                            MenuLevel = 1,
+                            MenuName = "Display Sales Order",
+                            MenuOrder = 3,
+                            MenuParent = 1,
+                            RowStatus = (short)0
+                        });
+                });
 
             modelBuilder.Entity("Domain.Entities.ApplicationUser", b =>
                 {
@@ -136,11 +254,11 @@ namespace Infrastructure.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "3903c9c3-4c17-4aa5-b6df-bc1ea64c2dc6",
+                            Id = "fd8289b8-9d7a-4347-a976-a77f317326d1",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "d2b1c255-932b-4233-b7d9-75ea15dca67b",
+                            ConcurrencyStamp = "3ae909e3-f414-4a21-8029-46a4fbe068d3",
                             CreatedBy = "",
-                            CreatedTime = new DateTime(2023, 1, 29, 8, 12, 6, 108, DateTimeKind.Utc).AddTicks(2513),
+                            CreatedTime = new DateTime(2023, 2, 23, 15, 55, 2, 77, DateTimeKind.Utc).AddTicks(7339),
                             Email = "admin@admin.com",
                             EmailConfirmed = false,
                             FirstName = "Admin",
@@ -148,20 +266,20 @@ namespace Infrastructure.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@ADMIN.COM",
                             NormalizedUserName = "ADMIN",
-                            PasswordHash = "AQAAAAIAAYagAAAAEPPR+GUreLqEU3+/iNPaBbCXbk+cpE3s3eRSkYwUi431BocPp/kcMbDR01fpvcSzDw==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEA7on2LRh0pCCyhCKj+dGeTVRQnfabaeoTnqCtAx4sjxadikpf1mkbKi+/9pOvVPpQ==",
                             PhoneNumberConfirmed = false,
                             RowStatus = (short)0,
-                            SecurityStamp = "0501b4e8-fd51-4c21-b95f-01d774f355fe",
+                            SecurityStamp = "60cb662a-d168-4fd8-91cc-33f070c6a3d7",
                             TwoFactorEnabled = false,
                             UserName = "admin"
                         },
                         new
                         {
-                            Id = "baab8e17-1d62-4ce4-afd8-ef7816b5d092",
+                            Id = "78299e84-5514-40d5-b5b5-eeafa7449d28",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "adde98b8-08d3-4e88-b423-7273a779bcda",
+                            ConcurrencyStamp = "d1f7632a-7ca4-40cf-9b71-621e1bdb1e16",
                             CreatedBy = "",
-                            CreatedTime = new DateTime(2023, 1, 29, 8, 12, 6, 264, DateTimeKind.Utc).AddTicks(5706),
+                            CreatedTime = new DateTime(2023, 2, 23, 15, 55, 2, 167, DateTimeKind.Utc).AddTicks(445),
                             Email = "user@user.com",
                             EmailConfirmed = false,
                             FirstName = "User",
@@ -169,12 +287,79 @@ namespace Infrastructure.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "USER@USER.COM",
                             NormalizedUserName = "USER",
-                            PasswordHash = "AQAAAAIAAYagAAAAEAztv6+F0kl0yjrbKtrAn29mtBfoSd7NYKYl772YCilmJ0VOuwl0bZ2CSvSZwGfAzg==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEB/3nYkIL0CUeJHWcO2yOtK2kOdFeadYkrb4dEyLq9Pfus/9Roqo1lnEt2GpbuYahA==",
                             PhoneNumberConfirmed = false,
                             RowStatus = (short)0,
-                            SecurityStamp = "a1abfe64-7905-4eec-a0bb-109099cbf92e",
+                            SecurityStamp = "5bc6ed6c-2473-4097-9f91-cabe5d36fef4",
                             TwoFactorEnabled = false,
                             UserName = "user"
+                        });
+                });
+
+            modelBuilder.Entity("Domain.Entities.LanguageCulture", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("CreatedBy")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreatedTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsDefaultLanguage")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("LCID")
+                        .HasColumnType("int");
+
+                    b.Property<string>("ModifiedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("ModifiedTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<short>("RowStatus")
+                        .HasColumnType("smallint");
+
+                    b.Property<byte[]>("RowVersion")
+                        .IsConcurrencyToken()
+                        .IsRequired()
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("rowversion");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("LanguageCulture");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            CreatedBy = "",
+                            CreatedTime = new DateTime(2023, 2, 23, 15, 55, 1, 975, DateTimeKind.Utc).AddTicks(6226),
+                            Description = "English",
+                            IsDefaultLanguage = true,
+                            LCID = 1033,
+                            RowStatus = (short)0
+                        },
+                        new
+                        {
+                            Id = 2,
+                            CreatedBy = "",
+                            CreatedTime = new DateTime(2023, 2, 23, 15, 55, 1, 975, DateTimeKind.Utc).AddTicks(6228),
+                            Description = "Indonesia",
+                            IsDefaultLanguage = false,
+                            LCID = 1057,
+                            RowStatus = (short)0
                         });
                 });
 

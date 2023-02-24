@@ -67,7 +67,9 @@ namespace WebMVC.Areas.Identity.Pages.Account.Manage
                 }
             }
 
-            var result = await _userManager.DeleteAsync(user);
+            //var result = await _userManager.DeleteAsync(user);
+            user.RowStatus = 1;
+            var result = await _userManager.UpdateAsync(user);
             var userId = await _userManager.GetUserIdAsync(user);
             if (!result.Succeeded)
             {

@@ -1,10 +1,14 @@
 ﻿using Application.Interfaces.Persistence;
+using Application.Interfaces.Persistence.AppMenus;
 using Application.Interfaces.Persistence.Auths;
+using Application.Interfaces.Persistence.LanguageCultures;
 using Application.Interfaces.Persistence.Products;
 using Application.Interfaces.Persistence.SalesOrders;
 using Application.Interfaces.Wrappers;
 using Domain.Entities;
+using Infrastructure.Repositories.AppMenus;
 using Infrastructure.Repositories.Auths;
+using Infrastructure.Repositories.LanguageCultures;
 using Infrastructure.Repositories.Products;
 using Infrastructure.Repositories.SalesOrders;
 using Microsoft.AspNetCore.Identity;
@@ -17,6 +21,8 @@ namespace Infrastructure.Wrappers
         private readonly IApplicationContext _context;
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly IConfiguration _configuration;
+        private IAppMenuRepository _appMenu;
+        private ILanguageCultureRepository _languageCulture;
         private IAuthRepository _auth;
         private IProductRepository _product;
         private ISalesOrderRepository _salesOrder;
@@ -26,6 +32,24 @@ namespace Infrastructure.Wrappers
             _context = context;
             _userManager = userManager;
             _configuration = configuration;
+        }
+
+        public IAppMenuRepository AppMenu
+        {
+            get
+            {
+                _appMenu ??= new AppMenuRepository(_context);
+                return _appMenu;
+            }
+        }
+
+        public ILanguageCultureRepository LanguageCulture
+        {
+            get
+            {
+                _languageCulture ??= new LanguageCultureRepository(_context);
+                return _languageCulture;
+            }
         }
 
         public IAuthRepository Auth

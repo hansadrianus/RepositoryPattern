@@ -8,5 +8,6 @@ namespace Application.Endpoints.Auths.Commands
     {
         public string AccessToken { get; set; }
         public string RefreshToken { get; set; }
+        public string Lcid { get; set; }
     }
 }

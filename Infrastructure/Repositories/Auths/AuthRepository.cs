@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
 namespace Infrastructure.Repositories.Auths
 {
@@ -23,11 +24,11 @@ namespace Infrastructure.Repositories.Auths
             _configuration = configuration;
         }
 
-        public async Task<UserLoginViewModel> CreateTokenAsync(ApplicationUser user, CancellationToken cancellationToken)
+        public async Task<UserLoginViewModel> CreateTokenAsync(ApplicationUser user, string lcid, CancellationToken cancellationToken)
         {
             SecurityHelper securityHelper = new SecurityHelper(_userManager, _configuration);
             var signingCredentials = securityHelper.GetSigningCredentials();
-            var claims = await securityHelper.GetClaimsAsync(user);
+            var claims = await securityHelper.GetClaimsAsync(user, lcid);
             var tokenOptions = securityHelper.GenerateTokenOptions(signingCredentials, claims);
             var refreshToken = securityHelper.GenerateRefreshToken(signingCredentials);
 
@@ -46,29 +47,29 @@ namespace Infrastructure.Repositories.Auths
             return model;
         }
 
-        public async Task<RefreshTokenViewModel> RefreshTokenAsync(RefreshTokenCommand command, CancellationToken cancellationToken)
+        public async Task<RefreshTokenViewModel> RefreshTokenAsync(ApplicationUser user, string lcid, CancellationToken cancellationToken)
         {
             SecurityHelper securityHelper = new SecurityHelper(_userManager, _configuration);
-            string accessToken = command.AccessToken;
-            string refreshToken = command.RefreshToken;
+            string accessToken = user.Token;
+            string refreshToken = user.RefreshToken;
             if (ValidateRefreshToken(refreshToken) || string.IsNullOrEmpty(accessToken))
                 return null;
 
-            var user = _userManager.Users.FirstOrDefault(q => q.Token == accessToken);
-            if (user == null)
+            var currentUser = _userManager.Users.FirstOrDefault(q => q.Token == accessToken);
+            if (currentUser == null)
                 return null;
 
             var signingCredentials = securityHelper.GetSigningCredentials();
-            var claims = await securityHelper.GetClaimsAsync(user);
+            var claims = await securityHelper.GetClaimsAsync(currentUser, lcid);
             var newAccessToken = securityHelper.GenerateTokenOptions(signingCredentials, claims);
 
-            user.Token = new JwtSecurityTokenHandler().WriteToken(newAccessToken);
-            user.RefreshToken = null;
-            await _userManager.UpdateAsync(user);
+            currentUser.Token = new JwtSecurityTokenHandler().WriteToken(newAccessToken);
+            currentUser.RefreshToken = null;
+            await _userManager.UpdateAsync(currentUser);
 
             RefreshTokenViewModel refreshTokenViewModel = new RefreshTokenViewModel()
             {
-                AccessToken = user.Token
+                AccessToken = currentUser.Token
             };
 
             return refreshTokenViewModel;

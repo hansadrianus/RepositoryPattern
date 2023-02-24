@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using Domain.Entities;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -14,13 +15,16 @@ namespace WebMVC.Areas.Identity.Pages.Account.Manage
     {
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
+        private readonly IMapper _mapper;
 
         public IndexModel(
             UserManager<ApplicationUser> userManager,
-            SignInManager<ApplicationUser> signInManager)
+            SignInManager<ApplicationUser> signInManager,
+            IMapper mapper)
         {
             _userManager = userManager;
             _signInManager = signInManager;
+            _mapper = mapper;
         }
 
         public string Username { get; set; }
@@ -33,6 +37,16 @@ namespace WebMVC.Areas.Identity.Pages.Account.Manage
 
         public class InputModel
         {
+            [Display(Name = "First Name")]
+            public string FirstName { get; set; }
+
+            [Display(Name = "Last Name")]
+            public string LastName { get; set; }
+
+            [DataType(DataType.Date)]
+            [Display(Name = "Date of Birth")]
+            public DateTime? DateOfBirth { get; set; }
+
             [Phone]
             [Display(Name = "Phone number")]
             public string PhoneNumber { get; set; }
@@ -47,6 +61,9 @@ namespace WebMVC.Areas.Identity.Pages.Account.Manage
 
             Input = new InputModel
             {
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                DateOfBirth = user.DateOfBirth,
                 PhoneNumber = phoneNumber
             };
         }
@@ -77,6 +94,10 @@ namespace WebMVC.Areas.Identity.Pages.Account.Manage
                 return Page();
             }
 
+            user.FirstName = Input.FirstName;
+            user.LastName = Input.LastName;
+            user.DateOfBirth = Input.DateOfBirth;
+
             var phoneNumber = await _userManager.GetPhoneNumberAsync(user);
             if (Input.PhoneNumber != phoneNumber)
             {
@@ -88,6 +109,7 @@ namespace WebMVC.Areas.Identity.Pages.Account.Manage
                 }
             }
 
+            await _userManager.UpdateAsync(user);
             await _signInManager.RefreshSignInAsync(user);
             StatusMessage = "Your profile has been updated";
             return RedirectToPage();

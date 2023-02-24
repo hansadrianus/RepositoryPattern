@@ -33,13 +33,14 @@ namespace Infrastructure.Helpers
             return new SigningCredentials(secret, SecurityAlgorithms.HmacSha256);
         }
 
-        public async Task<List<Claim>> GetClaimsAsync(ApplicationUser user)
+        public async Task<List<Claim>> GetClaimsAsync(ApplicationUser user, string lcid)
         {
             var selectedUser = await _userManager.FindByNameAsync(user.UserName);
             List<Claim> claims = new List<Claim>()
             {
                 new Claim("Id", selectedUser.Id),
-                new Claim(ClaimTypes.NameIdentifier, selectedUser.UserName)
+                new Claim(ClaimTypes.NameIdentifier, selectedUser.UserName),
+                new Claim("Lcid", lcid)
             };
 
             var roles = await _userManager.GetRolesAsync(selectedUser);

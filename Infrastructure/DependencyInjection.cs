@@ -10,6 +10,7 @@ using Infrastructure.Services;
 using Infrastructure.Wrappers;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -80,12 +81,12 @@ namespace Infrastructure
                 opt.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromDays(3650);
                 opt.Lockout.MaxFailedAccessAttempts = 3;
                 opt.Lockout.AllowedForNewUsers = false;
-                opt.User.AllowedUserNameCharacters =
-                    "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-._@+";
+                opt.User.AllowedUserNameCharacters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-._@+";
                 opt.User.RequireUniqueEmail = true;
             })
             .AddRoles<IdentityRole>()
             .AddEntityFrameworkStores<ApplicationContext>()
+            .AddDefaultUI()
             .AddDefaultTokenProviders();
         }
 
