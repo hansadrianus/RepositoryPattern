@@ -14,5 +14,6 @@ namespace Domain.Entities
         public DateTime? DateOfBirth { get; set; }
         public string? Token { get; set; }
         public string? RefreshToken { get; set; }
+        public byte[]? ProfilePicture { get; set; }
     }
 }
