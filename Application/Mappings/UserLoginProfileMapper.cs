@@ -37,7 +37,8 @@ namespace Application.Mappings
                 .ForMember(dest => dest.ModifiedTime, opt => opt.Ignore())
                 .ForMember(dest => dest.RowVersion, opt => opt.Ignore())
                 .ForMember(dest => dest.Token, opt => opt.Ignore())
-                .ForMember(dest => dest.RefreshToken, opt => opt.Ignore());
+                .ForMember(dest => dest.RefreshToken, opt => opt.Ignore())
+                .ForMember(dest => dest.ProfilePicture, opt => opt.Ignore());
         }
     }
 }

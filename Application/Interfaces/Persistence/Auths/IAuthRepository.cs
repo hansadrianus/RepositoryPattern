@@ -11,8 +11,8 @@ namespace Application.Interfaces.Persistence.Auths
 {
     public interface IAuthRepository : IRepositoryBase<ApplicationUser>
     {
-        Task<UserLoginViewModel> CreateTokenAsync(ApplicationUser user, CancellationToken cancellationToken);
-        Task<RefreshTokenViewModel> RefreshTokenAsync(RefreshTokenCommand command, CancellationToken cancellationToken);
+        Task<UserLoginViewModel> CreateTokenAsync(ApplicationUser user, string lcid, CancellationToken cancellationToken);
+        Task<RefreshTokenViewModel> RefreshTokenAsync(ApplicationUser user, string lcid, CancellationToken cancellationToken);
         Task<ApplicationUser> RegisterUserAsync(ApplicationUser user, CancellationToken cancellationToken);
         Task<bool> RemoveTokenAsync(Guid id, CancellationToken cancellationToken);
         Task<bool> ValidateUserAsync(ApplicationUser user, CancellationToken cancellationToken);

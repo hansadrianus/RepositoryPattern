@@ -1,0 +1,74 @@
+﻿@page
+@model LoginModel
+@inject ILocalizeService SharedLocalizer
+
+@{
+    Layout = "~/Views/Shared/_AuthLayout.cshtml";
+    ViewData["Title"] = "Log in";
+    ViewData["ApplicationName"] = "Repository Pattern";
+    ViewData["CssClass"] = "login-page";
+}
+
+<div class="login-box">
+    <div class="card card-outline card-primary">
+        <div class="card-header text-center">
+            <a href="#" class="h1"><b>@ViewData["ApplicationName"]</b></a>
+        </div>
+        <div class="card-body">
+            <div class="clearfix">
+                <p class="login-box-msg pull-left">@SharedLocalizer.GetLocalizedHtmlString("Login_titleLabel")</p>
+                <form method="get" id="culture-switcher">
+                    <div class="offset-8 col-4 pull-right">
+                        <select id="culture-options" asp-for="LCID" asp-items="@Model.LanguageCultureSelectList" onchange="changeCulture()">
+                        </select>
+                    </div>
+                </form>
+            </div>
+            <form id="account" method="post">
+                <div asp-validation-summary="All" class="text-danger"></div>
+                <div class="input-group mb-3">
+                    <input asp-for="Input.Username" class="form-control" placeholder="@SharedLocalizer.GetLocalizedHtmlString("Login_username")">
+                    <div class="input-group-append">
+                        <div class="input-group-text">
+                            <span class="fas fa-user"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="input-group mb-3">
+                    <input asp-for="Input.Password" class="form-control" placeholder="@SharedLocalizer.GetLocalizedHtmlString("Login_password")">
+                    <div class="input-group-append">
+                        <div class="input-group-text">
+                            <span class="fas fa-lock"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-8">
+                        <div class="icheck-primary">
+                            <input asp-for="Input.RememberMe" />
+                            <label asp-for="Input.RememberMe">
+                                <span>@SharedLocalizer.GetLocalizedHtmlString("Login_rememberMe")</span>
+                            </label>
+                        </div>
+                    </div>
+                    <!-- /.col -->
+                    <div class="col-4">
+                        <button type="submit" class="btn btn-primary btn-block">@SharedLocalizer.GetLocalizedHtmlString("Login_loginButton")</button>
+                    </div>
+                    <!-- /.col -->
+                </div>
+            </form>
+        </div>
+        <!-- /.card-body -->
+    </div>
+    <!-- /.card -->
+</div>
+<!-- /.login-box -->
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+    <script>
+        function changeCulture() {
+            document.getElementById("culture-switcher").submit();
+        }
+    </script>
+}

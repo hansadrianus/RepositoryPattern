@@ -34,7 +34,7 @@ namespace Application.Endpoints.Auths.Commands
                 bool isAuthenticated = await _repository.Auth.ValidateUserAsync(user, cancellationToken);
                 if (isAuthenticated)
                 {
-                    var userToken = await _repository.Auth.CreateTokenAsync(user, cancellationToken);
+                    var userToken = await _repository.Auth.CreateTokenAsync(user, request.Lcid, cancellationToken);
                     return new EndpointResult<UserLoginViewModel>(EndpointResultStatus.Success, _mapper.Map<UserLoginViewModel>(userToken));
                 }
 

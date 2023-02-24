@@ -40,7 +40,7 @@ namespace Application.Endpoints.SalesOrders.Commands
             {
                 var salesOrder = _mapper.Map<SalesOrderHeader>(request);
                 salesOrder.SalesOrderDetails = _mapper.Map<IList<SalesOrderDetail>>(request.OrderDetails);
-                var lastSalesOrder = await _repository.SalesOrder.GetLastAsync(cancellationToken);
+                var lastSalesOrder = await _repository.SalesOrder.GetLastAsync(q => q.Id, cancellationToken);
                 salesOrder.OrderNumber = _autoGenerateNumberService.GenerateOrderNumber("ORD", (lastSalesOrder is null) ? null : lastSalesOrder.OrderNumber, 4);
                 await _repository.SalesOrder.AddAsync(salesOrder, cancellationToken);
                 await _repository.SaveAsync(cancellationToken);

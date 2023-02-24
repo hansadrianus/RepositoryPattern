@@ -31,6 +31,8 @@ namespace Infrastructure.Persistence
             _configuration = configuration;
         }
 
+        public DbSet<AppMenu> AppMenu { get; set; }
+        public DbSet<LanguageCulture> LanguageCulture { get; set; }
         public DbSet<Product> Product { get; set; }
         public DbSet<SalesOrderHeader> SalesOrderHeader { get; set; }
         public DbSet<SalesOrderDetail> SalesOrderDetail { get; set; }

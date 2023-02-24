@@ -8,5 +8,6 @@ namespace Application.Endpoints.Auths.Commands
     {
         public string Username { get; set; }
         public string Password { get; set; }
+        public string Lcid { get; set; }
     }
 }
