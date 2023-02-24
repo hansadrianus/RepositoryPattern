@@ -44,6 +44,8 @@ namespace Infrastructure.Persistence.EntityConfigurations
             builder.ToTable("UserRoles");
             builder.Navigation(q => q.User).AutoInclude();
             builder.Navigation(q => q.Role).AutoInclude();
+            builder.HasOne(q => q.User).WithMany(q => q.UserRoles).OnDelete(DeleteBehavior.NoAction);
+            builder.HasOne(q => q.Role).WithMany(q => q.UserRoles).OnDelete(DeleteBehavior.NoAction);
         }
 
         public void Configure(EntityTypeBuilder<IdentityUserClaim<string>> builder)

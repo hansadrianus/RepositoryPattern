@@ -22,6 +22,8 @@ namespace Infrastructure.Persistence.EntityConfigurations
             builder.ToTable("MenuRoles");
             builder.Navigation(q => q.Role).AutoInclude();
             builder.Navigation(q => q.Menu).AutoInclude();
+            builder.HasOne(q => q.Menu).WithMany(q => q.MenuRoles).OnDelete(DeleteBehavior.NoAction);
+            builder.HasOne(q => q.Role).WithMany(q => q.MenuRoles).OnDelete(DeleteBehavior.NoAction);
         }
     }
 }

@@ -10,7 +10,7 @@ namespace Domain.Entities
 {
     public class ApplicationRole : AuditableRoleEntity
     {
-        public virtual ICollection<IdentityUserRole<string>>? UserRoles { get; set; }
+        public virtual ICollection<ApplicationUserRole>? UserRoles { get; set; }
         public virtual ICollection<IdentityRoleClaim<string>>? RoleClaims { get; set; }
         public virtual ICollection<AppMenuRole>? MenuRoles { get; set; }
     }
