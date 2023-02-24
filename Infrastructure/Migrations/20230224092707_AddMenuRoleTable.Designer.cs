@@ -4,6 +4,7 @@ using Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    partial class ApplicationContextModelSnapshot : ModelSnapshot
+    [Migration("20230224092707_AddMenuRoleTable")]
+    partial class AddMenuRoleTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -79,14 +82,14 @@ namespace Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Menu", (string)null);
+                    b.ToTable("AppMenu");
 
                     b.HasData(
                         new
                         {
                             Id = 1,
                             CreatedBy = "",
-                            CreatedTime = new DateTime(2023, 2, 24, 9, 31, 46, 941, DateTimeKind.Utc).AddTicks(1811),
+                            CreatedTime = new DateTime(2023, 2, 24, 9, 27, 6, 906, DateTimeKind.Utc).AddTicks(2501),
                             CssClass = "fas fa-dollar-sign",
                             MenuAction = "",
                             MenuController = "Sales",
@@ -100,7 +103,7 @@ namespace Infrastructure.Migrations
                         {
                             Id = 2,
                             CreatedBy = "",
-                            CreatedTime = new DateTime(2023, 2, 24, 9, 31, 46, 941, DateTimeKind.Utc).AddTicks(1815),
+                            CreatedTime = new DateTime(2023, 2, 24, 9, 27, 6, 906, DateTimeKind.Utc).AddTicks(2506),
                             CssClass = "",
                             MenuAction = "CreateSalesOrder",
                             MenuController = "Sales",
@@ -114,7 +117,7 @@ namespace Infrastructure.Migrations
                         {
                             Id = 3,
                             CreatedBy = "",
-                            CreatedTime = new DateTime(2023, 2, 24, 9, 31, 46, 941, DateTimeKind.Utc).AddTicks(1817),
+                            CreatedTime = new DateTime(2023, 2, 24, 9, 27, 6, 906, DateTimeKind.Utc).AddTicks(2508),
                             CssClass = "",
                             MenuAction = "ChangeSalesOrder",
                             MenuController = "Sales",
@@ -128,7 +131,7 @@ namespace Infrastructure.Migrations
                         {
                             Id = 4,
                             CreatedBy = "",
-                            CreatedTime = new DateTime(2023, 2, 24, 9, 31, 46, 941, DateTimeKind.Utc).AddTicks(1819),
+                            CreatedTime = new DateTime(2023, 2, 24, 9, 27, 6, 906, DateTimeKind.Utc).AddTicks(2510),
                             CssClass = "",
                             MenuAction = "DisplaySalesOrder",
                             MenuController = "Sales",
@@ -183,7 +186,7 @@ namespace Infrastructure.Migrations
 
                     b.HasIndex("RoleId");
 
-                    b.ToTable("AppMenuRole", (string)null);
+                    b.ToTable("AppMenuRole");
                 });
 
             modelBuilder.Entity("Domain.Entities.ApplicationUser", b =>
@@ -303,11 +306,11 @@ namespace Infrastructure.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "80237728-3b30-4fb3-aa28-ef7ab18e1a2e",
+                            Id = "743edad5-2fb4-4cea-93a0-56ae231d9fb8",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "d7cdd039-8551-477d-9de8-cbb6ba8e30d3",
+                            ConcurrencyStamp = "6bbf1a20-34ce-46fe-b18b-44722b740089",
                             CreatedBy = "",
-                            CreatedTime = new DateTime(2023, 2, 24, 9, 31, 47, 19, DateTimeKind.Utc).AddTicks(9769),
+                            CreatedTime = new DateTime(2023, 2, 24, 9, 27, 6, 985, DateTimeKind.Utc).AddTicks(1244),
                             Email = "admin@admin.com",
                             EmailConfirmed = false,
                             FirstName = "Admin",
@@ -315,20 +318,20 @@ namespace Infrastructure.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@ADMIN.COM",
                             NormalizedUserName = "ADMIN",
-                            PasswordHash = "AQAAAAIAAYagAAAAEOa7uxuz+djSt5MUg5wtZon7atRv8JBKfSWxeVXkVAVbH19ZqqFx9/MHuiKANVZ4Hg==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEDZzl8NFm5ssZaJtEw41AaycAAW6RFe/vK46VWB+hNUfrktwXItkxhOV8wRmZdybWQ==",
                             PhoneNumberConfirmed = false,
                             RowStatus = (short)0,
-                            SecurityStamp = "afa37089-fdaf-4be2-a329-39cd48235ec2",
+                            SecurityStamp = "fe1a7017-68f2-4b7f-b035-a1bf3b4304a9",
                             TwoFactorEnabled = false,
                             UserName = "admin"
                         },
                         new
                         {
-                            Id = "cb3a6e59-c6e7-43fb-a34a-821c8215f0eb",
+                            Id = "48f73005-6e34-45cc-93e9-ef3d8b455b78",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "427f0183-5298-4a41-b270-313923e004c0",
+                            ConcurrencyStamp = "cf912aab-ee2c-4510-bf1c-37c295922ca6",
                             CreatedBy = "",
-                            CreatedTime = new DateTime(2023, 2, 24, 9, 31, 47, 100, DateTimeKind.Utc).AddTicks(4730),
+                            CreatedTime = new DateTime(2023, 2, 24, 9, 27, 7, 64, DateTimeKind.Utc).AddTicks(8492),
                             Email = "user@user.com",
                             EmailConfirmed = false,
                             FirstName = "User",
@@ -336,10 +339,10 @@ namespace Infrastructure.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "USER@USER.COM",
                             NormalizedUserName = "USER",
-                            PasswordHash = "AQAAAAIAAYagAAAAEOPKNPOSedWLxAwyathq+hxsj4PysTgrmyVUHPl8fvzVxNXy5so+tF+5cCDceK05mw==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEMqjBt7QJLhY0ZgaMMmjv8YkJgMh1n45IjIdE/IBqZ/F+K4++7lrRoPJVpLbH1kt/A==",
                             PhoneNumberConfirmed = false,
                             RowStatus = (short)0,
-                            SecurityStamp = "2249790d-45ad-4688-9d72-67536acac643",
+                            SecurityStamp = "8c56d90b-46d2-42f9-b58a-9fd0e33f3891",
                             TwoFactorEnabled = false,
                             UserName = "user"
                         });
@@ -387,17 +390,14 @@ namespace Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("LCID")
-                        .IsUnique();
-
-                    b.ToTable("LanguageCulture", (string)null);
+                    b.ToTable("LanguageCulture");
 
                     b.HasData(
                         new
                         {
                             Id = 1,
                             CreatedBy = "",
-                            CreatedTime = new DateTime(2023, 2, 24, 9, 31, 46, 941, DateTimeKind.Utc).AddTicks(2014),
+                            CreatedTime = new DateTime(2023, 2, 24, 9, 27, 6, 906, DateTimeKind.Utc).AddTicks(2766),
                             Description = "English",
                             IsDefaultLanguage = true,
                             LCID = 1033,
@@ -407,7 +407,7 @@ namespace Infrastructure.Migrations
                         {
                             Id = 2,
                             CreatedBy = "",
-                            CreatedTime = new DateTime(2023, 2, 24, 9, 31, 46, 941, DateTimeKind.Utc).AddTicks(2068),
+                            CreatedTime = new DateTime(2023, 2, 24, 9, 27, 6, 906, DateTimeKind.Utc).AddTicks(2768),
                             Description = "Indonesia",
                             IsDefaultLanguage = false,
                             LCID = 1057,

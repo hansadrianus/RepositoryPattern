@@ -1,4 +1,5 @@
 ﻿using Domain.Common;
+using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,5 +16,10 @@ namespace Domain.Entities
         public string? Token { get; set; }
         public string? RefreshToken { get; set; }
         public byte[]? ProfilePicture { get; set; }
+
+        public virtual ICollection<ApplicationUserRole>? UserRoles { get; set; }
+        public virtual ICollection<IdentityUserClaim<string>>? UserClaims { get; set; }
+        public virtual ICollection<IdentityUserLogin<string>>? UserLogins { get; set; }
+        public virtual ICollection<IdentityUserToken<string>>? UserTokens { get; set; }
     }
 }

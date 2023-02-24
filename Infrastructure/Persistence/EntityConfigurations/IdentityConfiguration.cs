@@ -12,24 +12,38 @@ namespace Infrastructure.Persistence.EntityConfigurations
 {
     public class IdentityConfiguration :
         IEntityTypeConfiguration<ApplicationUser>,
-        IEntityTypeConfiguration<IdentityRole>,
+        IEntityTypeConfiguration<ApplicationRole>,
+        IEntityTypeConfiguration<ApplicationUserRole>,
         IEntityTypeConfiguration<IdentityUserClaim<string>>,
-        IEntityTypeConfiguration<IdentityUserRole<string>>,
         IEntityTypeConfiguration<IdentityUserLogin<string>>,
-        IEntityTypeConfiguration<IdentityRoleClaim<string>>,
-        IEntityTypeConfiguration<IdentityUserToken<string>>
+        IEntityTypeConfiguration<IdentityUserToken<string>>,
+        IEntityTypeConfiguration<IdentityRoleClaim<string>>
     {
         public void Configure(EntityTypeBuilder<ApplicationUser> builder)
         {
             builder.ToTable("UserLoginInfo");
             builder.HasIndex(q => q.UserName).IsUnique();
             builder.HasIndex(q => q.Email).IsUnique();
+            builder.Navigation(q => q.UserRoles).AutoInclude();
+            builder.Navigation(q => q.UserClaims).AutoInclude();
+            builder.Navigation(q => q.UserTokens).AutoInclude();
+            builder.Navigation(q => q.UserLogins).AutoInclude();
         }
 
-        public void Configure(EntityTypeBuilder<IdentityRole> builder)
+        public void Configure(EntityTypeBuilder<ApplicationRole> builder)
         {
             builder.ToTable("Role");
             builder.HasIndex(q => q.Name).IsUnique();
+            builder.Navigation(q => q.UserRoles).AutoInclude();
+            builder.Navigation(q => q.RoleClaims).AutoInclude();
+            builder.Navigation(q => q.MenuRoles).AutoInclude();
+        }
+
+        public void Configure(EntityTypeBuilder<ApplicationUserRole> builder)
+        {
+            builder.ToTable("UserRoles");
+            builder.Navigation(q => q.User).AutoInclude();
+            builder.Navigation(q => q.Role).AutoInclude();
         }
 
         public void Configure(EntityTypeBuilder<IdentityUserClaim<string>> builder)
@@ -37,24 +51,19 @@ namespace Infrastructure.Persistence.EntityConfigurations
             builder.ToTable("UserClaims");
         }
 
-        public void Configure(EntityTypeBuilder<IdentityUserRole<string>> builder)
-        {
-            builder.ToTable("UserRoles");
-        }
-
         public void Configure(EntityTypeBuilder<IdentityUserLogin<string>> builder)
         {
             builder.ToTable("UserLogin");
         }
 
-        public void Configure(EntityTypeBuilder<IdentityRoleClaim<string>> builder)
-        {
-            builder.ToTable("RoleClaim");
-        }
-
         public void Configure(EntityTypeBuilder<IdentityUserToken<string>> builder)
         {
             builder.ToTable("UserToken");
+        }
+
+        public void Configure(EntityTypeBuilder<IdentityRoleClaim<string>> builder)
+        {
+            builder.ToTable("RoleClaim");
         }
     }
 }

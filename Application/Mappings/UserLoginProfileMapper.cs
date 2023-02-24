@@ -38,7 +38,11 @@ namespace Application.Mappings
                 .ForMember(dest => dest.RowVersion, opt => opt.Ignore())
                 .ForMember(dest => dest.Token, opt => opt.Ignore())
                 .ForMember(dest => dest.RefreshToken, opt => opt.Ignore())
-                .ForMember(dest => dest.ProfilePicture, opt => opt.Ignore());
+                .ForMember(dest => dest.ProfilePicture, opt => opt.Ignore())
+                .ForMember(dest => dest.UserRoles, opt => opt.Ignore())
+                .ForMember(dest => dest.UserClaims, opt => opt.Ignore())
+                .ForMember(dest => dest.UserLogins, opt => opt.Ignore())
+                .ForMember(dest => dest.UserTokens, opt => opt.Ignore());
         }
     }
 }

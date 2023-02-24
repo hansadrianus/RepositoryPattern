@@ -9,13 +9,12 @@ using System.Threading.Tasks;
 
 namespace Infrastructure.Persistence.EntityConfigurations
 {
-    public class ProductConfiguration : IEntityTypeConfiguration<Product>
+    public class LanguageCultureConfiguration : IEntityTypeConfiguration<LanguageCulture>
     {
-        public void Configure(EntityTypeBuilder<Product> builder)
+        public void Configure(EntityTypeBuilder<LanguageCulture> builder)
         {
-            builder.ToTable("Product");
-            builder.HasIndex(q => q.ProductCode).IsUnique();
-            builder.Navigation(q => q.SalesOrderDetails).AutoInclude();
+            builder.ToTable("LanguageCulture");
+            builder.HasIndex(q => q.LCID).IsUnique();
         }
     }
 }
