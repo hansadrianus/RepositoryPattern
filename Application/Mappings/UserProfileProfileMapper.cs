@@ -15,7 +15,7 @@ namespace Application.Mappings
     {
         public UserProfileProfileMapper()
         {
-            CreateMap<ApplicationUser<string>, UserProfileViewModel>()
+            CreateMap<ApplicationUser, UserProfileViewModel>()
                 .ReverseMap();
         }
     }

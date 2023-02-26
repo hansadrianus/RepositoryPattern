@@ -2,7 +2,7 @@
 
 namespace Domain.Entities
 {
-    public class AppMenu<TKey> : AuditableEntity<TKey> where TKey : IEquatable<TKey>
+    public class AppMenu : AuditableEntity 
     {
         public string MenuName { get; set; }
         public string MenuController { get; set; }
@@ -12,6 +12,6 @@ namespace Domain.Entities
         public int MenuOrder { get; set; }
         public string CssClass { get; set; }
 
-        public virtual ICollection<AppMenuRole<TKey>> MenuRoles { get; set; }
+        public virtual ICollection<AppMenuRole> MenuRoles { get; set; }
     }
 }

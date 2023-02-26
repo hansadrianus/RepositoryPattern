@@ -15,22 +15,22 @@ namespace Application.Mappings
     {
         public ProductProfileMapper()
         {
-            CreateMap<Product<int>, ProductViewModel>()
+            CreateMap<Product, ProductViewModel>()
                 .ReverseMap();
-            CreateMap<AddProductCommand, Product<int>>()
+            CreateMap<AddProductCommand, Product>()
                 .ForMember(dest => dest.Id, opt => opt.Ignore())
                 .ForMember(dest => dest.CreatedBy, opt => opt.Ignore())
                 .ForMember(dest => dest.CreatedTime, opt => opt.Ignore())
                 .ForMember(dest => dest.ModifiedBy, opt => opt.Ignore())
                 .ForMember(dest => dest.ModifiedTime, opt => opt.Ignore())
                 .ForMember(dest => dest.RowVersion, opt => opt.Ignore());
-            CreateMap<UpdateProductCommand, Product<int>>()
+            CreateMap<UpdateProductCommand, Product>()
                 .ForMember(dest => dest.CreatedBy, opt => opt.Ignore())
                 .ForMember(dest => dest.CreatedTime, opt => opt.Ignore())
                 .ForMember(dest => dest.ModifiedBy, opt => opt.Ignore())
                 .ForMember(dest => dest.ModifiedTime, opt => opt.Ignore())
                 .ForMember(dest => dest.RowVersion, opt => opt.Ignore());
-            CreateMap<DeleteProductCommand, Product<int>>()
+            CreateMap<DeleteProductCommand, Product>()
                 .ForMember(dest => dest.CreatedBy, opt => opt.Ignore())
                 .ForMember(dest => dest.CreatedTime, opt => opt.Ignore())
                 .ForMember(dest => dest.ModifiedBy, opt => opt.Ignore())

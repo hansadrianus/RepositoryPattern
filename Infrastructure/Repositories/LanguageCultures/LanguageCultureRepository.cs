@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Infrastructure.Repositories.LanguageCultures
 {
-    public class LanguageCultureRepository : RepositoryBase<LanguageCulture<int>>, ILanguageCultureRepository
+    public class LanguageCultureRepository : RepositoryBase<LanguageCulture>, ILanguageCultureRepository
     {
         public LanguageCultureRepository(IApplicationContext context) : base(context)
         {

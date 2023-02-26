@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Application.Interfaces.Persistence.AppMenus
 {
-    public interface IAppMenuRepository : IRepositoryBase<AppMenu<int>>
+    public interface IAppMenuRepository : IRepositoryBase<AppMenu>
     {
     }
 }

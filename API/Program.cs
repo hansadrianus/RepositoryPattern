@@ -15,6 +15,7 @@ namespace API
             var builder = WebApplication.CreateBuilder(args);
             // TODO: Remove this line if you want to return the Server header
             builder.WebHost.ConfigureKestrel(options => options.AddServerHeader = false);
+            builder.Configuration.AddSharedConfiguration(builder.Environment);
 
             builder.Services.AddSingleton(builder.Configuration);
             // Adds in Application dependencies

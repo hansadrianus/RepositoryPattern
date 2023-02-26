@@ -16,15 +16,15 @@ namespace WebMVC.Areas.Identity.Pages.Account
     [AllowAnonymous]
     public class LoginModel : PageModel
     {
-        private readonly UserManager<ApplicationUser<string>> _userManager;
-        private readonly SignInManager<ApplicationUser<string>> _signInManager;
+        private readonly UserManager<ApplicationUser> _userManager;
+        private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly ILogger<LoginModel> _logger;
         private readonly IApplicationContext _context;
         private readonly IRepositoryWrapper _repository;
 
-        public LoginModel(SignInManager<ApplicationUser<string>> signInManager,
+        public LoginModel(SignInManager<ApplicationUser> signInManager,
             ILogger<LoginModel> logger,
-            UserManager<ApplicationUser<string>> userManager,
+            UserManager<ApplicationUser> userManager,
             IApplicationContext context,
             IRepositoryWrapper repository)
         {
@@ -116,13 +116,13 @@ namespace WebMVC.Areas.Identity.Pages.Account
             return Page();
         }
 
-        private async Task<IEnumerable<LanguageCulture<int>>> PrepareLanguageCultureAsync() => await _repository.LanguageCulture.GetAllAsync();
+        private async Task<IEnumerable<LanguageCulture>> PrepareLanguageCultureAsync() => await _repository.LanguageCulture.GetAllAsync();
 
         private async Task SetLanguageAsync(string lcid)
         {
             if (string.IsNullOrEmpty(lcid))
             {
-                LanguageCulture<int> language = await _repository.LanguageCulture.GetAsync(q => q.IsDefaultLanguage == true);
+                LanguageCulture language = await _repository.LanguageCulture.GetAsync(q => q.IsDefaultLanguage == true);
                 LCID = (language is null) ? 1033 : language.LCID;
                 CultureInfo.CurrentCulture = new CultureInfo(LCID);
                 CultureInfo.CurrentUICulture = new CultureInfo(LCID);

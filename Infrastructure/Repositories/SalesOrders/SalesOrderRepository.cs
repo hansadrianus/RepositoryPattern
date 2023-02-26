@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace Infrastructure.Repositories.SalesOrders
 {
-    public class SalesOrderRepository : RepositoryBase<SalesOrderHeader<int>>, ISalesOrderRepository
+    public class SalesOrderRepository : RepositoryBase<SalesOrderHeader>, ISalesOrderRepository
     {
         public SalesOrderRepository(IApplicationContext context) : base(context)
         {

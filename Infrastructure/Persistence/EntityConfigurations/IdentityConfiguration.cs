@@ -11,59 +11,48 @@ using Domain.Entities;
 namespace Infrastructure.Persistence.EntityConfigurations
 {
     public class IdentityConfiguration :
-        IEntityTypeConfiguration<ApplicationUser<string>>,
-        IEntityTypeConfiguration<ApplicationRole<string>>,
-        IEntityTypeConfiguration<ApplicationUserRole<string>>,
-        IEntityTypeConfiguration<IdentityUserClaim<string>>,
-        IEntityTypeConfiguration<IdentityUserLogin<string>>,
-        IEntityTypeConfiguration<IdentityUserToken<string>>,
-        IEntityTypeConfiguration<IdentityRoleClaim<string>>
+        IEntityTypeConfiguration<ApplicationUser>,
+        IEntityTypeConfiguration<ApplicationRole>,
+        IEntityTypeConfiguration<ApplicationUserRole>,
+        IEntityTypeConfiguration<ApplicationUserClaim>,
+        IEntityTypeConfiguration<ApplicationUserLogin>,
+        IEntityTypeConfiguration<ApplicationUserToken>,
+        IEntityTypeConfiguration<ApplicationRoleClaim>
     {
-        public void Configure(EntityTypeBuilder<ApplicationUser<string>> builder)
+        public void Configure(EntityTypeBuilder<ApplicationUser> builder)
         {
             builder.ToTable("UserLoginInfo");
             builder.HasIndex(q => q.UserName).IsUnique();
             builder.HasIndex(q => q.Email).IsUnique();
-            builder.Navigation(q => q.UserRoles).AutoInclude();
-            builder.Navigation(q => q.UserClaims).AutoInclude();
-            builder.Navigation(q => q.UserTokens).AutoInclude();
-            builder.Navigation(q => q.UserLogins).AutoInclude();
         }
 
-        public void Configure(EntityTypeBuilder<ApplicationRole<string>> builder)
+        public void Configure(EntityTypeBuilder<ApplicationRole> builder)
         {
             builder.ToTable("Role");
             builder.HasIndex(q => q.Name).IsUnique();
-            builder.Navigation(q => q.UserRoles).AutoInclude();
-            builder.Navigation(q => q.RoleClaims).AutoInclude();
-            builder.Navigation(q => q.MenuRoles).AutoInclude();
         }
 
-        public void Configure(EntityTypeBuilder<ApplicationUserRole<string>> builder)
+        public void Configure(EntityTypeBuilder<ApplicationUserRole> builder)
         {
             builder.ToTable("UserRoles");
-            builder.Navigation(q => q.User).AutoInclude();
-            builder.Navigation(q => q.Role).AutoInclude();
-            builder.HasOne(q => q.User).WithMany(q => q.UserRoles).OnDelete(DeleteBehavior.NoAction);
-            builder.HasOne(q => q.Role).WithMany(q => q.UserRoles).OnDelete(DeleteBehavior.NoAction);
         }
 
-        public void Configure(EntityTypeBuilder<IdentityUserClaim<string>> builder)
+        public void Configure(EntityTypeBuilder<ApplicationUserClaim> builder)
         {
             builder.ToTable("UserClaims");
         }
 
-        public void Configure(EntityTypeBuilder<IdentityUserLogin<string>> builder)
+        public void Configure(EntityTypeBuilder<ApplicationUserLogin> builder)
         {
             builder.ToTable("UserLogin");
         }
 
-        public void Configure(EntityTypeBuilder<IdentityUserToken<string>> builder)
+        public void Configure(EntityTypeBuilder<ApplicationUserToken> builder)
         {
             builder.ToTable("UserToken");
         }
 
-        public void Configure(EntityTypeBuilder<IdentityRoleClaim<string>> builder)
+        public void Configure(EntityTypeBuilder<ApplicationRoleClaim> builder)
         {
             builder.ToTable("RoleClaim");
         }

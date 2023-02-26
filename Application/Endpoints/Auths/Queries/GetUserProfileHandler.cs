@@ -24,7 +24,7 @@ namespace Application.Endpoints.Auths.Queries
 
         public async Task<EndpointResult<IEnumerable<UserProfileViewModel>>> Handle(GetUserProfile request, CancellationToken cancellationToken)
         {
-            var predicates = _queryBuilder.BuildPredicate<ApplicationUser<string>, GetUserProfile>(request);
+            var predicates = _queryBuilder.BuildPredicate<ApplicationUser, GetUserProfile>(request);
             var users = await _repository.Auth.GetAllAsync(predicates, cancellationToken);
 
             return new EndpointResult<IEnumerable<UserProfileViewModel>>(Models.Enumerations.EndpointResultStatus.Success, _mapper.Map<IEnumerable<UserProfileViewModel>>(users));

@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Domain.Entities
 {
-    public class SalesOrderDetail<TKey> : AuditableEntity<TKey> where TKey : IEquatable<TKey>
+    public class SalesOrderDetail : AuditableEntity 
     {
         public int OrderId { get; set; }
         public int ProductId { get; set; }
@@ -18,8 +18,8 @@ namespace Domain.Entities
         public string Notes { get; set; }
 
         [ForeignKey("OrderId")]
-        public virtual SalesOrderHeader<TKey> OrderHeader { get; set; }
+        public virtual SalesOrderHeader OrderHeader { get; set; }
         [ForeignKey("ProductId")]
-        public virtual Product<TKey> Product { get; set; }
+        public virtual Product Product { get; set; }
     }
 }

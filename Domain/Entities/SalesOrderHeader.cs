@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Domain.Entities
 {
-    public class SalesOrderHeader<TKey> : AuditableEntity<TKey> where TKey : IEquatable<TKey>
+    public class SalesOrderHeader : AuditableEntity 
     {
         public string OrderNumber { get; set; }
         public string OrderType { get; set; }
@@ -16,6 +16,6 @@ namespace Domain.Entities
         public string CustomerAddress { get; set; }
         public string PaymentType { get; set; }
 
-        public virtual ICollection<SalesOrderDetail<TKey>> SalesOrderDetails { get; set;}
+        public virtual ICollection<SalesOrderDetail> SalesOrderDetails { get; set;}
     }
 }

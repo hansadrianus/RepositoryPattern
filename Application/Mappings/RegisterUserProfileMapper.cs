@@ -9,9 +9,9 @@ namespace Application.Mappings
     {
         public RegisterUserProfileMapper()
         {
-            CreateMap<ApplicationUser<string>, RegisterViewModel>()
+            CreateMap<ApplicationUser, RegisterViewModel>()
                 .ReverseMap();
-            CreateMap<RegisterCommand, ApplicationUser<string>>()
+            CreateMap<RegisterCommand, ApplicationUser>()
                 .ForMember(dest => dest.Id, opt => opt.Ignore())
                 .ForMember(dest => dest.NormalizedUserName, opt => opt.Ignore())
                 .ForMember(dest => dest.NormalizedEmail, opt => opt.Ignore())

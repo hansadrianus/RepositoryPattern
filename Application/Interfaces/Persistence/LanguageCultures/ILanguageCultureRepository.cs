@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Application.Interfaces.Persistence.LanguageCultures
 {
-    public interface ILanguageCultureRepository : IRepositoryBase<LanguageCulture<int>>
+    public interface ILanguageCultureRepository : IRepositoryBase<LanguageCulture>
     {
     }
 }

@@ -9,12 +9,12 @@ using System.Threading.Tasks;
 
 namespace Application.Interfaces.Persistence.Auths
 {
-    public interface IAuthRepository : IRepositoryBase<ApplicationUser<string>>
+    public interface IAuthRepository : IRepositoryBase<ApplicationUser>
     {
-        Task<UserLoginViewModel> CreateTokenAsync(ApplicationUser<string> user, string lcid, CancellationToken cancellationToken);
-        Task<RefreshTokenViewModel> RefreshTokenAsync(ApplicationUser<string> user, string lcid, CancellationToken cancellationToken);
-        Task<ApplicationUser<string>> RegisterUserAsync(ApplicationUser<string> user, CancellationToken cancellationToken);
+        Task<UserLoginViewModel> CreateTokenAsync(ApplicationUser user, string lcid, CancellationToken cancellationToken);
+        Task<RefreshTokenViewModel> RefreshTokenAsync(ApplicationUser user, string lcid, CancellationToken cancellationToken);
+        Task<ApplicationUser> RegisterUserAsync(ApplicationUser user, CancellationToken cancellationToken);
         Task<bool> RemoveTokenAsync(Guid id, CancellationToken cancellationToken);
-        Task<bool> ValidateUserAsync(ApplicationUser<string> user, CancellationToken cancellationToken);
+        Task<bool> ValidateUserAsync(ApplicationUser user, CancellationToken cancellationToken);
     }
 }

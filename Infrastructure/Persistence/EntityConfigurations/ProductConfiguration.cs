@@ -9,9 +9,9 @@ using System.Threading.Tasks;
 
 namespace Infrastructure.Persistence.EntityConfigurations
 {
-    public class ProductConfiguration : IEntityTypeConfiguration<Product<int>>
+    public class ProductConfiguration : IEntityTypeConfiguration<Product>
     {
-        public void Configure(EntityTypeBuilder<Product<int>> builder)
+        public void Configure(EntityTypeBuilder<Product> builder)
         {
             builder.ToTable("Product");
             builder.HasIndex(q => q.ProductCode).IsUnique();

@@ -16,6 +16,7 @@ namespace WebMVC
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
+            builder.Configuration.AddSharedConfiguration(builder.Environment);
 
             // Add services to the container.
             builder.Services.AddSingleton(builder.Configuration);
@@ -62,7 +63,7 @@ namespace WebMVC
                         AssemblyName assemblyName = new AssemblyName(typeof(GlobalResource).GetTypeInfo().Assembly.FullName);
                         return factory.Create("GlobalResource", assemblyName.Name);
                     };
-                }); ;
+                });
 
             var app = builder.Build();
 

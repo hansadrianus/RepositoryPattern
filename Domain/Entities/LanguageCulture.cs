@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Domain.Entities
 {
-    public class LanguageCulture<TKey> : AuditableEntity<TKey> where TKey : IEquatable<TKey>
+    public class LanguageCulture : AuditableEntity 
     {
         public int LCID { get; set; }
         public string Description { get; set; }

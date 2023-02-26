@@ -35,7 +35,7 @@ namespace Application.Endpoints.SalesOrders.Commands
 
             try
             {
-                var order = _mapper.Map<SalesOrderHeader<int>>(request);
+                var order = _mapper.Map<SalesOrderHeader>(request);
                 var orderToDelete = await _repository.SalesOrder.GetAsync(q => q.Id == order.Id && q.RowStatus == 0, cancellationToken);
                 if (orderToDelete == null)
                     return new EndpointResult<SalesOrderViewModel>(EndpointResultStatus.Invalid, "Data not found");

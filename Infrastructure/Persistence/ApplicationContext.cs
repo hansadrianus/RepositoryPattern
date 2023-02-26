@@ -19,7 +19,7 @@ using System.Threading.Tasks;
 
 namespace Infrastructure.Persistence
 {
-    public class ApplicationContext : IdentityDbContext<ApplicationUser<string>, ApplicationRole<string>, string, IdentityUserClaim<string>, ApplicationUserRole<string>, IdentityUserLogin<string>, IdentityRoleClaim<string>, IdentityUserToken<string>>, IApplicationContext
+    public class ApplicationContext : IdentityDbContext<ApplicationUser, ApplicationRole, int, ApplicationUserClaim, ApplicationUserRole, ApplicationUserLogin, ApplicationRoleClaim, ApplicationUserToken>, IApplicationContext
     {
         private readonly IPrincipalService _principalService;
         private readonly IDateTimeService _dateTimeService;
@@ -32,11 +32,11 @@ namespace Infrastructure.Persistence
             _configuration = configuration;
         }
 
-        public DbSet<AppMenu<int>> AppMenu { get; set; }
-        public DbSet<LanguageCulture<int>> LanguageCulture { get; set; }
-        public DbSet<Product<int>> Product { get; set; }
-        public DbSet<SalesOrderHeader<int>> SalesOrderHeader { get; set; }
-        public DbSet<SalesOrderDetail<int>> SalesOrderDetail { get; set; }
+        public DbSet<AppMenu> AppMenu { get; set; }
+        public DbSet<LanguageCulture> LanguageCulture { get; set; }
+        public DbSet<Product> Product { get; set; }
+        public DbSet<SalesOrderHeader> SalesOrderHeader { get; set; }
+        public DbSet<SalesOrderDetail> SalesOrderDetail { get; set; }
 
         public override EntityEntry<TEntity> Add<TEntity>(TEntity entity)
         {
@@ -185,7 +185,7 @@ namespace Infrastructure.Persistence
 
         public override int SaveChanges()
         {
-            foreach (var entity in ChangeTracker.Entries<AuditableEntity<int>>())
+            foreach (var entity in ChangeTracker.Entries<AuditableEntity>())
             {
                 switch (entity.State)
                 {
@@ -201,7 +201,39 @@ namespace Infrastructure.Persistence
                 }
             }
 
-            foreach (var entity in ChangeTracker.Entries<AuditableIdentityEntity<string>>())
+            foreach (var entity in ChangeTracker.Entries<AuditableIdentityEntity>())
+            {
+                switch (entity.State)
+                {
+                    case EntityState.Added:
+                        entity.Entity.CreatedBy = _principalService.UserId;
+                        entity.Entity.CreatedTime = _dateTimeService.UtcNow;
+                        entity.Entity.RowStatus = 0;
+                        break;
+                    case EntityState.Modified:
+                        entity.Entity.ModifiedBy = _principalService.UserId;
+                        entity.Entity.ModifiedTime = _dateTimeService.UtcNow;
+                        break;
+                }
+            }
+
+            foreach (var entity in ChangeTracker.Entries<AuditableRoleEntity>())
+            {
+                switch (entity.State)
+                {
+                    case EntityState.Added:
+                        entity.Entity.CreatedBy = _principalService.UserId;
+                        entity.Entity.CreatedTime = _dateTimeService.UtcNow;
+                        entity.Entity.RowStatus = 0;
+                        break;
+                    case EntityState.Modified:
+                        entity.Entity.ModifiedBy = _principalService.UserId;
+                        entity.Entity.ModifiedTime = _dateTimeService.UtcNow;
+                        break;
+                }
+            }
+
+            foreach (var entity in ChangeTracker.Entries<AuditableUserRoleEntity>())
             {
                 switch (entity.State)
                 {
@@ -222,7 +254,7 @@ namespace Infrastructure.Persistence
 
         public override int SaveChanges(bool acceptAllChangesOnSuccess)
         {
-            foreach (var entity in ChangeTracker.Entries<AuditableEntity<int>>())
+            foreach (var entity in ChangeTracker.Entries<AuditableEntity>())
             {
                 switch (entity.State)
                 {
@@ -238,7 +270,39 @@ namespace Infrastructure.Persistence
                 }
             }
 
-            foreach (var entity in ChangeTracker.Entries<AuditableIdentityEntity<string>>())
+            foreach (var entity in ChangeTracker.Entries<AuditableIdentityEntity>())
+            {
+                switch (entity.State)
+                {
+                    case EntityState.Added:
+                        entity.Entity.CreatedBy = _principalService.UserId;
+                        entity.Entity.CreatedTime = _dateTimeService.UtcNow;
+                        entity.Entity.RowStatus = 0;
+                        break;
+                    case EntityState.Modified:
+                        entity.Entity.ModifiedBy = _principalService.UserId;
+                        entity.Entity.ModifiedTime = _dateTimeService.UtcNow;
+                        break;
+                }
+            }
+
+            foreach (var entity in ChangeTracker.Entries<AuditableRoleEntity>())
+            {
+                switch (entity.State)
+                {
+                    case EntityState.Added:
+                        entity.Entity.CreatedBy = _principalService.UserId;
+                        entity.Entity.CreatedTime = _dateTimeService.UtcNow;
+                        entity.Entity.RowStatus = 0;
+                        break;
+                    case EntityState.Modified:
+                        entity.Entity.ModifiedBy = _principalService.UserId;
+                        entity.Entity.ModifiedTime = _dateTimeService.UtcNow;
+                        break;
+                }
+            }
+
+            foreach (var entity in ChangeTracker.Entries<AuditableUserRoleEntity>())
             {
                 switch (entity.State)
                 {
@@ -259,7 +323,7 @@ namespace Infrastructure.Persistence
 
         public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
         {
-            foreach (var entity in ChangeTracker.Entries<AuditableEntity<int>>())
+            foreach (var entity in ChangeTracker.Entries<AuditableEntity>())
             {
                 switch (entity.State)
                 {
@@ -275,7 +339,39 @@ namespace Infrastructure.Persistence
                 }
             }
 
-            foreach (var entity in ChangeTracker.Entries<AuditableIdentityEntity<string>>())
+            foreach (var entity in ChangeTracker.Entries<AuditableIdentityEntity>())
+            {
+                switch (entity.State)
+                {
+                    case EntityState.Added:
+                        entity.Entity.CreatedBy = _principalService.UserId;
+                        entity.Entity.CreatedTime = _dateTimeService.UtcNow;
+                        entity.Entity.RowStatus = 0;
+                        break;
+                    case EntityState.Modified:
+                        entity.Entity.ModifiedBy = _principalService.UserId;
+                        entity.Entity.ModifiedTime = _dateTimeService.UtcNow;
+                        break;
+                }
+            }
+
+            foreach (var entity in ChangeTracker.Entries<AuditableRoleEntity>())
+            {
+                switch (entity.State)
+                {
+                    case EntityState.Added:
+                        entity.Entity.CreatedBy = _principalService.UserId;
+                        entity.Entity.CreatedTime = _dateTimeService.UtcNow;
+                        entity.Entity.RowStatus = 0;
+                        break;
+                    case EntityState.Modified:
+                        entity.Entity.ModifiedBy = _principalService.UserId;
+                        entity.Entity.ModifiedTime = _dateTimeService.UtcNow;
+                        break;
+                }
+            }
+
+            foreach (var entity in ChangeTracker.Entries<AuditableUserRoleEntity>())
             {
                 switch (entity.State)
                 {
@@ -296,7 +392,7 @@ namespace Infrastructure.Persistence
 
         public override Task<int> SaveChangesAsync(bool acceptAllChangesOnSuccess, CancellationToken cancellationToken = default)
         {
-            foreach (var entity in ChangeTracker.Entries<AuditableEntity<int>>())
+            foreach (var entity in ChangeTracker.Entries<AuditableEntity>())
             {
                 switch (entity.State)
                 {
@@ -312,7 +408,39 @@ namespace Infrastructure.Persistence
                 }
             }
 
-            foreach (var entity in ChangeTracker.Entries<AuditableIdentityEntity<string>>())
+            foreach (var entity in ChangeTracker.Entries<AuditableIdentityEntity>())
+            {
+                switch (entity.State)
+                {
+                    case EntityState.Added:
+                        entity.Entity.CreatedBy = _principalService.UserId;
+                        entity.Entity.CreatedTime = _dateTimeService.UtcNow;
+                        entity.Entity.RowStatus = 0;
+                        break;
+                    case EntityState.Modified:
+                        entity.Entity.ModifiedBy = _principalService.UserId;
+                        entity.Entity.ModifiedTime = _dateTimeService.UtcNow;
+                        break;
+                }
+            }
+
+            foreach (var entity in ChangeTracker.Entries<AuditableRoleEntity>())
+            {
+                switch (entity.State)
+                {
+                    case EntityState.Added:
+                        entity.Entity.CreatedBy = _principalService.UserId;
+                        entity.Entity.CreatedTime = _dateTimeService.UtcNow;
+                        entity.Entity.RowStatus = 0;
+                        break;
+                    case EntityState.Modified:
+                        entity.Entity.ModifiedBy = _principalService.UserId;
+                        entity.Entity.ModifiedTime = _dateTimeService.UtcNow;
+                        break;
+                }
+            }
+
+            foreach (var entity in ChangeTracker.Entries<AuditableUserRoleEntity>())
             {
                 switch (entity.State)
                 {

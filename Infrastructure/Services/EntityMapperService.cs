@@ -40,7 +40,7 @@ namespace Infrastructure.Services
         private IList<string> IgnoredProperties()
         {
             IList<string> propertyNames = new List<string>();
-            PropertyInfo[] auditableEntityPropertyInfos = typeof(AuditableEntity<int>).GetProperties();
+            PropertyInfo[] auditableEntityPropertyInfos = typeof(AuditableEntity).GetProperties();
             foreach (PropertyInfo property in auditableEntityPropertyInfos)
                 propertyNames.Add(property.Name);
 
