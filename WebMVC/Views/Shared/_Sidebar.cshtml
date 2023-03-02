@@ -16,7 +16,14 @@
     <div class="sidebar">
         <div class="user-panel mt-3 pb-3 mb-3 d-flex">
             <div class="image">
-                <img src="~/dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
+                @if (currUser.ProfilePicture != null)
+                {
+                    <img src="data:image/*;base64,@(Convert.ToBase64String(currUser.ProfilePicture))" class="img-circle elevation-2" alt="User Image" style="width:40px;height:40px; object-fit:cover; border-radius:30px">
+                }
+                else
+                {
+                    <img class="img-circle elevation-2" src="" alt="Profile Picture" style="width:40px;height:40px; object-fit:cover; border-radius:30px">
+                }
             </div>
             <div class="info">
                 <a href="#" class="d-block">@currUser.FirstName @currUser.LastName</a>
@@ -34,23 +41,23 @@
         </div>
         <nav class="mt-2">
             <ul class="nav nav-pills nav-sidebar nav-child-indent flex-column" data-widget="treeview" role="menu">
-                @Html.Raw(MenuHelper.renderMenu(Html, Context))
+                @Html.Raw(MenuHelper.RenderMenu(Html, Context))
                 <li class="nav-header">User Management</li>
                 <li class="nav-item">
-                    <a href="#" class="nav-link">
-                        <i class="nav-icon fas fa-user-cog"></i>
+                    <a asp-area="" asp-controller="Auth" asp-action="Users" class="nav-link">
+                        <i class="nav-icon fas fa-users"></i>
                         <p>User Manager</p>
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="#" class="nav-link">
+                    <a asp-area="" asp-controller="Auth" asp-action="Roles" class="nav-link">
                         <i class="nav-icon fas fa-user-tag"></i>
                         <p>Role Manager</p>
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="#" class="nav-link">
-                        <i class="nav-icon fas fa-tags"></i>
+                    <a asp-area="" asp-controller="Auth" asp-action="Menu" class="nav-link">
+                        <i class="nav-icon fas fa-user-cog"></i>
                         <p>Menu Manager</p>
                     </a>
                 </li>

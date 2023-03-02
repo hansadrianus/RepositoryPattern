@@ -17,5 +17,7 @@ namespace Domain.Entities
         public string? Token { get; set; }
         public string? RefreshToken { get; set; }
         public byte[]? ProfilePicture { get; set; }
+
+        public virtual ICollection<ApplicationUserRole> UserRoles { get; set; }
     }
 }

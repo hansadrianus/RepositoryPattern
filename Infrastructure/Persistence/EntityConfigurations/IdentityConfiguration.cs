@@ -24,17 +24,21 @@ namespace Infrastructure.Persistence.EntityConfigurations
             builder.ToTable("UserLoginInfo");
             builder.HasIndex(q => q.UserName).IsUnique();
             builder.HasIndex(q => q.Email).IsUnique();
+            builder.HasMany(q => q.UserRoles).WithOne().HasForeignKey(q => q.UserId).OnDelete(DeleteBehavior.NoAction);
         }
 
         public void Configure(EntityTypeBuilder<ApplicationRole> builder)
         {
             builder.ToTable("Role");
             builder.HasIndex(q => q.Name).IsUnique();
+            builder.HasMany(q => q.UserRoles).WithOne().HasForeignKey(q => q.RoleId).OnDelete(DeleteBehavior.NoAction);
         }
 
         public void Configure(EntityTypeBuilder<ApplicationUserRole> builder)
         {
             builder.ToTable("UserRoles");
+            builder.Navigation(q => q.User).AutoInclude();
+            builder.Navigation(q => q.Role).AutoInclude();
         }
 
         public void Configure(EntityTypeBuilder<ApplicationUserClaim> builder)

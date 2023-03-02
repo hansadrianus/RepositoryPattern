@@ -31,6 +31,11 @@ namespace Infrastructure.Persistence
                 new ApplicationUser { Id = 1, FirstName = "Admin", LastName = "Admin", UserName = "admin", NormalizedUserName = "ADMIN", Email = "admin@admin.com", NormalizedEmail = "ADMIN@ADMIN.COM", PasswordHash = new PasswordHasher<ApplicationUser>().HashPassword(null, "Password123!@#"), SecurityStamp = Guid.NewGuid().ToString(), CreatedBy = "", CreatedTime = DateTime.UtcNow },
                 new ApplicationUser { Id = 2, FirstName = "User", LastName = "User", UserName = "user", NormalizedUserName = "USER", Email = "user@user.com", NormalizedEmail = "USER@USER.COM", PasswordHash = new PasswordHasher<ApplicationUser>().HashPassword(null, "Password123!@#"), SecurityStamp = Guid.NewGuid().ToString(), CreatedBy = "", CreatedTime = DateTime.UtcNow }
             );
+
+            builder.Entity<ApplicationRole>().HasData(
+                new ApplicationRole { Id = 1, Name = "Administrator", NormalizedName = "ADMINISTRATOR", ConcurrencyStamp = Guid.NewGuid().ToString(), CreatedBy = "", CreatedTime = DateTime.UtcNow },
+                new ApplicationRole { Id = 2, Name = "Sales Create", NormalizedName = "SALES CREATE", ConcurrencyStamp = Guid.NewGuid().ToString(), CreatedBy = "", CreatedTime = DateTime.UtcNow }
+            );
         }
     }
 }

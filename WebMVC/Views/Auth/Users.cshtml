@@ -1,0 +1,95 @@
+﻿<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">List of User Accounts</h3>
+                    </div>
+
+                    <div class="card-body">
+                        <div id="usersGrid"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+@section Styles{
+    <link rel="stylesheet" href="~/assets/plugins/jsgrid/jsgrid.min.css">
+    <link rel="stylesheet" href="~/assets/plugins/jsgrid/jsgrid-theme.min.css">
+}
+
+@section Scripts{
+    <script src="~/assets/plugins/jsgrid/jsgrid.min.js"></script>
+    <script>
+        $(function () {
+            $("#usersGrid").jsGrid({
+                height: "auto",
+                width: "100%",
+
+                sorting: true,
+                paging: false,
+                editing: true,
+                autoload: true,
+
+                onItemUpdating: function (args) {
+                    previousItem = args.previousItem;
+                },
+
+                controller: {
+                    loadData: function () {
+                        var d = $.Deferred();
+
+                        $.ajax({
+                            type: "GET",
+                            url: "../Auth/GetUsers",
+                            dataType: "json"
+                        }).done(function (response) {
+                            d.resolve(response.data);
+                        });
+
+                        return d.promise();
+                    },
+                    updateItem: function (item) {
+                        var d = $.Deferred();
+
+                        $.ajax({
+                            type: "PUT",
+                            url: "../UpdateUserStatus/" + item.id,
+                            data: item
+                        }).done(function (response) {
+                            d.resolve(response.data);
+                        }).fail(function () {
+                            d.resolve(previousItem);
+                        });
+                    }
+                },
+
+                fields: [
+                    { title: "ID", name: "id", type: "number", align: "center", width: 10, readOnly: true, editing: false },
+                    { title: "First Name", name: "firstName", type: "text" },
+                    { title: "Last Name", name: "lastName", type: "text" },
+                    { title: "Username", name: "userName", type: "text", readOnly: true, editing: false },
+                    { title: "Status", name: "status", type: "checkbox" },
+                    {
+                        type: "control", width: 200, align: "center",
+                        itemTemplate: function (value, item) {
+                            var $link = $("<a>").attr("href", "../Auth/UserRoles/" + item.id).text("Roles");
+                            return $("<div>").append($link);
+                        }
+                    }
+                ]
+            });
+        });
+
+        function checkBoxFormatter(cellvalue, options, rowObject) {
+            if (rowObject.amount > 50) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+    </script>
+}

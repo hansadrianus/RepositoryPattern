@@ -4,6 +4,7 @@ using Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    partial class ApplicationContextModelSnapshot : ModelSnapshot
+    [Migration("20230227043128_AddedPrecisionAndScaleForDecimalDataTypeRevision1")]
+    partial class AddedPrecisionAndScaleForDecimalDataTypeRevision1
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -86,7 +89,7 @@ namespace Infrastructure.Migrations
                         {
                             Id = 1,
                             CreatedBy = "",
-                            CreatedTime = new DateTime(2023, 3, 1, 10, 54, 1, 88, DateTimeKind.Utc).AddTicks(8360),
+                            CreatedTime = new DateTime(2023, 2, 27, 4, 31, 28, 195, DateTimeKind.Utc).AddTicks(2293),
                             CssClass = "fas fa-dollar-sign",
                             MenuAction = "",
                             MenuController = "Sales",
@@ -100,7 +103,7 @@ namespace Infrastructure.Migrations
                         {
                             Id = 2,
                             CreatedBy = "",
-                            CreatedTime = new DateTime(2023, 3, 1, 10, 54, 1, 88, DateTimeKind.Utc).AddTicks(8364),
+                            CreatedTime = new DateTime(2023, 2, 27, 4, 31, 28, 195, DateTimeKind.Utc).AddTicks(2300),
                             CssClass = "",
                             MenuAction = "CreateSalesOrder",
                             MenuController = "Sales",
@@ -114,7 +117,7 @@ namespace Infrastructure.Migrations
                         {
                             Id = 3,
                             CreatedBy = "",
-                            CreatedTime = new DateTime(2023, 3, 1, 10, 54, 1, 88, DateTimeKind.Utc).AddTicks(8367),
+                            CreatedTime = new DateTime(2023, 2, 27, 4, 31, 28, 195, DateTimeKind.Utc).AddTicks(2303),
                             CssClass = "",
                             MenuAction = "ChangeSalesOrder",
                             MenuController = "Sales",
@@ -128,7 +131,7 @@ namespace Infrastructure.Migrations
                         {
                             Id = 4,
                             CreatedBy = "",
-                            CreatedTime = new DateTime(2023, 3, 1, 10, 54, 1, 88, DateTimeKind.Utc).AddTicks(8369),
+                            CreatedTime = new DateTime(2023, 2, 27, 4, 31, 28, 195, DateTimeKind.Utc).AddTicks(2305),
                             CssClass = "",
                             MenuAction = "DisplaySalesOrder",
                             MenuController = "Sales",
@@ -239,28 +242,6 @@ namespace Infrastructure.Migrations
                         .HasFilter("[NormalizedName] IS NOT NULL");
 
                     b.ToTable("Role", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            ConcurrencyStamp = "d8032b33-d38e-4367-87d2-6a8134d8d7f7",
-                            CreatedBy = "",
-                            CreatedTime = new DateTime(2023, 3, 1, 10, 54, 1, 389, DateTimeKind.Utc).AddTicks(7359),
-                            Name = "Administrator",
-                            NormalizedName = "ADMINISTRATOR",
-                            RowStatus = (short)0
-                        },
-                        new
-                        {
-                            Id = 2,
-                            ConcurrencyStamp = "b7b140e8-cd11-4eff-99e0-14d10b3c27c6",
-                            CreatedBy = "",
-                            CreatedTime = new DateTime(2023, 3, 1, 10, 54, 1, 389, DateTimeKind.Utc).AddTicks(7385),
-                            Name = "Sales Create",
-                            NormalizedName = "SALES CREATE",
-                            RowStatus = (short)0
-                        });
                 });
 
             modelBuilder.Entity("Domain.Entities.ApplicationRoleClaim", b =>
@@ -431,9 +412,9 @@ namespace Infrastructure.Migrations
                         {
                             Id = 1,
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "c39d7177-82d0-4e79-9289-dbac5679d66f",
+                            ConcurrencyStamp = "6f8dcebf-df9b-4396-8452-4a3439e2a44c",
                             CreatedBy = "",
-                            CreatedTime = new DateTime(2023, 3, 1, 10, 54, 1, 199, DateTimeKind.Utc).AddTicks(2307),
+                            CreatedTime = new DateTime(2023, 2, 27, 4, 31, 28, 285, DateTimeKind.Utc).AddTicks(7),
                             Email = "admin@admin.com",
                             EmailConfirmed = false,
                             FirstName = "Admin",
@@ -441,10 +422,10 @@ namespace Infrastructure.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@ADMIN.COM",
                             NormalizedUserName = "ADMIN",
-                            PasswordHash = "AQAAAAIAAYagAAAAEFa3JiPEqrvN23b9sLNkt8dpVL1fzj1mAAYO+t4AseVUt5jUwsoVY4s7/YwFgOrJFA==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEHe5uuuh66n6+7KDvct9enxLEwBxroWWzqbhU3nGBH3y1dwZi+bjfps2Y3583xv/XQ==",
                             PhoneNumberConfirmed = false,
                             RowStatus = (short)0,
-                            SecurityStamp = "77809e30-9b26-461d-bab0-00625bf43f3a",
+                            SecurityStamp = "1c07a2b1-fb36-46f2-8af4-69f2f716eb85",
                             TwoFactorEnabled = false,
                             UserName = "admin"
                         },
@@ -452,9 +433,9 @@ namespace Infrastructure.Migrations
                         {
                             Id = 2,
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "b8b7a85c-c2c8-4871-9336-e3df2cf47e78",
+                            ConcurrencyStamp = "4736f245-1d3f-487d-9eba-7a846d8a19f8",
                             CreatedBy = "",
-                            CreatedTime = new DateTime(2023, 3, 1, 10, 54, 1, 389, DateTimeKind.Utc).AddTicks(6558),
+                            CreatedTime = new DateTime(2023, 2, 27, 4, 31, 28, 376, DateTimeKind.Utc).AddTicks(6645),
                             Email = "user@user.com",
                             EmailConfirmed = false,
                             FirstName = "User",
@@ -462,10 +443,10 @@ namespace Infrastructure.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "USER@USER.COM",
                             NormalizedUserName = "USER",
-                            PasswordHash = "AQAAAAIAAYagAAAAEKNoLEUteZhdvhPLJnXO5MW80SNsz8HQr8PtRudwvhNvpeAui0HdsUAE1p2/vrEEvw==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEIBs9dkdAD9D6v1FmNktvFDcvUgbdLmioxrI13lwyTj2+U8u6dYA1rGX4UtlhKSO1w==",
                             PhoneNumberConfirmed = false,
                             RowStatus = (short)0,
-                            SecurityStamp = "337c6657-bc08-4d26-9c6b-45edec8cc74c",
+                            SecurityStamp = "ec055c06-633e-4d9d-b0ea-2e4f2f305195",
                             TwoFactorEnabled = false,
                             UserName = "user"
                         });
@@ -581,9 +562,6 @@ namespace Infrastructure.Migrations
                     b.Property<DateTime?>("ModifiedTime")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("RoleId1")
-                        .HasColumnType("int");
-
                     b.Property<short>("RowStatus")
                         .HasColumnType("smallint");
 
@@ -593,16 +571,9 @@ namespace Infrastructure.Migrations
                         .ValueGeneratedOnAddOrUpdate()
                         .HasColumnType("rowversion");
 
-                    b.Property<int>("UserId1")
-                        .HasColumnType("int");
-
                     b.HasKey("UserId", "RoleId");
 
                     b.HasIndex("RoleId");
-
-                    b.HasIndex("RoleId1");
-
-                    b.HasIndex("UserId1");
 
                     b.ToTable("UserRoles", (string)null);
                 });
@@ -700,7 +671,7 @@ namespace Infrastructure.Migrations
                         {
                             Id = 1,
                             CreatedBy = "",
-                            CreatedTime = new DateTime(2023, 3, 1, 10, 54, 1, 88, DateTimeKind.Utc).AddTicks(8639),
+                            CreatedTime = new DateTime(2023, 2, 27, 4, 31, 28, 195, DateTimeKind.Utc).AddTicks(2491),
                             Description = "English",
                             IsDefaultLanguage = true,
                             LCID = 1033,
@@ -710,7 +681,7 @@ namespace Infrastructure.Migrations
                         {
                             Id = 2,
                             CreatedBy = "",
-                            CreatedTime = new DateTime(2023, 3, 1, 10, 54, 1, 88, DateTimeKind.Utc).AddTicks(8641),
+                            CreatedTime = new DateTime(2023, 2, 27, 4, 31, 28, 195, DateTimeKind.Utc).AddTicks(2494),
                             Description = "Indonesia",
                             IsDefaultLanguage = false,
                             LCID = 1057,
@@ -944,32 +915,16 @@ namespace Infrastructure.Migrations
             modelBuilder.Entity("Domain.Entities.ApplicationUserRole", b =>
                 {
                     b.HasOne("Domain.Entities.ApplicationRole", null)
-                        .WithMany("UserRoles")
-                        .HasForeignKey("RoleId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
-                    b.HasOne("Domain.Entities.ApplicationRole", "Role")
                         .WithMany()
-                        .HasForeignKey("RoleId1")
+                        .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("Domain.Entities.ApplicationUser", null)
-                        .WithMany("UserRoles")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
-                    b.HasOne("Domain.Entities.ApplicationUser", "User")
                         .WithMany()
-                        .HasForeignKey("UserId1")
+                        .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("Role");
-
-                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("Domain.Entities.ApplicationUserToken", b =>
@@ -1008,13 +963,6 @@ namespace Infrastructure.Migrations
             modelBuilder.Entity("Domain.Entities.ApplicationRole", b =>
                 {
                     b.Navigation("MenuRoles");
-
-                    b.Navigation("UserRoles");
-                });
-
-            modelBuilder.Entity("Domain.Entities.ApplicationUser", b =>
-                {
-                    b.Navigation("UserRoles");
                 });
 
             modelBuilder.Entity("Domain.Entities.Product", b =>

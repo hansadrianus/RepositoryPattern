@@ -11,6 +11,8 @@ namespace Application.Interfaces.Wrappers
         IAppMenuRepository AppMenu { get; }
         ILanguageCultureRepository LanguageCulture { get; }
         IAuthRepository Auth { get; }
+        IRoleRepository Role { get; }
+        IUserRoleRepository UserRoles { get; }
         IProductRepository Product { get; }
         ISalesOrderRepository SalesOrder { get; }
 

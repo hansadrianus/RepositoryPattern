@@ -31,6 +31,7 @@ namespace WebMVC
                 options.LoginPath = "/Identity/Account/Login";
             });
             builder.Services.AddHttpContextAccessor();
+            builder.Services.AddControllers().AddNewtonsoftJson();
             builder.Services.AddControllersWithViews();
             builder.Services.AddScoped<IPrincipalService, PrincipalService>();
             builder.Services.AddScoped<ILocalizeService, LocalizeService>();

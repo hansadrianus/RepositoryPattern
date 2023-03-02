@@ -21,6 +21,7 @@ namespace Infrastructure.Persistence.EntityConfigurations
         public void Configure(EntityTypeBuilder<SalesOrderDetail> builder)
         {
             builder.ToTable("SalesOrderDetail");
+            builder.Property(q => q.Price).HasPrecision(38, 38);
             builder.HasOne(q => q.Product).WithMany(q => q.SalesOrderDetails).OnDelete(DeleteBehavior.NoAction);
             builder.Navigation(q => q.OrderHeader).AutoInclude();
         }
