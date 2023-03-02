@@ -18,11 +18,11 @@
             <div class="image">
                 @if (currUser.ProfilePicture != null)
                 {
-                    <img src="data:image/*;base64,@(Convert.ToBase64String(currUser.ProfilePicture))" class="img-circle elevation-2" alt="User Image" style="width:40px;height:40px; object-fit:cover; border-radius:30px">
+                    <img src="data:image/*;base64,@(Convert.ToBase64String(currUser.ProfilePicture))" class="img-circle elevation-2" alt="User Image" style="width:40px;height:40px; object-fit:cover; border-radius:100%">
                 }
                 else
                 {
-                    <img class="img-circle elevation-2" src="~/assets/img/avatar.png" alt="Profile Picture" style="width:40px;height:40px; object-fit:cover; border-radius:30px">
+                    <img class="img-circle elevation-2" src="~/assets/img/avatar.png" alt="Profile Picture" style="width:40px;height:40px; object-fit:cover; border-radius:100%">
                 }
             </div>
             <div class="info">
