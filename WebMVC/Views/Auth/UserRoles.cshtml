@@ -35,18 +35,19 @@
 </div>
 
 @section Styles{
-    <link rel="stylesheet" href="~/assets/plugins/jsgrid/jsgrid.min.css">
-    <link rel="stylesheet" href="~/assets/plugins/jsgrid/jsgrid-theme.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jsgrid/1.5.3/jsgrid.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jsgrid/1.5.3/jsgrid-theme.min.css">
 }
 
 @section Scripts{
-    <script src="~/assets/plugins/jsgrid/jsgrid.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jsgrid/1.5.3/jsgrid.min.js"></script>
     <script>
         $(function () {
             $("#userRolesGrid").jsGrid({
                 height: "auto",
                 width: "100%",
 
+                filtering: true,
                 sorting: true,
                 paging: false,
                 editing: true,
@@ -57,12 +58,13 @@
                 },
 
                 controller: {
-                    loadData: function () {
+                    loadData: function (filter) {
                         var d = $.Deferred();
 
                         $.ajax({
                             type: "GET",
-                            url: "../GetUserRoles",
+                            url: "../GetUserRoles/" + @Model.Id,
+                            data: filter,
                             dataType: "json"
                         }).done(function (response) {
                             d.resolve(response.data);
@@ -75,19 +77,22 @@
 
                         $.ajax({
                             type: "PUT",
-                            url: "../UpdateUserRoles",
-                            data: item
+                            url: "../UpdateUserRoles/" + @Model.Id,
+                            data: item,
+                            dataType: "json"
                         }).done(function (response) {
                             d.resolve(response.data);
                         }).fail(function () {
                             d.resolve(previousItem);
                         });
+
+                        return d.promise();
                     }
                 },
 
                 fields: [
-                    { title: "ID", name: "roleId", type: "number", align: "center", width: 10, readOnly: true },
-                    { title: "Name", name: "roleName", type: "text", readOnly: true },
+                    { title: "ID", name: "roleId", type: "number", width: 50, align: "center", editing: false },
+                    { title: "Name", name: "roleName", type: "text", editing: false },
                     { title: "Selected", name: "isSelected", type: "checkbox" },
                     { type: "control", deleteButton: false }
                 ]

@@ -17,20 +17,93 @@
 </section>
 
 @section Styles{
-    <link rel="stylesheet" href="~/assets/plugins/jsgrid/jsgrid.min.css">
-    <link rel="stylesheet" href="~/assets/plugins/jsgrid/jsgrid-theme.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jsgrid/1.5.3/jsgrid.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jsgrid/1.5.3/jsgrid-theme.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.44/css/bootstrap-datetimepicker.min.css">
 }
 
 @section Scripts{
-    <script src="~/assets/plugins/jsgrid/jsgrid.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jsgrid/1.5.3/jsgrid.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.17.1/moment.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.44/js/bootstrap-datetimepicker.min.js"></script>
     <script>
         $(function () {
+            var jsGridCustomDateTimeField = function (config) {
+                jsGrid.Field.call(this, config);
+            };
+
+            jsGridCustomDateTimeField.prototype = new jsGrid.Field({
+                sorter: function (date1, date2) {
+                    return new Date(date1) - new Date(date2);
+                },
+
+                itemTemplate: function (value) {
+                    if (value === null) {
+                        return '';
+                    } else {
+                        return moment(value).format('L');
+                    }
+                },
+
+                insertTemplate: function (value) {
+                    this._insertPicker = $('<input>').datetimepicker({
+                        format: 'L',
+                        defaultDate: moment(),
+                        widgetPositioning: {
+                            horizontal: 'auto',
+                            vertical: 'bottom'
+                        }
+                    });
+
+                    this._insertPicker.data('DateTimePicker').date(moment());
+                    return this._insertPicker;
+                },
+
+                editTemplate: function (value) {
+                    this._editPicker = $('<input>').datetimepicker({
+                        format: 'L',
+                        widgetPositioning: {
+                            horizontal: 'auto',
+                            vertical: 'bottom'
+                        }
+                    });
+
+                    if (value !== null) {
+                        this._editPicker.data('DateTimePicker').defaultDate(moment(value));
+                        this._editPicker.data('DateTimePicker').date(moment(value));
+                    }
+                    return this._editPicker;
+                },
+
+                insertValue: function () {
+                    var insertValue = this._insertPicker.data('DateTimePicker').date();
+                    if (typeof insertDate !== 'undefined' && insertDate !== null) {
+                        return insertDate.format('L');
+                    } else {
+                        return null;
+                    }
+                },
+
+                editValue: function () {
+                    var editValue = this._editPicker.data('DateTimePicker').date();
+                    if (typeof editValue !== 'undefined' && editValue !== null) {
+                        return editValue.format('L');
+                    } else {
+                        return null;
+                    }
+                }
+            });
+
+            jsGrid.fields.jsGridCustomDateTimeField = jsGridCustomDateTimeField;
+
             $("#usersGrid").jsGrid({
-                height: "auto",
+                height: "500px",
                 width: "100%",
 
+                filtering: true,
                 sorting: true,
                 paging: false,
+                inserting: true,
                 editing: true,
                 autoload: true,
 
@@ -39,15 +112,32 @@
                 },
 
                 controller: {
-                    loadData: function () {
+                    loadData: function (filter) {
                         var d = $.Deferred();
 
                         $.ajax({
                             type: "GET",
                             url: "../Auth/GetUsers",
+                            data: filter,
                             dataType: "json"
                         }).done(function (response) {
                             d.resolve(response.data);
+                        });
+
+                        return d.promise();
+                    },
+                    insertItem: function (item) {
+                        var d = $.Deferred();
+
+                        $.ajax({
+                            type: "POST",
+                            url: "../AddUser",
+                            data: item,
+                            dataType: "json"
+                        }).done(function (response) {
+                            d.resolve(response.data);
+                        }).fail(function (response) {
+                            alert(response.data);
                         });
 
                         return d.promise();
@@ -58,38 +148,36 @@
                         $.ajax({
                             type: "PUT",
                             url: "../UpdateUserStatus/" + item.id,
-                            data: item
+                            data: item,
+                            dataType: "json"
                         }).done(function (response) {
                             d.resolve(response.data);
                         }).fail(function () {
                             d.resolve(previousItem);
                         });
+
+                        return d.promise();
                     }
                 },
 
                 fields: [
-                    { title: "ID", name: "id", type: "number", align: "center", width: 10, readOnly: true, editing: false },
+                    { title: "ID", name: "id", type: "number", width: 50, align: "center", editing: false },
                     { title: "First Name", name: "firstName", type: "text" },
                     { title: "Last Name", name: "lastName", type: "text" },
-                    { title: "Username", name: "userName", type: "text", readOnly: true, editing: false },
+                    { title: "Date Of Birth", name: "dateOfBirth", type: "jsGridCustomDateTimeField" },
+                    { title: "Email", name: "email", type: "text" },
+                    { title: "Phone Number", name: "phoneNumber", type: "text" },
+                    { title: "Username", name: "userName", type: "text", editing: false },
                     { title: "Status", name: "status", type: "checkbox" },
                     {
-                        type: "control", width: 200, align: "center",
-                        itemTemplate: function (value, item) {
+                        title: "Action", itemTemplate: function (value, item) {
                             var $link = $("<a>").attr("href", "../Auth/UserRoles/" + item.id).text("Roles");
                             return $("<div>").append($link);
                         }
-                    }
+                    },
+                    { type: "control", width: 200, align: "center", editButton: true, deleteButton: false }
                 ]
             });
         });
-
-        function checkBoxFormatter(cellvalue, options, rowObject) {
-            if (rowObject.amount > 50) {
-                return true;
-            } else {
-                return false;
-            }
-        }
     </script>
 }

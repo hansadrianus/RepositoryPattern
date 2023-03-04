@@ -37,8 +37,6 @@ namespace Infrastructure.Persistence.EntityConfigurations
         public void Configure(EntityTypeBuilder<ApplicationUserRole> builder)
         {
             builder.ToTable("UserRoles");
-            builder.Navigation(q => q.User).AutoInclude();
-            builder.Navigation(q => q.Role).AutoInclude();
         }
 
         public void Configure(EntityTypeBuilder<ApplicationUserClaim> builder)

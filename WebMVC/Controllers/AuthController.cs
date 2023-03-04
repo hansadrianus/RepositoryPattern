@@ -1,4 +1,5 @@
-﻿using Application.Endpoints.Auths.Queries;
+﻿using Application.Endpoints.Auths.Commands;
+using Application.Endpoints.Auths.Queries;
 using Application.Interfaces.Wrappers;
 using Application.Models;
 using Application.ViewModels;
@@ -28,12 +29,27 @@ namespace WebMVC.Controllers
 
         #region JSON API Controller
         [HttpGet]
-        public async Task<IActionResult> GetUsers()
-            => Json(await _mediator.Send(new GetUserProfileQuery()));
+        public async Task<IActionResult> GetUsers([FromQuery]GetUserProfileQuery query)
+            => Json(await _mediator.Send(query));
+
+        [HttpPost]
+        public async Task<IActionResult> AddUser([FromForm] RegisterCommand command)
+            => Json(await _mediator.Send(command));
 
         [HttpGet]
         public async Task<IActionResult> GetUserRoles(int id)
-            => Json(await _mediator.Send(new GetUserRolesQuery() { Id = id }));
+            => Json(await _mediator.Send(new GetUserRolesQuery() { UserId = id }));
+
+        [HttpPut]
+        public async Task<IActionResult> UpdateUserRoles(int id, [FromForm] UserRolesCommand command)
+        {
+            command.UserId = id;
+            var result = await _mediator.Send(command);
+            var roles = await _mediator.Send(new GetRoleQuery() { Id = result.Data.RoleId });
+            result.Data.RoleName = roles.Data.FirstOrDefault().Name;
+
+            return Json(result);
+        }
         #endregion
     }
 }

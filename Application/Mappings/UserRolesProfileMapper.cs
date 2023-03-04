@@ -1,4 +1,5 @@
-﻿using Application.ViewModels;
+﻿using Application.Endpoints.Auths.Commands;
+using Application.ViewModels;
 using AutoMapper;
 using Domain.Entities;
 using System;
@@ -15,9 +16,15 @@ namespace Application.Mappings
         {
             CreateMap<ApplicationUserRole, UserRolesViewModel>()
                 .ForMember(dest => dest.RoleId, opt => opt.MapFrom(src => src.RoleId))
-                .ForMember(dest => dest.RoleName, opt => opt.MapFrom(src => src.Role.Name))
+                .ForMember(dest => dest.RoleName, opt => opt.Ignore())
                 .ForMember(dest => dest.IsSelected, opt => opt.Ignore())
                 .ReverseMap();
+            CreateMap<UserRolesCommand, ApplicationUserRole>()
+                .ForMember(dest => dest.CreatedBy, opt => opt.Ignore())
+                .ForMember(dest => dest.CreatedTime, opt => opt.Ignore())
+                .ForMember(dest => dest.ModifiedBy, opt => opt.Ignore())
+                .ForMember(dest => dest.ModifiedTime, opt => opt.Ignore())
+                .ForMember(dest => dest.RowVersion, opt => opt.Ignore());
         }
     }
 }

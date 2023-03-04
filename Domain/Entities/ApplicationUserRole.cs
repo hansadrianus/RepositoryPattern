@@ -11,9 +11,5 @@ namespace Domain.Entities
 {
     public class ApplicationUserRole : AuditableUserRoleEntity
     {
-        [ForeignKey("UserId")]
-        public virtual ApplicationUser User { get; set; }
-        [ForeignKey("RoleId")]
-        public virtual ApplicationRole Role { get; set; }
     }
 }

@@ -11,6 +11,7 @@ namespace Application.Endpoints.Auths.Queries
 {
     public class GetUserRolesQuery : IRequest<EndpointResult<IEnumerable<UserRolesViewModel>>>
     {
-        public int Id { get; set; }
+        public int? UserId { get; set; }
+        public int? RoleId { get; set; }
     }
 }
