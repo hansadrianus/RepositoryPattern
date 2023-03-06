@@ -37,7 +37,7 @@ namespace WebMVC.Controllers
         public async Task<IActionResult> AddUser([FromForm] AddUserCommand command)
         {
             var result = await _mediator.Send(command);
-            Notify($"User successfully created for Username: {result.Data.UserName} with password: {result.Data.Password}.", result.Status);
+            Notify(result.Status, $"User successfully created for Username: {result.Data.UserName} with password: {result.Data.Password}.");
 
             return Json(result);
         }
@@ -46,9 +46,8 @@ namespace WebMVC.Controllers
         public async Task<IActionResult> GetUserRoles(int id, [FromQuery] GetUserRolesQuery query)
         {
             query.UserId = id;
-            var result = await _mediator.Send(query);
 
-            return Json(result);
+            return Json(await _mediator.Send(query));
         }
 
         [HttpPut]
@@ -58,6 +57,7 @@ namespace WebMVC.Controllers
             var result = await _mediator.Send(command);
             var roles = await _mediator.Send(new GetRoleQuery() { Id = result.Data.RoleId });
             result.Data.RoleName = roles.Data.FirstOrDefault().Name;
+            Notify(result.Status, $"User role(s) successfully updated!");
 
             return Json(result);
         }

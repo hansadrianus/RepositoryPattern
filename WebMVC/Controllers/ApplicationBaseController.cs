@@ -7,18 +7,26 @@ namespace WebMVC.Controllers
     [Authorize]
     public abstract class ApplicationBaseController : Controller
     {
-        public void Notify(string message, EndpointResultStatus status)
+        public void Notify(EndpointResultStatus status, string message = null)
         {
             switch (status)
             {
                 case EndpointResultStatus.Success:
-                    FireNotification(message, NotificationType.success); break;
+                    message = string.IsNullOrEmpty(message) ? "Success" : message;
+                    FireNotification(message, NotificationType.success); 
+                    break;
                 case EndpointResultStatus.Duplicate:
-                    FireNotification(message, NotificationType.warning); break;
+                    message = string.IsNullOrEmpty(message) ? "Warning" : message;
+                    FireNotification(message, NotificationType.warning);
+                    break;
                 case EndpointResultStatus.Gone:
-                    FireNotification(message, NotificationType.info); break;
+                    message = string.IsNullOrEmpty(message) ? "Information" : message;
+                    FireNotification(message, NotificationType.info);
+                    break;
                 default:
-                    FireNotification(message, NotificationType.error); break;
+                    message = string.IsNullOrEmpty(message) ? "Error" : message;
+                    FireNotification(message, NotificationType.error); 
+                    break;
             }
         }
 
