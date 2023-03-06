@@ -35,8 +35,8 @@
 </div>
 
 @section Styles{
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jsgrid/1.5.3/jsgrid.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jsgrid/1.5.3/jsgrid-theme.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jsgrid/1.5.3/jsgrid.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jsgrid/1.5.3/jsgrid-theme.min.css" />
 }
 
 @section Scripts{
@@ -44,7 +44,7 @@
     <script>
         $(function () {
             $("#userRolesGrid").jsGrid({
-                height: "auto",
+                height: "500px",
                 width: "100%",
 
                 filtering: true,
@@ -93,7 +93,7 @@
                 fields: [
                     { title: "ID", name: "roleId", type: "number", width: 50, align: "center", editing: false },
                     { title: "Name", name: "roleName", type: "text", editing: false },
-                    { title: "Selected", name: "isSelected", type: "checkbox" },
+                    { title: "Selected", name: "isSelected", type: "checkbox", width: 50, filtering: false },
                     { type: "control", deleteButton: false }
                 ]
             });

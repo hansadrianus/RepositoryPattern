@@ -8,9 +8,9 @@ namespace Application.Models.Enumerations
 {
     public enum NotificationType
     {
-        success,
-        error,
-        warning,
-        info
+        success = 0,
+        error = 1,
+        warning = 2,
+        info = 3
     }
 }

@@ -1,4 +1,5 @@
 ﻿using Application.Endpoints.Auths.Commands;
+using Application.Endpoints.Auths.Queries;
 using Application.ViewModels;
 using AutoMapper;
 using Domain.Entities;
@@ -15,7 +16,6 @@ namespace Application.Mappings
         public UserRolesProfileMapper()
         {
             CreateMap<ApplicationUserRole, UserRolesViewModel>()
-                .ForMember(dest => dest.RoleId, opt => opt.MapFrom(src => src.RoleId))
                 .ForMember(dest => dest.RoleName, opt => opt.Ignore())
                 .ForMember(dest => dest.IsSelected, opt => opt.Ignore())
                 .ReverseMap();
@@ -25,6 +25,9 @@ namespace Application.Mappings
                 .ForMember(dest => dest.ModifiedBy, opt => opt.Ignore())
                 .ForMember(dest => dest.ModifiedTime, opt => opt.Ignore())
                 .ForMember(dest => dest.RowVersion, opt => opt.Ignore());
+            CreateMap<GetUserRolesQuery, GetRoleQuery>()
+                .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.RoleId))
+                .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.RoleName));
         }
     }
 }

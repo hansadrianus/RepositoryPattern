@@ -2,6 +2,7 @@
 using Application.Endpoints.Auths.Queries;
 using Application.Interfaces.Wrappers;
 using Application.Models;
+using Application.Models.Enumerations;
 using Application.ViewModels;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -29,16 +30,26 @@ namespace WebMVC.Controllers
 
         #region JSON API Controller
         [HttpGet]
-        public async Task<IActionResult> GetUsers([FromQuery]GetUserProfileQuery query)
+        public async Task<IActionResult> GetUsers([FromQuery] GetUserProfileQuery query)
             => Json(await _mediator.Send(query));
 
         [HttpPost]
-        public async Task<IActionResult> AddUser([FromForm] RegisterCommand command)
-            => Json(await _mediator.Send(command));
+        public async Task<IActionResult> AddUser([FromForm] AddUserCommand command)
+        {
+            var result = await _mediator.Send(command);
+            Notify($"User successfully created for Username: {result.Data.UserName} with password: {result.Data.Password}.", result.Status);
+
+            return Json(result);
+        }
 
         [HttpGet]
-        public async Task<IActionResult> GetUserRoles(int id)
-            => Json(await _mediator.Send(new GetUserRolesQuery() { UserId = id }));
+        public async Task<IActionResult> GetUserRoles(int id, [FromQuery] GetUserRolesQuery query)
+        {
+            query.UserId = id;
+            var result = await _mediator.Send(query);
+
+            return Json(result);
+        }
 
         [HttpPut]
         public async Task<IActionResult> UpdateUserRoles(int id, [FromForm] UserRolesCommand command)

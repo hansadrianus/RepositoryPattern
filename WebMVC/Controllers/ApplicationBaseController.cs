@@ -7,7 +7,22 @@ namespace WebMVC.Controllers
     [Authorize]
     public abstract class ApplicationBaseController : Controller
     {
-        public void Notify(string message, NotificationType notificationType)
+        public void Notify(string message, EndpointResultStatus status)
+        {
+            switch (status)
+            {
+                case EndpointResultStatus.Success:
+                    FireNotification(message, NotificationType.success); break;
+                case EndpointResultStatus.Duplicate:
+                    FireNotification(message, NotificationType.warning); break;
+                case EndpointResultStatus.Gone:
+                    FireNotification(message, NotificationType.info); break;
+                default:
+                    FireNotification(message, NotificationType.error); break;
+            }
+        }
+
+        private void FireNotification(string message, NotificationType notificationType)
         {
             var msg = "$(function() { Toast.fire({ icon: '" + notificationType + "', title: '" + message + "' }) });";
             TempData["Notification"] = msg;

@@ -37,14 +37,16 @@ namespace Application.Endpoints.Auths.Commands
             {
                 var userRole = _mapper.Map<ApplicationUserRole>(request);
                 var existingUserRole = await _repository.UserRoles.GetAllAsync(q => q.UserId == userRole.UserId && q.RoleId == userRole.RoleId, cancellationToken);
-                if (existingUserRole.Any())
+                if (existingUserRole.Any() && !request.IsSelected)
                     _repository.UserRoles.RemoveRange(existingUserRole);
                 else
                     await _repository.UserRoles.AddAsync(userRole, cancellationToken);
 
                 await _repository.SaveAsync(cancellationToken);
+                var userRoleView = _mapper.Map<UserRolesViewModel>(userRole);
+                userRoleView.IsSelected = request.IsSelected;
 
-                return new EndpointResult<UserRolesViewModel>(EndpointResultStatus.Success, _mapper.Map<UserRolesViewModel>(userRole));
+                return new EndpointResult<UserRolesViewModel>(EndpointResultStatus.Success, userRoleView);
             }
             catch (Exception ex)
             {
