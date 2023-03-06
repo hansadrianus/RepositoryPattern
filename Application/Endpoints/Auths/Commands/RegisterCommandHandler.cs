@@ -38,7 +38,9 @@ namespace Application.Endpoints.Auths.Commands
                 await _repository.Auth.RegisterUserAsync(user, cancellationToken);
                 await _repository.SaveAsync(cancellationToken);
 
-                return new EndpointResult<RegisterViewModel>(EndpointResultStatus.Success, _mapper.Map<RegisterViewModel>(user));
+                var addedUser = await _repository.Auth.GetAsync(q => q.UserName == user.UserName, cancellationToken: cancellationToken);
+
+                return new EndpointResult<RegisterViewModel>(EndpointResultStatus.Success, _mapper.Map<RegisterViewModel>(addedUser));
             }
             catch (Exception ex)
             {
