@@ -1,8 +1,12 @@
 using Application;
 using Application.Interfaces.Services;
+using Domain.Entities;
 using Infrastructure;
+using Infrastructure.Persistence;
 using Infrastructure.Persistence.Localizations;
 using Infrastructure.Services;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.Extensions.Options;
 using System.Globalization;
@@ -13,9 +17,10 @@ namespace WebMVC
 {
     public class Program
     {
-        public static void Main(string[] args)
+        public static async Task Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
+            builder.Configuration.AddSharedConfiguration(builder.Environment);
 
             // Add services to the container.
             builder.Services.AddSingleton(builder.Configuration);
@@ -30,6 +35,7 @@ namespace WebMVC
                 options.LoginPath = "/Identity/Account/Login";
             });
             builder.Services.AddHttpContextAccessor();
+            builder.Services.AddControllers().AddNewtonsoftJson();
             builder.Services.AddControllersWithViews();
             builder.Services.AddScoped<IPrincipalService, PrincipalService>();
             builder.Services.AddScoped<ILocalizeService, LocalizeService>();
@@ -62,7 +68,7 @@ namespace WebMVC
                         AssemblyName assemblyName = new AssemblyName(typeof(GlobalResource).GetTypeInfo().Assembly.FullName);
                         return factory.Create("GlobalResource", assemblyName.Name);
                     };
-                }); ;
+                });
 
             var app = builder.Build();
 
@@ -72,6 +78,7 @@ namespace WebMVC
                 app.UseExceptionHandler("/Home/Error");
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
+                app.SeedDevelopmentData();
             }
             IOptions<RequestLocalizationOptions> localizeOptions = app.Services.GetService<IOptions<RequestLocalizationOptions>>();
             app.UseRequestLocalization(localizeOptions.Value);

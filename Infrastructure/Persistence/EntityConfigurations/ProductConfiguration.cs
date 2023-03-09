@@ -15,6 +15,8 @@ namespace Infrastructure.Persistence.EntityConfigurations
         {
             builder.ToTable("Product");
             builder.HasIndex(q => q.ProductCode).IsUnique();
+            builder.Property(q => q.Price).HasPrecision(38, 38);
+            builder.Navigation(q => q.SalesOrderDetails).AutoInclude();
         }
     }
 }

@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Domain.Entities
 {
-    public class SalesOrderDetail : AuditableEntity
+    public class SalesOrderDetail : AuditableEntity 
     {
         public int OrderId { get; set; }
         public int ProductId { get; set; }

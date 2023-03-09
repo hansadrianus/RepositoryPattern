@@ -43,8 +43,11 @@ namespace API.Controllers
         [HttpGet]
         public async Task<IActionResult> UserProfileAsync()
         {
-            GetUserProfile command = new GetUserProfile();
-            command.Id = HttpContext.User.FindFirstValue("id");
+            GetUserProfileQuery command = new GetUserProfileQuery();
+            if (int.TryParse(HttpContext.User.FindFirstValue("id"), out int id))
+                command.Id = id;
+            else
+                command.Id = 0;
 
             return (await _mediator.Send(command)).ToActionResult();
         }

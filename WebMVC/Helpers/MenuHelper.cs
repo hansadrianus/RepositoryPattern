@@ -6,7 +6,7 @@ namespace WebMVC.Helpers
 {
     public static class MenuHelper
     {
-        public static string renderMenu(this IHtmlHelper html, IApplicationContext context)
+        public static string RenderMenu(this IHtmlHelper html, IApplicationContext context)
         {
             string htmlTag = "";
             List<AppMenu> menuList = context.AppMenu.Where(menu => menu.MenuLevel == 0).OrderBy(menu => menu.MenuOrder).ToList();
@@ -21,13 +21,13 @@ namespace WebMVC.Helpers
                                                 </p>
                                             </a>
                                             {2}
-                                        </li>", menu.MenuName, setAnchorRef(menu), html.setChildMenu(context, menu), menu.CssClass, HtmlHelper.isMenuOpen(html, menu.MenuController));
+                                        </li>", menu.MenuName, SetAnchorRef(menu), html.SetChildMenu(context, menu), menu.CssClass, HtmlHelper.isMenuOpen(html, menu.MenuController));
             }
 
             return htmlTag;
         }
 
-        private static string setAnchorRef(AppMenu menu)
+        private static string SetAnchorRef(AppMenu menu)
         {
             string anchorRefString = "href='#'";
             if (menu.MenuLevel != 0 && !string.IsNullOrEmpty(menu.MenuAction))
@@ -38,7 +38,7 @@ namespace WebMVC.Helpers
             return anchorRefString;
         }
 
-        private static string setChildMenu(this IHtmlHelper html, IApplicationContext context, AppMenu menu)
+        private static string SetChildMenu(this IHtmlHelper html, IApplicationContext context, AppMenu menu)
         {
             string childMenuString = "<ul class='nav nav-treeview'>";
             List<AppMenu> childMenuList = context.AppMenu.Where(child => child.MenuParent == menu.Id).OrderBy(child => child.MenuOrder).ToList();
@@ -51,7 +51,7 @@ namespace WebMVC.Helpers
                                                                 <i class='far fa-circle nav-icon'></i>
                                                                 <p>{0}</p>
                                                             </a>
-                                                        </li>", childMenu.MenuName, setAnchorRef(childMenu), HtmlHelper.isActive(html, childMenu.MenuController, childMenu.MenuAction));
+                                                        </li>", childMenu.MenuName, SetAnchorRef(childMenu), HtmlHelper.isActive(html, childMenu.MenuController, childMenu.MenuAction));
                 }
             }
             childMenuString += "</ul>";

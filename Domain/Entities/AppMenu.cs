@@ -2,7 +2,7 @@
 
 namespace Domain.Entities
 {
-    public class AppMenu : AuditableEntity
+    public class AppMenu : AuditableEntity 
     {
         public string MenuName { get; set; }
         public string MenuController { get; set; }
@@ -11,5 +11,7 @@ namespace Domain.Entities
         public int MenuLevel { get; set; }
         public int MenuOrder { get; set; }
         public string CssClass { get; set; }
+
+        public virtual ICollection<AppMenuRole> MenuRoles { get; set; }
     }
 }

@@ -10,12 +10,16 @@ using Infrastructure.Services;
 using Infrastructure.Wrappers;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using System.Configuration;
+using System.Runtime.InteropServices;
 using System.Text.RegularExpressions;
 
 namespace Infrastructure
@@ -52,7 +56,24 @@ namespace Infrastructure
             return services;
         }
 
-        public static void ConfigureCookies(this IServiceCollection services, IConfiguration configuration)
+        public static IConfigurationBuilder AddSharedConfiguration(this IConfigurationBuilder configBuilder, IHostEnvironment hostEnvironment)
+        {
+            var environment = hostEnvironment.EnvironmentName;
+            if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+            {
+                configBuilder.AddJsonFile(Path.Combine(hostEnvironment.ContentRootPath, "..", "Shared", "appsettings.json"), false, true)
+                    .AddJsonFile(Path.Combine(Directory.GetCurrentDirectory(), "..", "Shared", $"appsettings.{environment}.json"), true, true);
+            }
+            else
+            {
+                configBuilder.AddJsonFile(Path.Combine(hostEnvironment.ContentRootPath, "..", "src", "Shared", "appsettings.json"), false, true)
+                    .AddJsonFile(Path.Combine(Directory.GetCurrentDirectory(), "..", "src", "Shared", $"appsettings.{environment}.json"), true, true);
+            }
+
+            return configBuilder;
+        }
+
+        public static IServiceCollection ConfigureCookies(this IServiceCollection services, IConfiguration configuration)
         {
             var config = configuration.GetSection("AuthConfig");
             double expireTime = (string.IsNullOrEmpty(config["tokenExpiresInMinutes"])) ? 5 : double.Parse(config["tokenExpiresInMinutes"]);
@@ -65,11 +86,13 @@ namespace Infrastructure
                     opt.EventsType = typeof(CookiesAuthenticationConfiguration);
                 });
             services.AddTransient<CookiesAuthenticationConfiguration>();
+
+            return services;
         }
 
-        public static void ConfigureIdentity(this IServiceCollection services)
+        public static IServiceCollection ConfigureIdentity(this IServiceCollection services)
         {
-            var builder = services.AddIdentity<ApplicationUser, IdentityRole>(opt =>
+            var builder = services.AddIdentity<ApplicationUser, ApplicationRole>(opt =>
             {
                 opt.Password.RequireDigit = true;
                 opt.Password.RequireLowercase = true;
@@ -84,13 +107,15 @@ namespace Infrastructure
                 opt.User.AllowedUserNameCharacters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-._@+";
                 opt.User.RequireUniqueEmail = true;
             })
-            .AddRoles<IdentityRole>()
+            .AddRoles<ApplicationRole>()
             .AddEntityFrameworkStores<ApplicationContext>()
             .AddDefaultUI()
             .AddDefaultTokenProviders();
+
+            return services;
         }
 
-        public static void ConfigureJWT(this IServiceCollection services, IConfiguration configuration)
+        public static IServiceCollection ConfigureJWT(this IServiceCollection services, IConfiguration configuration)
         {
             services.AddAuthentication(opt =>
             {
@@ -101,9 +126,11 @@ namespace Infrastructure
             {
                 opt.TokenValidationParameters = new TokenValidationConfiguration(configuration).DefaultTokenConfiguration();
             });
+
+            return services;
         }
 
-        public static void ConfigureSession(this IServiceCollection services, IConfiguration configuration)
+        public static IServiceCollection ConfigureSession(this IServiceCollection services, IConfiguration configuration)
         {
             var config = configuration.GetSection("AuthConfig");
             double expireTime = (string.IsNullOrEmpty(config["tokenExpiresInMinutes"])) ? 5 : double.Parse(config["tokenExpiresInMinutes"]);
@@ -113,6 +140,8 @@ namespace Infrastructure
                 options.Cookie.HttpOnly = true;
                 options.Cookie.IsEssential = true;
             });
+
+            return services;
         }
     }
 }
