@@ -1,4 +1,5 @@
-﻿using Application.ViewModels;
+﻿using Application.Endpoints.Auths.Queries;
+using Application.ViewModels;
 using AutoMapper;
 using Domain.Entities;
 using System;
@@ -14,7 +15,10 @@ namespace Application.Mappings
         public RoleProfileMapper()
         {
             CreateMap<ApplicationRole, RoleViewModel>()
+                .ForMember(dest => dest.RowStatus, opt => opt.MapFrom(src => (src.RowStatus == 0) ? 1 : 0))
                 .ReverseMap();
+            CreateMap<GetRoleQuery, GetRoleQuery>()
+                .ForMember(dest => dest.RowStatus, opt => opt.MapFrom(src => (src.RowStatus == 0) ? 1 : 0));
         }
     }
 }

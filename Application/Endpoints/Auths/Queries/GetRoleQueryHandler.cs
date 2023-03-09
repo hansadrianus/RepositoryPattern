@@ -28,7 +28,7 @@ namespace Application.Endpoints.Auths.Queries
 
         public async Task<EndpointResult<IEnumerable<RoleViewModel>>> Handle(GetRoleQuery request, CancellationToken cancellationToken)
         {
-            var predicates = _queryBuilder.BuildPredicate<ApplicationRole, GetRoleQuery>(request);
+            var predicates = _queryBuilder.BuildPredicate<ApplicationRole, GetRoleQuery>(_mapper.Map<GetRoleQuery>(request));
             var roles = await _repository.Role.GetAllAsync(predicates, cancellationToken);
 
             return new EndpointResult<IEnumerable<RoleViewModel>>(Models.Enumerations.EndpointResultStatus.Success, _mapper.Map<IEnumerable<RoleViewModel>>(roles));

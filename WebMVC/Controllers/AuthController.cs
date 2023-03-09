@@ -26,6 +26,9 @@ namespace WebMVC.Controllers
 
         public async Task<IActionResult> UserRoles(int id)
             => View((await _mediator.Send(new GetUserProfileQuery() { Id = id })).Data.FirstOrDefault());
+
+        public IActionResult Roles()
+            => View();
         #endregion
 
         #region JSON API Controller
@@ -63,6 +66,10 @@ namespace WebMVC.Controllers
 
             return Json(result);
         }
+
+        [HttpGet]
+        public async Task<IActionResult> GetRoles([FromQuery] GetRoleQuery query)
+           => Json(await _mediator.Send(query));
         #endregion
     }
 }

@@ -16,17 +16,10 @@ namespace Application.Mappings
         public UserProfileProfileMapper()
         {
             CreateMap<ApplicationUser, UserProfileViewModel>()
-                .ForMember(dest => dest.RowStatus, opt => opt.Ignore())
-                .AfterMap((src, dest) =>
-                {
-                    dest.RowStatus = (short)(src.RowStatus == 0 ? 1 : 0);
-                })
+                .ForMember(dest => dest.RowStatus, opt => opt.MapFrom(src => (src.RowStatus == 0) ? 1 : 0))
                 .ReverseMap();
             CreateMap<GetUserProfileQuery, GetUserProfileQuery>()
-                .AfterMap((src, dest) =>
-                {
-                    dest.RowStatus = (short)(src.RowStatus == 0 ? 1 : 0);
-                });
+                .ForMember(dest => dest.RowStatus, opt => opt.MapFrom(src => (src.RowStatus == 0) ? 1 : 0));
         }
     }
 }
