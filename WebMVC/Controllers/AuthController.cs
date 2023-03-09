@@ -70,6 +70,18 @@ namespace WebMVC.Controllers
         [HttpGet]
         public async Task<IActionResult> GetRoles([FromQuery] GetRoleQuery query)
            => Json(await _mediator.Send(query));
+
+        [HttpPost]
+        public async Task<IActionResult> AddRole([FromForm] AddRoleCommand command)
+            => Json(await _mediator.Send(command));
+
+        [HttpPut]
+        public async Task<IActionResult> UpdateRole(int id, [FromForm] UpdateRoleCommand command)
+        {
+            command.Id = id;
+
+            return Json(await _mediator.Send(command));
+        }
         #endregion
     }
 }
