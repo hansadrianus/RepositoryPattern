@@ -17,6 +17,9 @@ namespace API.Services
         {
             get
             {
+                if (_httpContextAccessor.HttpContext is null)
+                    return "Initial";
+
                 var claimsPrincipal = _httpContextAccessor.HttpContext?.User;
                 if (claimsPrincipal == null)
                     throw new MissingClaimsPrincipalException();

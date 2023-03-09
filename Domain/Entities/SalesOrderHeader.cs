@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Domain.Entities
 {
-    public class SalesOrderHeader : AuditableEntity
+    public class SalesOrderHeader : AuditableEntity 
     {
         public string OrderNumber { get; set; }
         public string OrderType { get; set; }

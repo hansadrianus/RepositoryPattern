@@ -8,24 +8,31 @@ namespace Application.Endpoints.Auths.Commands
         {
             RuleFor(x => x.FirstName)
                 .NotEmpty()
+                .NotNull()
                 .Length(1, 100);
             RuleFor(x => x.LastName)
                 .NotEmpty()
+                .NotNull()
                 .Length(1, 100);
             RuleFor(x => x.UserName)
                 .NotEmpty()
+                .NotNull()
                 .Length(1, 100);
             RuleFor(x => x.Email)
                 .EmailAddress()
+                .NotNull()
                 .NotEmpty();
             RuleFor(x => x.DateOfBirth)
                 .NotEmpty()
-                .LessThanOrEqualTo(DateTime.Now);
+                .NotNull()
+                .LessThanOrEqualTo(DateTime.Now.AddDays(1));
             RuleFor(x => x.PhoneNumber)
                 .NotEmpty()
+                .NotNull()
                 .Length(1, 20);
             RuleFor(x => x.Password)
                 .NotEmpty()
+                .NotNull()
                 .Equal(x => x.PasswordConfirmation)
                 .MinimumLength(8);
         }

@@ -38,7 +38,7 @@ namespace Infrastructure.Helpers
             var selectedUser = await _userManager.FindByNameAsync(user.UserName);
             List<Claim> claims = new List<Claim>()
             {
-                new Claim("Id", selectedUser.Id),
+                new Claim("Id", selectedUser.Id.ToString()),
                 new Claim(ClaimTypes.NameIdentifier, selectedUser.UserName),
                 new Claim("Lcid", lcid)
             };
