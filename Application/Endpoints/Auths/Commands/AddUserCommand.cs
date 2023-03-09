@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Application.Endpoints.Auths.Commands
 {
-    public class AddUserCommand : IRequest<EndpointResult<AddUserViewModel>>
+    public class AddUserCommand : IRequest<EndpointResult<UserViewModel>>
     {
         public string FirstName { get; set; }
         public string LastName { get; set; }

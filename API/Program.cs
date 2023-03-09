@@ -1,8 +1,13 @@
 using API.Services;
 using Application;
+using Application.Interfaces.Persistence;
 using Application.Interfaces.Services;
+using Domain.Entities;
 using Infrastructure;
+using Infrastructure.Persistence;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Hosting;
 using Microsoft.Net.Http.Headers;
 using Microsoft.OpenApi.Models;
 
@@ -10,7 +15,7 @@ namespace API
 {
     public class Program
     {
-        public static void Main(string[] args)
+        public static async Task Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
             // TODO: Remove this line if you want to return the Server header
@@ -84,6 +89,7 @@ namespace API
                 app.UseDeveloperExceptionPage();
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Repository.Api v1"));
+                app.SeedDevelopmentData();
             }
 
             app.UseHttpsRedirection();

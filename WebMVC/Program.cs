@@ -1,8 +1,12 @@
 using Application;
 using Application.Interfaces.Services;
+using Domain.Entities;
 using Infrastructure;
+using Infrastructure.Persistence;
 using Infrastructure.Persistence.Localizations;
 using Infrastructure.Services;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.Extensions.Options;
 using System.Globalization;
@@ -13,7 +17,7 @@ namespace WebMVC
 {
     public class Program
     {
-        public static void Main(string[] args)
+        public static async Task Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
             builder.Configuration.AddSharedConfiguration(builder.Environment);
@@ -74,6 +78,7 @@ namespace WebMVC
                 app.UseExceptionHandler("/Home/Error");
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
+                app.SeedDevelopmentData();
             }
             IOptions<RequestLocalizationOptions> localizeOptions = app.Services.GetService<IOptions<RequestLocalizationOptions>>();
             app.UseRequestLocalization(localizeOptions.Value);

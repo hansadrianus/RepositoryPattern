@@ -28,7 +28,7 @@
                 <h3 class="card-title">User Roles</h3>
             </div>
             <div class="card-body">
-                <div id="userRolesGrid"></div>
+                <div id="userRolesGrid" style="overflow: visible"></div>
             </div>
         </div>
     </section>
@@ -82,8 +82,10 @@
                             dataType: "json"
                         }).done(function (response) {
                             d.resolve(response.data);
-                        }).fail(function () {
+                            $(function () { Swal.fire({ icon: 'success', title: 'Success!', text: 'User role updated successfully.' }) });
+                        }).fail(function (response) {
                             d.resolve(previousItem);
+                            $(function () { Swal.fire({ icon: 'error', title: 'Error!', text: response.data.message }) });
                         });
 
                         return d.promise();

@@ -35,11 +35,14 @@ namespace WebMVC.Controllers
 
         [HttpPost]
         public async Task<IActionResult> AddUser([FromForm] AddUserCommand command)
-        {
-            var result = await _mediator.Send(command);
-            Notify(result.Status, $"User successfully created for Username: {result.Data.UserName} with password: {result.Data.Password}.");
+            => Json(await _mediator.Send(command));
 
-            return Json(result);
+        [HttpPut]
+        public async Task<IActionResult> UpdateUser(int id, [FromForm] UpdateUserCommand command)
+        {
+            command.Id = id;
+
+            return Json(await _mediator.Send(command));
         }
 
         [HttpGet]
@@ -57,7 +60,6 @@ namespace WebMVC.Controllers
             var result = await _mediator.Send(command);
             var roles = await _mediator.Send(new GetRoleQuery() { Id = result.Data.RoleId });
             result.Data.RoleName = roles.Data.FirstOrDefault().Name;
-            Notify(result.Status, $"User role(s) successfully updated!");
 
             return Json(result);
         }

@@ -15,7 +15,7 @@ using System.Threading.Tasks;
 
 namespace Application.Endpoints.Auths.Commands
 {
-    public class AddUserCommandHandler : IRequestHandler<AddUserCommand, EndpointResult<AddUserViewModel>>
+    public class AddUserCommandHandler : IRequestHandler<AddUserCommand, EndpointResult<UserViewModel>>
     {
         private readonly IRequestValidator<AddUserCommand> _requestValidator;
         private readonly IRepositoryWrapper _repository;
@@ -28,29 +28,31 @@ namespace Application.Endpoints.Auths.Commands
             _mapper = mapper;
         }
 
-        public async Task<EndpointResult<AddUserViewModel>> Handle(AddUserCommand request, CancellationToken cancellationToken)
+        public async Task<EndpointResult<UserViewModel>> Handle(AddUserCommand request, CancellationToken cancellationToken)
         {
             var validationErrors = _requestValidator.ValidateRequest(request);
             if (validationErrors.Any())
-                return new EndpointResult<AddUserViewModel>(EndpointResultStatus.BadRequest, validationErrors.ToArray());
+                return new EndpointResult<UserViewModel>(EndpointResultStatus.BadRequest, validationErrors.ToArray());
 
             try
             {
                 var newUser = _mapper.Map<ApplicationUser>(request);
+                string rawPassword = newUser.PasswordHash;
                 var usersFound = await _repository.Auth.GetAsync(q => q.UserName == newUser.UserName, cancellationToken: cancellationToken);
                 if (usersFound != null)
-                    return new EndpointResult<AddUserViewModel>(EndpointResultStatus.BadRequest, _mapper.Map<AddUserViewModel>(newUser), "Username already taken.");
+                    return new EndpointResult<UserViewModel>(EndpointResultStatus.BadRequest, _mapper.Map<UserViewModel>(newUser), "Username already taken.");
 
                 await _repository.Auth.RegisterUserAsync(newUser, cancellationToken);
                 await _repository.SaveAsync(cancellationToken);
 
-                var addedUser = await _repository.Auth.GetAsync(q => q.UserName == newUser.UserName, cancellationToken: cancellationToken);
+                var result = _mapper.Map<UserViewModel>(newUser);
+                result.Password = rawPassword;
 
-                return new EndpointResult<AddUserViewModel>(EndpointResultStatus.Success, _mapper.Map<AddUserViewModel>(addedUser));
+                return new EndpointResult<UserViewModel>(EndpointResultStatus.Success, result);
             }
             catch (Exception ex)
             {
-                return new EndpointResult<AddUserViewModel>(EndpointResultStatus.Error, ex.Message);
+                return new EndpointResult<UserViewModel>(EndpointResultStatus.Error, ex.Message);
             }
         }
     }

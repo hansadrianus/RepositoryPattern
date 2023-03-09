@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace Application.Endpoints.Auths.Commands
 {
-    public class AddUserCommandValidator : AbstractValidator<AddUserCommand>
+    public class UpdateUserCommandValidator : AbstractValidator<UpdateUserCommand>
     {
-        public AddUserCommandValidator()
+        public UpdateUserCommandValidator()
         {
             RuleFor(x => x.FirstName)
                 .NotEmpty()
@@ -17,21 +17,18 @@ namespace Application.Endpoints.Auths.Commands
             RuleFor(x => x.LastName)
                 .NotEmpty()
                 .NotNull();
-            RuleFor(x => x.UserName)
-                .NotEmpty()
-                .NotNull();
             RuleFor(x => x.PhoneNumber)
                 .NotEmpty()
                 .NotNull()
                 .Length(1, 20);
-            RuleFor(x => x.Email)
-                .NotEmpty()
-                .NotNull()
-                .EmailAddress();
             RuleFor(x => x.DateOfBirth)
                 .NotEmpty()
                 .NotNull()
                 .LessThanOrEqualTo(DateTime.Now.AddDays(1));
+            RuleFor(x => x.Email)
+                .NotEmpty()
+                .NotNull()
+                .EmailAddress();
         }
     }
 }
