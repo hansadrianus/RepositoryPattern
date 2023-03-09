@@ -6,8 +6,31 @@ services:
     build:
       context: .
       dockerfile: API/Dockerfile
+    depends_on:
+      - db
+    networks:
+      - dbnetwork
+
   mvc:
     image: ${DOCKER_REGISTRY-}repository-pattern-mvc
     build:
       context: .
       dockerfile: WebMVC/Dockerfile
+    depends_on:
+      - db
+    networks:
+      - dbnetwork
+
+  db:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    ports:
+      - 1433:1433
+    environment:
+      MSSQL_SA_PASSWORD: Password123!@#
+      ACCEPT_EULA: Y
+    networks:
+      - dbnetwork
+
+networks:
+  dbnetwork:
+    driver: bridge

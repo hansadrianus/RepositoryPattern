@@ -17,11 +17,14 @@ namespace WebMVC.Services
         {
             get
             {
+                if (_httpContextAccessor.HttpContext is null)
+                    return "Initial";
+
                 var claimsPrincipal = _httpContextAccessor.HttpContext?.User;
                 if (claimsPrincipal == null)
                     throw new MissingClaimsPrincipalException();
 
-                return claimsPrincipal.FindFirst(ClaimTypes.NameIdentifier)?.Value ?? "0";
+                return claimsPrincipal.Identity?.Name ?? "0";
             }
         }
     }

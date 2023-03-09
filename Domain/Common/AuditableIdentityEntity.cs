@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Domain.Common
 {
-    public abstract class AuditableIdentityEntity : IdentityUser, IAuditableEntity
+    public abstract class AuditableIdentityEntity : IdentityUser<int>, IAuditableEntity 
     {
         public string CreatedBy { get; set; }
         public DateTime CreatedTime { get; set; }

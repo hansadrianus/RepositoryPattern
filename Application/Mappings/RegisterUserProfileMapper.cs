@@ -23,7 +23,7 @@ namespace Application.Mappings
                 .ForMember(dest => dest.LockoutEnabled, opt => opt.Ignore())
                 .ForMember(dest => dest.LockoutEnd, opt => opt.Ignore())
                 .ForMember(dest => dest.PhoneNumberConfirmed, opt => opt.Ignore())
-                .ForMember(dest => dest.SecurityStamp, opt => opt.Ignore())
+                .ForMember(dest => dest.SecurityStamp, opt => opt.MapFrom(src => Guid.NewGuid().ToString()))
                 .ForMember(dest => dest.PasswordHash, opt => opt.MapFrom(src => src.Password))
                 .ForMember(dest => dest.RowStatus, opt => opt.MapFrom(src => 0))
                 .ForMember(dest => dest.CreatedBy, opt => opt.Ignore())

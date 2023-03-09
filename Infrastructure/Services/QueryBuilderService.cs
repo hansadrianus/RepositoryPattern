@@ -24,100 +24,108 @@ namespace Infrastructure.Services
             var searchCriteriaPropertyInfos = searchCriteria.GetType().GetProperties();
             foreach (var searchCriteriaPropertyInfo in searchCriteriaPropertyInfos)
             {
-                var dbFieldName = GetDbFieldName(searchCriteriaPropertyInfo);
-                if (dbFieldName.Contains("_"))
-                    dbFieldName = dbFieldName.Substring(0, dbFieldName.IndexOf("_"));
-                var dbType = typeof(TDbType);
-                var dbFieldMemberInfo = dbType.GetMember(dbFieldName, BindingFlags.IgnoreCase | BindingFlags.Public | BindingFlags.Instance).Single();
+                try
+                {
+                    var dbFieldName = GetDbFieldName(searchCriteriaPropertyInfo);
+                    if (dbFieldName.Contains("_"))
+                        dbFieldName = dbFieldName.Substring(0, dbFieldName.IndexOf("_"));
+                    var dbType = typeof(TDbType);
+                    var dbFieldMemberInfo = dbType.GetMember(dbFieldName, BindingFlags.IgnoreCase | BindingFlags.Public | BindingFlags.Instance).Single();
 
-                if (searchCriteriaPropertyInfo.Name.Contains("GreaterThanEqual"))
-                {
-                    if (searchCriteriaPropertyInfo.PropertyType == typeof(short?))
-                        predicate = ApplyInt16Criterion(searchCriteria, searchCriteriaPropertyInfo, dbType, dbFieldMemberInfo, predicate, ">=");
-                    else if (searchCriteriaPropertyInfo.PropertyType == typeof(int?))
-                        predicate = ApplyInt32Criterion(searchCriteria, searchCriteriaPropertyInfo, dbType, dbFieldMemberInfo, predicate, ">=");
-                    else if (searchCriteriaPropertyInfo.PropertyType == typeof(long?))
-                        predicate = ApplyInt64Criterion(searchCriteria, searchCriteriaPropertyInfo, dbType, dbFieldMemberInfo, predicate, ">=");
-                    else if (searchCriteriaPropertyInfo.PropertyType == typeof(float?))
-                        predicate = ApplyUint16Criterion(searchCriteria, searchCriteriaPropertyInfo, dbType, dbFieldMemberInfo, predicate, ">=");
-                    else if (searchCriteriaPropertyInfo.PropertyType == typeof(double?))
-                        predicate = ApplyUint32Criterion(searchCriteria, searchCriteriaPropertyInfo, dbType, dbFieldMemberInfo, predicate, ">=");
-                    else if (searchCriteriaPropertyInfo.PropertyType == typeof(decimal?))
-                        predicate = ApplyUint64Criterion(searchCriteria, searchCriteriaPropertyInfo, dbType, dbFieldMemberInfo, predicate, ">=");
-                    else if (searchCriteriaPropertyInfo.PropertyType == typeof(DateTime?))
-                        predicate = ApplyDateTimeCriterion(searchCriteria, searchCriteriaPropertyInfo, dbType, dbFieldMemberInfo, predicate, ">=");
+                    if (searchCriteriaPropertyInfo.Name.Contains("GreaterThanEqual"))
+                    {
+                        if (searchCriteriaPropertyInfo.PropertyType == typeof(short?) || searchCriteriaPropertyInfo.PropertyType == typeof(short))
+                            predicate = ApplyInt16Criterion(searchCriteria, searchCriteriaPropertyInfo, dbType, dbFieldMemberInfo, predicate, ">=");
+                        else if (searchCriteriaPropertyInfo.PropertyType == typeof(int?) || searchCriteriaPropertyInfo.PropertyType == typeof(int))
+                            predicate = ApplyInt32Criterion(searchCriteria, searchCriteriaPropertyInfo, dbType, dbFieldMemberInfo, predicate, ">=");
+                        else if (searchCriteriaPropertyInfo.PropertyType == typeof(long?) || searchCriteriaPropertyInfo.PropertyType == typeof(long))
+                            predicate = ApplyInt64Criterion(searchCriteria, searchCriteriaPropertyInfo, dbType, dbFieldMemberInfo, predicate, ">=");
+                        else if (searchCriteriaPropertyInfo.PropertyType == typeof(float?) || searchCriteriaPropertyInfo.PropertyType == typeof(float))
+                            predicate = ApplyUint16Criterion(searchCriteria, searchCriteriaPropertyInfo, dbType, dbFieldMemberInfo, predicate, ">=");
+                        else if (searchCriteriaPropertyInfo.PropertyType == typeof(double?) || searchCriteriaPropertyInfo.PropertyType == typeof(double))
+                            predicate = ApplyUint32Criterion(searchCriteria, searchCriteriaPropertyInfo, dbType, dbFieldMemberInfo, predicate, ">=");
+                        else if (searchCriteriaPropertyInfo.PropertyType == typeof(decimal?) || searchCriteriaPropertyInfo.PropertyType == typeof(decimal))
+                            predicate = ApplyUint64Criterion(searchCriteria, searchCriteriaPropertyInfo, dbType, dbFieldMemberInfo, predicate, ">=");
+                        else if (searchCriteriaPropertyInfo.PropertyType == typeof(DateTime?) || searchCriteriaPropertyInfo.PropertyType == typeof(DateTime))
+                            predicate = ApplyDateTimeCriterion(searchCriteria, searchCriteriaPropertyInfo, dbType, dbFieldMemberInfo, predicate, ">=");
+                    }
+                    else if (searchCriteriaPropertyInfo.Name.Contains("LessThanEqual"))
+                    {
+                        if (searchCriteriaPropertyInfo.PropertyType == typeof(short?) || searchCriteriaPropertyInfo.PropertyType == typeof(short))
+                            predicate = ApplyInt16Criterion(searchCriteria, searchCriteriaPropertyInfo, dbType, dbFieldMemberInfo, predicate, "<=");
+                        else if (searchCriteriaPropertyInfo.PropertyType == typeof(int?) || searchCriteriaPropertyInfo.PropertyType == typeof(int))
+                            predicate = ApplyInt32Criterion(searchCriteria, searchCriteriaPropertyInfo, dbType, dbFieldMemberInfo, predicate, "<=");
+                        else if (searchCriteriaPropertyInfo.PropertyType == typeof(long?) || searchCriteriaPropertyInfo.PropertyType == typeof(long))
+                            predicate = ApplyInt64Criterion(searchCriteria, searchCriteriaPropertyInfo, dbType, dbFieldMemberInfo, predicate, "<=");
+                        else if (searchCriteriaPropertyInfo.PropertyType == typeof(float?) || searchCriteriaPropertyInfo.PropertyType == typeof(float))
+                            predicate = ApplyUint16Criterion(searchCriteria, searchCriteriaPropertyInfo, dbType, dbFieldMemberInfo, predicate, "<=");
+                        else if (searchCriteriaPropertyInfo.PropertyType == typeof(double?) || searchCriteriaPropertyInfo.PropertyType == typeof(double))
+                            predicate = ApplyUint32Criterion(searchCriteria, searchCriteriaPropertyInfo, dbType, dbFieldMemberInfo, predicate, "<=");
+                        else if (searchCriteriaPropertyInfo.PropertyType == typeof(decimal?) || searchCriteriaPropertyInfo.PropertyType == typeof(decimal))
+                            predicate = ApplyUint64Criterion(searchCriteria, searchCriteriaPropertyInfo, dbType, dbFieldMemberInfo, predicate, "<=");
+                        else if (searchCriteriaPropertyInfo.PropertyType == typeof(DateTime?) || searchCriteriaPropertyInfo.PropertyType == typeof(DateTime))
+                            predicate = ApplyDateTimeCriterion(searchCriteria, searchCriteriaPropertyInfo, dbType, dbFieldMemberInfo, predicate, "<=");
+                    }
+                    else if (searchCriteriaPropertyInfo.Name.Contains("GreaterThan"))
+                    {
+                        if (searchCriteriaPropertyInfo.PropertyType == typeof(short?) || searchCriteriaPropertyInfo.PropertyType == typeof(short))
+                            predicate = ApplyInt16Criterion(searchCriteria, searchCriteriaPropertyInfo, dbType, dbFieldMemberInfo, predicate, ">");
+                        else if (searchCriteriaPropertyInfo.PropertyType == typeof(int?) || searchCriteriaPropertyInfo.PropertyType == typeof(int))
+                            predicate = ApplyInt32Criterion(searchCriteria, searchCriteriaPropertyInfo, dbType, dbFieldMemberInfo, predicate, ">");
+                        else if (searchCriteriaPropertyInfo.PropertyType == typeof(long?) || searchCriteriaPropertyInfo.PropertyType == typeof(long))
+                            predicate = ApplyInt64Criterion(searchCriteria, searchCriteriaPropertyInfo, dbType, dbFieldMemberInfo, predicate, ">");
+                        else if (searchCriteriaPropertyInfo.PropertyType == typeof(float?) || searchCriteriaPropertyInfo.PropertyType == typeof(float))
+                            predicate = ApplyUint16Criterion(searchCriteria, searchCriteriaPropertyInfo, dbType, dbFieldMemberInfo, predicate, ">");
+                        else if (searchCriteriaPropertyInfo.PropertyType == typeof(double?) || searchCriteriaPropertyInfo.PropertyType == typeof(double))
+                            predicate = ApplyUint32Criterion(searchCriteria, searchCriteriaPropertyInfo, dbType, dbFieldMemberInfo, predicate, ">");
+                        else if (searchCriteriaPropertyInfo.PropertyType == typeof(decimal?) || searchCriteriaPropertyInfo.PropertyType == typeof(decimal))
+                            predicate = ApplyUint64Criterion(searchCriteria, searchCriteriaPropertyInfo, dbType, dbFieldMemberInfo, predicate, ">");
+                        else if (searchCriteriaPropertyInfo.PropertyType == typeof(DateTime?) || searchCriteriaPropertyInfo.PropertyType == typeof(DateTime))
+                            predicate = ApplyDateTimeCriterion(searchCriteria, searchCriteriaPropertyInfo, dbType, dbFieldMemberInfo, predicate, ">");
+                    }
+                    else if (searchCriteriaPropertyInfo.Name.Contains("LessThan"))
+                    {
+                        if (searchCriteriaPropertyInfo.PropertyType == typeof(short?) || searchCriteriaPropertyInfo.PropertyType == typeof(short))
+                            predicate = ApplyInt16Criterion(searchCriteria, searchCriteriaPropertyInfo, dbType, dbFieldMemberInfo, predicate, "<");
+                        else if (searchCriteriaPropertyInfo.PropertyType == typeof(int?) || searchCriteriaPropertyInfo.PropertyType == typeof(int))
+                            predicate = ApplyInt32Criterion(searchCriteria, searchCriteriaPropertyInfo, dbType, dbFieldMemberInfo, predicate, "<");
+                        else if (searchCriteriaPropertyInfo.PropertyType == typeof(long?) || searchCriteriaPropertyInfo.PropertyType == typeof(long))
+                            predicate = ApplyInt64Criterion(searchCriteria, searchCriteriaPropertyInfo, dbType, dbFieldMemberInfo, predicate, "<");
+                        else if (searchCriteriaPropertyInfo.PropertyType == typeof(float?) || searchCriteriaPropertyInfo.PropertyType == typeof(float))
+                            predicate = ApplyUint16Criterion(searchCriteria, searchCriteriaPropertyInfo, dbType, dbFieldMemberInfo, predicate, "<");
+                        else if (searchCriteriaPropertyInfo.PropertyType == typeof(double?) || searchCriteriaPropertyInfo.PropertyType == typeof(double))
+                            predicate = ApplyUint32Criterion(searchCriteria, searchCriteriaPropertyInfo, dbType, dbFieldMemberInfo, predicate, "<");
+                        else if (searchCriteriaPropertyInfo.PropertyType == typeof(decimal?) || searchCriteriaPropertyInfo.PropertyType == typeof(decimal))
+                            predicate = ApplyUint64Criterion(searchCriteria, searchCriteriaPropertyInfo, dbType, dbFieldMemberInfo, predicate, "<");
+                        else if (searchCriteriaPropertyInfo.PropertyType == typeof(DateTime?) || searchCriteriaPropertyInfo.PropertyType == typeof(DateTime))
+                            predicate = ApplyDateTimeCriterion(searchCriteria, searchCriteriaPropertyInfo, dbType, dbFieldMemberInfo, predicate, "<");
+                    }
+                    else
+                    {
+                        if (searchCriteriaPropertyInfo.PropertyType == typeof(string))
+                            predicate = ApplyStringCriterion(searchCriteria, searchCriteriaPropertyInfo, dbType, dbFieldMemberInfo, predicate);
+                        else if (searchCriteriaPropertyInfo.PropertyType == typeof(bool?) || searchCriteriaPropertyInfo.PropertyType == typeof(bool))
+                            predicate = ApplyBoolCriterion(searchCriteria, searchCriteriaPropertyInfo, dbType, dbFieldMemberInfo, predicate);
+                        else if (searchCriteriaPropertyInfo.PropertyType == typeof(short?) || searchCriteriaPropertyInfo.PropertyType == typeof(short))
+                            predicate = ApplyInt16Criterion(searchCriteria, searchCriteriaPropertyInfo, dbType, dbFieldMemberInfo, predicate);
+                        else if (searchCriteriaPropertyInfo.PropertyType == typeof(int?) || searchCriteriaPropertyInfo.PropertyType == typeof(int))
+                            predicate = ApplyInt32Criterion(searchCriteria, searchCriteriaPropertyInfo, dbType, dbFieldMemberInfo, predicate);
+                        else if (searchCriteriaPropertyInfo.PropertyType == typeof(long?) || searchCriteriaPropertyInfo.PropertyType == typeof(long))
+                            predicate = ApplyInt64Criterion(searchCriteria, searchCriteriaPropertyInfo, dbType, dbFieldMemberInfo, predicate);
+                        else if (searchCriteriaPropertyInfo.PropertyType == typeof(float?) || searchCriteriaPropertyInfo.PropertyType == typeof(float))
+                            predicate = ApplyUint16Criterion(searchCriteria, searchCriteriaPropertyInfo, dbType, dbFieldMemberInfo, predicate);
+                        else if (searchCriteriaPropertyInfo.PropertyType == typeof(double?) || searchCriteriaPropertyInfo.PropertyType == typeof(double))
+                            predicate = ApplyUint32Criterion(searchCriteria, searchCriteriaPropertyInfo, dbType, dbFieldMemberInfo, predicate);
+                        else if (searchCriteriaPropertyInfo.PropertyType == typeof(decimal?) || searchCriteriaPropertyInfo.PropertyType == typeof(decimal))
+                            predicate = ApplyUint64Criterion(searchCriteria, searchCriteriaPropertyInfo, dbType, dbFieldMemberInfo, predicate);
+                        else if (searchCriteriaPropertyInfo.PropertyType == typeof(DateTime?) || searchCriteriaPropertyInfo.PropertyType == typeof(DateTime))
+                            predicate = ApplyDateTimeCriterion(searchCriteria, searchCriteriaPropertyInfo, dbType, dbFieldMemberInfo, predicate);
+                    }
                 }
-                else if (searchCriteriaPropertyInfo.Name.Contains("LessThanEqual"))
+                catch (Exception ex)
                 {
-                    if (searchCriteriaPropertyInfo.PropertyType == typeof(short?))
-                        predicate = ApplyInt16Criterion(searchCriteria, searchCriteriaPropertyInfo, dbType, dbFieldMemberInfo, predicate, "<=");
-                    else if (searchCriteriaPropertyInfo.PropertyType == typeof(int?))
-                        predicate = ApplyInt32Criterion(searchCriteria, searchCriteriaPropertyInfo, dbType, dbFieldMemberInfo, predicate, "<=");
-                    else if (searchCriteriaPropertyInfo.PropertyType == typeof(long?))
-                        predicate = ApplyInt64Criterion(searchCriteria, searchCriteriaPropertyInfo, dbType, dbFieldMemberInfo, predicate, "<=");
-                    else if (searchCriteriaPropertyInfo.PropertyType == typeof(float?))
-                        predicate = ApplyUint16Criterion(searchCriteria, searchCriteriaPropertyInfo, dbType, dbFieldMemberInfo, predicate, "<=");
-                    else if (searchCriteriaPropertyInfo.PropertyType == typeof(double?))
-                        predicate = ApplyUint32Criterion(searchCriteria, searchCriteriaPropertyInfo, dbType, dbFieldMemberInfo, predicate, "<=");
-                    else if (searchCriteriaPropertyInfo.PropertyType == typeof(decimal?))
-                        predicate = ApplyUint64Criterion(searchCriteria, searchCriteriaPropertyInfo, dbType, dbFieldMemberInfo, predicate, "<=");
-                    else if (searchCriteriaPropertyInfo.PropertyType == typeof(DateTime?))
-                        predicate = ApplyDateTimeCriterion(searchCriteria, searchCriteriaPropertyInfo, dbType, dbFieldMemberInfo, predicate, "<=");
-                }
-                else if (searchCriteriaPropertyInfo.Name.Contains("GreaterThan"))
-                {
-                    if (searchCriteriaPropertyInfo.PropertyType == typeof(short?))
-                        predicate = ApplyInt16Criterion(searchCriteria, searchCriteriaPropertyInfo, dbType, dbFieldMemberInfo, predicate, ">");
-                    else if (searchCriteriaPropertyInfo.PropertyType == typeof(int?))
-                        predicate = ApplyInt32Criterion(searchCriteria, searchCriteriaPropertyInfo, dbType, dbFieldMemberInfo, predicate, ">");
-                    else if (searchCriteriaPropertyInfo.PropertyType == typeof(long?))
-                        predicate = ApplyInt64Criterion(searchCriteria, searchCriteriaPropertyInfo, dbType, dbFieldMemberInfo, predicate, ">");
-                    else if (searchCriteriaPropertyInfo.PropertyType == typeof(float?))
-                        predicate = ApplyUint16Criterion(searchCriteria, searchCriteriaPropertyInfo, dbType, dbFieldMemberInfo, predicate, ">");
-                    else if (searchCriteriaPropertyInfo.PropertyType == typeof(double?))
-                        predicate = ApplyUint32Criterion(searchCriteria, searchCriteriaPropertyInfo, dbType, dbFieldMemberInfo, predicate, ">");
-                    else if (searchCriteriaPropertyInfo.PropertyType == typeof(decimal?))
-                        predicate = ApplyUint64Criterion(searchCriteria, searchCriteriaPropertyInfo, dbType, dbFieldMemberInfo, predicate, ">");
-                    else if (searchCriteriaPropertyInfo.PropertyType == typeof(DateTime?))
-                        predicate = ApplyDateTimeCriterion(searchCriteria, searchCriteriaPropertyInfo, dbType, dbFieldMemberInfo, predicate, ">");
-                }
-                else if (searchCriteriaPropertyInfo.Name.Contains("LessThan"))
-                {
-                    if (searchCriteriaPropertyInfo.PropertyType == typeof(short?))
-                        predicate = ApplyInt16Criterion(searchCriteria, searchCriteriaPropertyInfo, dbType, dbFieldMemberInfo, predicate, "<");
-                    else if (searchCriteriaPropertyInfo.PropertyType == typeof(int?))
-                        predicate = ApplyInt32Criterion(searchCriteria, searchCriteriaPropertyInfo, dbType, dbFieldMemberInfo, predicate, "<");
-                    else if (searchCriteriaPropertyInfo.PropertyType == typeof(long?))
-                        predicate = ApplyInt64Criterion(searchCriteria, searchCriteriaPropertyInfo, dbType, dbFieldMemberInfo, predicate, "<");
-                    else if (searchCriteriaPropertyInfo.PropertyType == typeof(float?))
-                        predicate = ApplyUint16Criterion(searchCriteria, searchCriteriaPropertyInfo, dbType, dbFieldMemberInfo, predicate, "<");
-                    else if (searchCriteriaPropertyInfo.PropertyType == typeof(double?))
-                        predicate = ApplyUint32Criterion(searchCriteria, searchCriteriaPropertyInfo, dbType, dbFieldMemberInfo, predicate, "<");
-                    else if (searchCriteriaPropertyInfo.PropertyType == typeof(decimal?))
-                        predicate = ApplyUint64Criterion(searchCriteria, searchCriteriaPropertyInfo, dbType, dbFieldMemberInfo, predicate, "<");
-                    else if (searchCriteriaPropertyInfo.PropertyType == typeof(DateTime?))
-                        predicate = ApplyDateTimeCriterion(searchCriteria, searchCriteriaPropertyInfo, dbType, dbFieldMemberInfo, predicate, "<");
-                }
-                else
-                {
-                    if (searchCriteriaPropertyInfo.PropertyType == typeof(string))
-                        predicate = ApplyStringCriterion(searchCriteria, searchCriteriaPropertyInfo, dbType, dbFieldMemberInfo, predicate);
-                    else if (searchCriteriaPropertyInfo.PropertyType == typeof(bool?))
-                        predicate = ApplyBoolCriterion(searchCriteria, searchCriteriaPropertyInfo, dbType, dbFieldMemberInfo, predicate);
-                    else if (searchCriteriaPropertyInfo.PropertyType == typeof(short?))
-                        predicate = ApplyInt16Criterion(searchCriteria, searchCriteriaPropertyInfo, dbType, dbFieldMemberInfo, predicate);
-                    else if (searchCriteriaPropertyInfo.PropertyType == typeof(int?))
-                        predicate = ApplyInt32Criterion(searchCriteria, searchCriteriaPropertyInfo, dbType, dbFieldMemberInfo, predicate);
-                    else if (searchCriteriaPropertyInfo.PropertyType == typeof(long?))
-                        predicate = ApplyInt64Criterion(searchCriteria, searchCriteriaPropertyInfo, dbType, dbFieldMemberInfo, predicate);
-                    else if (searchCriteriaPropertyInfo.PropertyType == typeof(float?))
-                        predicate = ApplyUint16Criterion(searchCriteria, searchCriteriaPropertyInfo, dbType, dbFieldMemberInfo, predicate);
-                    else if (searchCriteriaPropertyInfo.PropertyType == typeof(double?))
-                        predicate = ApplyUint32Criterion(searchCriteria, searchCriteriaPropertyInfo, dbType, dbFieldMemberInfo, predicate);
-                    else if (searchCriteriaPropertyInfo.PropertyType == typeof(decimal?))
-                        predicate = ApplyUint64Criterion(searchCriteria, searchCriteriaPropertyInfo, dbType, dbFieldMemberInfo, predicate);
-                    else if (searchCriteriaPropertyInfo.PropertyType == typeof(DateTime?))
-                        predicate = ApplyDateTimeCriterion(searchCriteria, searchCriteriaPropertyInfo, dbType, dbFieldMemberInfo, predicate);
+                    //Will continue to search
+                    continue;
                 }
             }
 

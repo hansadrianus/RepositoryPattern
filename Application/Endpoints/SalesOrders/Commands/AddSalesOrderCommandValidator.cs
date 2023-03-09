@@ -20,7 +20,7 @@ namespace Application.Endpoints.SalesOrders.Commands
             RuleFor(x => x.OrderDate)
                 .NotEmpty()
                 .NotNull()
-                .GreaterThanOrEqualTo(DateTime.UtcNow);
+                .GreaterThanOrEqualTo(DateTime.Now);
             RuleFor(x => x.CustomerName)
                 .NotEmpty()
                 .NotNull();

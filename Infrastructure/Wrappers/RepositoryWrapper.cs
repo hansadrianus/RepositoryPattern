@@ -24,6 +24,8 @@ namespace Infrastructure.Wrappers
         private IAppMenuRepository _appMenu;
         private ILanguageCultureRepository _languageCulture;
         private IAuthRepository _auth;
+        private IRoleRepository _role;
+        private IUserRoleRepository _userRole;
         private IProductRepository _product;
         private ISalesOrderRepository _salesOrder;
 
@@ -58,6 +60,24 @@ namespace Infrastructure.Wrappers
             {
                 _auth ??= new AuthRepository(_context, _userManager, _configuration);
                 return _auth;
+            }
+        }
+
+        public IRoleRepository Role
+        {
+            get
+            {
+                _role ??= new RoleRepository(_context);
+                return _role;
+            }
+        }
+
+        public IUserRoleRepository UserRoles
+        {
+            get
+            {
+                _userRole ??= new UserRoleRepository(_context);
+                return _userRole;
             }
         }
 

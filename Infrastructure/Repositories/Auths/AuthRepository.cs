@@ -1,5 +1,4 @@
-﻿using Application.Endpoints.Auths.Commands;
-using Application.Interfaces.Persistence;
+﻿using Application.Interfaces.Persistence;
 using Application.Interfaces.Persistence.Auths;
 using Application.ViewModels;
 using Domain.Entities;
@@ -9,7 +8,6 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
-using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
 namespace Infrastructure.Repositories.Auths
 {
