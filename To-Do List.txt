@@ -1,0 +1,32 @@
+1. Create API for external application to print html menu.
+	Json output will be as below:
+	{
+		"id": 1,
+		"menuName": "Sales",
+		"menuController": "Sales",
+		"menuAction": "",
+		"menuParent": 0,
+		"menuLevel": 0,
+		"menuOrder": 0,
+		"cssClass": "fas fa-dollar-sign"
+	},
+	{
+		"id": 2,
+		"menuName": "Create Sales Order",
+		"menuController": "Sales",
+		"menuAction": "CreateSalesOrder",
+		"menuParent": 1,
+		"menuLevel": 1,
+		"menuOrder": 1,
+		"cssClass": ""
+	},
+	{
+		"id": 3,
+		"menuName": "Change Sales Order",
+		"menuController": "Sales",
+		"menuAction": "ChangeSalesOrder",
+		"menuParent": 1,
+		"menuLevel": 1,
+		"menuOrder": 2,
+		"cssClass": ""
+	}

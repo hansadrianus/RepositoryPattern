@@ -17,7 +17,12 @@ Project("{54A90642-561A-4BB1-A94E-469ADEE60C69}") = "WebUI", "WebUI\WebUI.esproj
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebMVC", "WebMVC\WebMVC.csproj", "{E6BF184A-A9F5-4E01-9BED-54D32A0887E8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shared", "Shared\Shared.csproj", "{7287CD83-FFAC-4A98-9F94-2F0A39C3AD3D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Shared", "Shared\Shared.csproj", "{7287CD83-FFAC-4A98-9F94-2F0A39C3AD3D}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "000_Notes", "000_Notes", "{765E1973-28D4-4D57-96C9-836C6EA17988}"
+	ProjectSection(SolutionItems) = preProject
+		To-Do List.txt = To-Do List.txt
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
