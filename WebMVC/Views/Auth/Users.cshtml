@@ -1,20 +1,22 @@
-﻿<section class="content">
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-12">
-                <div class="card">
-                    <div class="card-header">
-                        <h3 class="card-title">List of User Accounts</h3>
-                    </div>
+﻿<div class="content-wrapper">
+    <section class="content">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title">List of User Accounts</h3>
+                        </div>
 
-                    <div class="card-body">
-                        <div id="usersGrid" style="overflow: visible"></div>
+                        <div class="card-body">
+                            <div id="usersGrid" style="overflow: visible"></div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-</section>
+    </section>
+</div>
 
 @section Styles{
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jsgrid/1.5.3/jsgrid.min.css" />
@@ -176,7 +178,7 @@
                     },
                     updateItem: function (item) {
                         var d = $.Deferred();
-                        
+
                         if (item.rowStatus == true) {
                             item.rowStatus = 1;
                         }

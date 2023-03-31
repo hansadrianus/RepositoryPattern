@@ -22,6 +22,7 @@ namespace Infrastructure.Wrappers
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly IConfiguration _configuration;
         private IAppMenuRepository _appMenu;
+        private IMenuRoleRepository _menuRole;
         private ILanguageCultureRepository _languageCulture;
         private IAuthRepository _auth;
         private IRoleRepository _role;
@@ -42,6 +43,15 @@ namespace Infrastructure.Wrappers
             {
                 _appMenu ??= new AppMenuRepository(_context);
                 return _appMenu;
+            }
+        }
+
+        public IMenuRoleRepository MenuRole
+        {
+            get
+            {
+                _menuRole ??= new MenuRoleRepository(_context);
+                return _menuRole;
             }
         }
 

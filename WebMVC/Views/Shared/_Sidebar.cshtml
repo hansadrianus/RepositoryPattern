@@ -6,6 +6,7 @@
 @inject IApplicationContext Context
 @{
     var currUser = await UserManager.FindByNameAsync(User.Identity.Name);
+    var userRoles = await UserManager.GetRolesAsync(currUser);
 }
 
 <aside class="main-sidebar sidebar-dark-primary elevation-4">
@@ -41,26 +42,23 @@
         </div>
         <nav class="mt-2">
             <ul class="nav nav-pills nav-sidebar nav-child-indent flex-column" data-widget="treeview" role="menu">
-                @Html.Raw(MenuHelper.RenderMenu(Html, Context))
-                <li class="nav-header">User Management</li>
-                <li class="nav-item">
-                    <a asp-area="" asp-controller="Auth" asp-action="Users" class="nav-link">
-                        <i class="nav-icon fas fa-users"></i>
-                        <p>User Manager</p>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a asp-area="" asp-controller="Auth" asp-action="Roles" class="nav-link">
-                        <i class="nav-icon fas fa-user-tag"></i>
-                        <p>Role Manager</p>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a asp-area="" asp-controller="Auth" asp-action="Menu" class="nav-link">
-                        <i class="nav-icon fas fa-user-cog"></i>
-                        <p>Menu Manager</p>
-                    </a>
-                </li>
+                @Html.Raw(MenuHelper.RenderMenu(Html, Context, userRoles))
+                @if (User.IsInRole("Administrator"))
+                {
+                    <li class="nav-header">User Management</li>
+                    <li class="nav-item">
+                        <a asp-area="" asp-controller="Auth" asp-action="Users" class="nav-link">
+                            <i class="nav-icon fas fa-users"></i>
+                            <p>User Manager</p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a asp-area="" asp-controller="Auth" asp-action="Roles" class="nav-link">
+                            <i class="nav-icon fas fa-user-tag"></i>
+                            <p>Role Manager</p>
+                        </a>
+                    </li>
+                }
             </ul>
         </nav>
     </div>

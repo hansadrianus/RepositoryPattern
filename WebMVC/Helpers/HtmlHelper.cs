@@ -4,7 +4,7 @@ namespace WebMVC.Helpers
 {
     public static class HtmlHelper
     {
-        public static string isMenuOpen(this IHtmlHelper html, string controller = null)
+        public static string IsMenuOpen(this IHtmlHelper html, string controller = null)
         {
             const string MENU_OPEN_CLASS = "menu-open";
             string actualController = (string)html.ViewContext.RouteData.Values["controller"];
@@ -15,7 +15,7 @@ namespace WebMVC.Helpers
             return controller.Contains(actualController) ? MENU_OPEN_CLASS : string.Empty;
         }
 
-        public static string isActive(this IHtmlHelper html, string controller = null, string action = null)
+        public static string IsActive(this IHtmlHelper html, string controller = null, string action = null)
         {
             const string ACTIVE_CLASS = "active";
             string actualAction = (string)html.ViewContext.RouteData.Values["action"];

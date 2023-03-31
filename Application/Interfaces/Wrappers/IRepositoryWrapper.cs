@@ -9,6 +9,7 @@ namespace Application.Interfaces.Wrappers
     public interface IRepositoryWrapper
     {
         IAppMenuRepository AppMenu { get; }
+        IMenuRoleRepository MenuRole { get; }
         ILanguageCultureRepository LanguageCulture { get; }
         IAuthRepository Auth { get; }
         IRoleRepository Role { get; }

@@ -1,15 +1,27 @@
-﻿<div class="content-wrapper">
+﻿@model RoleViewModel
+
+<div class="content-wrapper">
+    <div class="row">
+        <div class="col-12">
+            <div class="card card-widget widget-user-2 shadow-sm">
+                <div class="widget-user-header bg-info">
+                    <h3 class="widget-user-username">Role: @Model.Name</h3>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <section class="content">
         <div class="container-fluid">
             <div class="row">
                 <div class="col-12">
                     <div class="card">
                         <div class="card-header">
-                            <h3 class="card-title">List of Roles</h3>
+                            <h3 class="card-title">Menus</h3>
                         </div>
 
                         <div class="card-body">
-                            <div id="rolesGrid" style="overflow: visible"></div>
+                            <div id="menuRolesGrid" style="overflow: visible"></div>
                         </div>
                     </div>
                 </div>
@@ -30,14 +42,14 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js"></script>
     <script>
         $(function () {
-            $("#rolesGrid").jsGrid({
+            $("#menuRolesGrid").jsGrid({
                 height: "500px",
                 width: "100%",
 
                 filtering: true,
                 sorting: true,
                 paging: false,
-                inserting: true,
+                inserting: false,
                 editing: true,
                 autoload: true,
 
@@ -58,28 +70,11 @@
 
                         $.ajax({
                             type: "GET",
-                            url: "../Auth/GetRoles",
+                            url: "../GetMenus?roleId=" + @Model.Id,
                             data: filter,
                             dataType: "json"
                         }).done(function (response) {
                             d.resolve(response.data);
-                        });
-
-                        return d.promise();
-                    },
-                    insertItem: function (item) {
-                        var d = $.Deferred();
-
-                        $.ajax({
-                            type: "POST",
-                            url: "../Auth/AddRole",
-                            data: item,
-                            dataType: "json"
-                        }).done(function (response) {
-                            d.resolve(response.data);
-                            $(function () { Swal.fire({ icon: 'success', title: 'Success!', text: 'Role created successfully.' }) });
-                        }).fail(function (response) {
-                            $(function () { Swal.fire({ icon: 'error', title: 'Error!', text: response.data.message }) });
                         });
 
                         return d.promise();
@@ -96,7 +91,7 @@
 
                         $.ajax({
                             type: "PUT",
-                            url: "../Auth/UpdateRole/" + item.id,
+                            url: "../UpdateMenuRoles?roleId=" + @Model.Id,
                             data: item,
                             dataType: "json"
                         }).done(function (response) {
@@ -112,16 +107,9 @@
                 },
 
                 fields: [
-                    { title: "ID", name: "id", type: "number", width: 50, align: "center", editing: false, inserting: false },
-                    { title: "Name", name: "name", type: "text", validate: "required" },
-                    { title: "Status", name: "rowStatus", type: "checkbox", width: 50, inserting: false },
-                    {
-                        title: "Action", align: "center", width: 50,
-                        itemTemplate: function (value, item) {
-                            var $link = $("<a>").attr("href", "../Auth/MenuRoles/" + item.id).text("Menus");
-                            return $("<div>").append($link);
-                        }
-                    },
+                    { title: "ID", name: "appMenuId", type: "number", width: 50, align: "center", editing: false },
+                    { title: "Name", name: "menuName", type: "text", editing: false },
+                    { title: "Selected", name: "isSelected", type: "checkbox", width: 50, filtering: false },
                     { type: "control", width: 200, align: "center", editButton: true, deleteButton: false }
                 ]
             });

@@ -43,6 +43,7 @@ namespace Infrastructure.Persistence
                 var roleManager = services.GetRequiredService<RoleManager<ApplicationRole>>();
                 await SeedUsersAsync(userManager);
                 await SeedRolesAsync(roleManager);
+                await AssignUserRolesAsync(userManager, roleManager);
             }
             catch (Exception ex)
             {
@@ -88,6 +89,16 @@ namespace Infrastructure.Persistence
                 await roleManager.CreateAsync(new ApplicationRole() { Name = "Sales Order View" });
             if (!await roleManager.RoleExistsAsync("Sales Order Change"))
                 await roleManager.CreateAsync(new ApplicationRole() { Name = "Sales Order Change" });
+        }
+
+        private static async Task AssignUserRolesAsync(UserManager<ApplicationUser> userManager, RoleManager<ApplicationRole> roleManager)
+        {
+            var admin = await userManager.FindByNameAsync("admin");
+            await userManager.AddToRoleAsync(admin, "Administrator");
+            var user = await userManager.FindByNameAsync("user");
+            await userManager.AddToRoleAsync(user, "Sales Order Create");
+            await userManager.AddToRoleAsync(user, "Sales Order View");
+            await userManager.AddToRoleAsync(user, "Sales Order Change");
         }
     }
 }
