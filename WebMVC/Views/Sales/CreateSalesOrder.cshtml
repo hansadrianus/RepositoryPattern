@@ -1,0 +1,86 @@
+﻿<div class="content-wrapper">
+    <section class="content">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-12">
+                    <div class="card card-info">
+                        <div class="card-header">
+                            <h3 class="card-title">Order Header</h3>
+                        </div>
+                        <form class="form-horizontal">
+                            <div class="card-body">
+                                <div class="form-group row">
+                                    <label for="customerName" class="col-sm-2 col-form-label">Customer Name</label>
+                                    <div class="col-sm-4">
+                                        <input type="text" class="form-control" id="customerName">
+                                    </div>
+                                    <label for="customerName" class="col-sm-2 col-form-label">Customer Name</label>
+                                    <div class="col-sm-4">
+                                        <input type="text" class="form-control" id="customerName">
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="customerAddress" class="col-sm-2 col-form-label">Customer Address</label>
+                                    <div class="col-sm-10">
+                                        <textarea class="form-control" id="customerAddress" rows="3"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title">Order Details</h3>
+                        </div>
+
+                        <div class="card-body">
+                            <div id="orderDetailGrid" style="overflow: visible"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+
+@section Styles{
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jsgrid/1.5.3/jsgrid.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jsgrid/1.5.3/jsgrid-theme.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.min.css" />
+}
+
+@section Scripts{
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jsgrid/1.5.3/jsgrid.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.17.1/moment.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js"></script>
+    <script>
+        $(function () {
+            $("#orderDetailGrid").jsGrid({
+                height: "300px",
+                width: "100%",
+
+                paging: false,
+                inserting: true,
+                editing: true,
+
+                fields: [
+                    { title: "Name", name: "name", type: "text", validate: "required" },
+                    { title: "Status", name: "rowStatus", type: "checkbox", width: 50, inserting: false },
+                    {
+                        title: "Action", align: "center", width: 50,
+                        itemTemplate: function (value, item) {
+                            var $link = $("<a>").attr("href", "../Auth/MenuRoles/" + item.id).text("Menus");
+                            return $("<div>").append($link);
+                        }
+                    },
+                    { type: "control", width: 200, align: "center", editButton: true, deleteButton: false }
+                ]
+            });
+        });
+    </script>
+}

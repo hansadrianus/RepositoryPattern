@@ -10,7 +10,7 @@ namespace Application.ViewModels
     public record SalesOrderViewModel
     {
         public string OrderNumber { get; set; }
-        public string OrderType { get; set; }
+        public int OrderType { get; set; }
         public DateTime OrderDate { get; set; }
         public string CustomerName { get; set; }
         public string CustomerAddress { get; set; }

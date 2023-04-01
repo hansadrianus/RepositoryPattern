@@ -1,18 +1,21 @@
 ﻿@model RoleViewModel
 
 <div class="content-wrapper">
-    <div class="row">
-        <div class="col-12">
-            <div class="card card-widget widget-user-2 shadow-sm">
-                <div class="widget-user-header bg-info">
-                    <h3 class="widget-user-username">Role: @Model.Name</h3>
-                </div>
-            </div>
-        </div>
-    </div>
-
     <section class="content">
         <div class="container-fluid">
+            <div class="row">
+                <div class="col-12">
+                    <div class="card card-widget widget-user-2 shadow-sm">
+                        <div class="widget-user-header bg-primary">
+                            <h3 class="widget-user-username">
+                                Role: @Model.Name
+                                <button class="float-right btn btn-lg btn-secondary" onclick="history.back()">Go Back</button>
+                            </h3>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             <div class="row">
                 <div class="col-12">
                     <div class="card">
