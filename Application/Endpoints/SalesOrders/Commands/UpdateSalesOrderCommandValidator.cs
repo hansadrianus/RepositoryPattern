@@ -11,9 +11,10 @@ namespace Application.Endpoints.SalesOrders.Commands
     {
         public UpdateSalesOrderCommandValidator()
         {
-            RuleFor(x => x.OrderType)
+            RuleFor(x => x.OrderTypeId)
                 .NotEmpty()
-                .NotNull();
+                .NotNull()
+                .GreaterThan(0);
             RuleFor(x => x.PaymentType)
                 .NotEmpty()
                 .NotNull();
