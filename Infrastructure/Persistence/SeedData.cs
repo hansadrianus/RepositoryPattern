@@ -31,6 +31,12 @@ namespace Infrastructure.Persistence
                 new LanguageCulture { Id = 1, LCID = 1033, Description = "English", IsDefaultLanguage = true, CreatedBy = "", CreatedTime = DateTime.UtcNow, RowStatus = 0 },
                 new LanguageCulture { Id = 2, LCID = 1057, Description = "Indonesia", IsDefaultLanguage = false, CreatedBy = "", CreatedTime = DateTime.UtcNow, RowStatus = 0 }
             );
+
+            builder.Entity<OrderType>().HasData(
+                new OrderType { Id = 1, Name = "Cash", CreatedBy = "", CreatedTime = DateTime.UtcNow, RowStatus = 0 },
+                new OrderType { Id = 2, Name = "Credit", CreatedBy = "", CreatedTime = DateTime.UtcNow, RowStatus = 0 },
+                new OrderType { Id = 3, Name = "Split Payment", CreatedBy = "", CreatedTime = DateTime.UtcNow, RowStatus = 0 }
+            );
         }
 
         public static async Task SeedDevelopmentData(this WebApplication? app)

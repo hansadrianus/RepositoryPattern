@@ -4,6 +4,7 @@ using Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    partial class ApplicationContextModelSnapshot : ModelSnapshot
+    [Migration("20230401171810_AddOrderTypeEntityAndModifiedOrderTypeColumn")]
+    partial class AddOrderTypeEntityAndModifiedOrderTypeColumn
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -86,7 +89,7 @@ namespace Infrastructure.Migrations
                         {
                             Id = 1,
                             CreatedBy = "",
-                            CreatedTime = new DateTime(2023, 4, 1, 17, 27, 54, 554, DateTimeKind.Utc).AddTicks(7585),
+                            CreatedTime = new DateTime(2023, 4, 1, 17, 18, 10, 357, DateTimeKind.Utc).AddTicks(9743),
                             CssClass = "fas fa-dollar-sign",
                             MenuAction = "",
                             MenuController = "Sales",
@@ -100,7 +103,7 @@ namespace Infrastructure.Migrations
                         {
                             Id = 2,
                             CreatedBy = "",
-                            CreatedTime = new DateTime(2023, 4, 1, 17, 27, 54, 554, DateTimeKind.Utc).AddTicks(7591),
+                            CreatedTime = new DateTime(2023, 4, 1, 17, 18, 10, 357, DateTimeKind.Utc).AddTicks(9748),
                             CssClass = "",
                             MenuAction = "CreateSalesOrder",
                             MenuController = "Sales",
@@ -114,7 +117,7 @@ namespace Infrastructure.Migrations
                         {
                             Id = 3,
                             CreatedBy = "",
-                            CreatedTime = new DateTime(2023, 4, 1, 17, 27, 54, 554, DateTimeKind.Utc).AddTicks(7593),
+                            CreatedTime = new DateTime(2023, 4, 1, 17, 18, 10, 357, DateTimeKind.Utc).AddTicks(9750),
                             CssClass = "",
                             MenuAction = "ChangeSalesOrder",
                             MenuController = "Sales",
@@ -128,7 +131,7 @@ namespace Infrastructure.Migrations
                         {
                             Id = 4,
                             CreatedBy = "",
-                            CreatedTime = new DateTime(2023, 4, 1, 17, 27, 54, 554, DateTimeKind.Utc).AddTicks(7595),
+                            CreatedTime = new DateTime(2023, 4, 1, 17, 18, 10, 357, DateTimeKind.Utc).AddTicks(9752),
                             CssClass = "",
                             MenuAction = "DisplaySalesOrder",
                             MenuController = "Sales",
@@ -624,7 +627,7 @@ namespace Infrastructure.Migrations
                         {
                             Id = 1,
                             CreatedBy = "",
-                            CreatedTime = new DateTime(2023, 4, 1, 17, 27, 54, 554, DateTimeKind.Utc).AddTicks(7824),
+                            CreatedTime = new DateTime(2023, 4, 1, 17, 18, 10, 358, DateTimeKind.Utc).AddTicks(39),
                             Description = "English",
                             IsDefaultLanguage = true,
                             LCID = 1033,
@@ -634,7 +637,7 @@ namespace Infrastructure.Migrations
                         {
                             Id = 2,
                             CreatedBy = "",
-                            CreatedTime = new DateTime(2023, 4, 1, 17, 27, 54, 554, DateTimeKind.Utc).AddTicks(7826),
+                            CreatedTime = new DateTime(2023, 4, 1, 17, 18, 10, 358, DateTimeKind.Utc).AddTicks(40),
                             Description = "Indonesia",
                             IsDefaultLanguage = false,
                             LCID = 1057,
@@ -679,32 +682,6 @@ namespace Infrastructure.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("OrderType", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            CreatedBy = "",
-                            CreatedTime = new DateTime(2023, 4, 1, 17, 27, 54, 554, DateTimeKind.Utc).AddTicks(7853),
-                            Name = "Cash",
-                            RowStatus = (short)0
-                        },
-                        new
-                        {
-                            Id = 2,
-                            CreatedBy = "",
-                            CreatedTime = new DateTime(2023, 4, 1, 17, 27, 54, 554, DateTimeKind.Utc).AddTicks(7855),
-                            Name = "Credit",
-                            RowStatus = (short)0
-                        },
-                        new
-                        {
-                            Id = 3,
-                            CreatedBy = "",
-                            CreatedTime = new DateTime(2023, 4, 1, 17, 27, 54, 554, DateTimeKind.Utc).AddTicks(7856),
-                            Name = "Split Payment",
-                            RowStatus = (short)0
-                        });
                 });
 
             modelBuilder.Entity("Domain.Entities.Product", b =>

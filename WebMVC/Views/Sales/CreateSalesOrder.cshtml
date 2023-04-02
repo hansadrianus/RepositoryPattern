@@ -14,14 +14,15 @@
                                     <div class="col-sm-4">
                                         <input type="text" class="form-control" id="customerName">
                                     </div>
-                                    <label for="customerName" class="col-sm-2 col-form-label">Customer Name</label>
+                                    <label for="orderType" class="col-sm-2 col-form-label">Order Type</label>
                                     <div class="col-sm-4">
-                                        <input type="text" class="form-control" id="customerName">
+                                        <select class="form-control select2" id="select_orderType">
+                                        </select>
                                     </div>
                                 </div>
                                 <div class="form-group row">
                                     <label for="customerAddress" class="col-sm-2 col-form-label">Customer Address</label>
-                                    <div class="col-sm-10">
+                                    <div class="col-sm-4">
                                         <textarea class="form-control" id="customerAddress" rows="3"></textarea>
                                     </div>
                                 </div>
@@ -49,17 +50,35 @@
 </div>
 
 @section Styles{
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jsgrid/1.5.3/jsgrid.min.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jsgrid/1.5.3/jsgrid-theme.min.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.min.css" />
 }
 
 @section Scripts{
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jsgrid/1.5.3/jsgrid.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.17.1/moment.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js"></script>
     <script>
         $(function () {
+            $.ajax({
+                type: 'GET',
+                url: '../Sales/GetOrderTypes',
+                dataType: 'json',
+                success: function (response) {
+                    $("#select_orderType").append("<option value='0'> - Select Type - </option>");
+
+                    for (var i = 0; i < response.data.length; i++) {
+                        var id = response.data[i]['id'];
+                        var name = response.data[i]['name'];
+
+                        $("#select_orderType").append("<option value='" + id + "'>" + name + "</option>");
+                    }
+                }
+            });
+
             $("#orderDetailGrid").jsGrid({
                 height: "300px",
                 width: "100%",

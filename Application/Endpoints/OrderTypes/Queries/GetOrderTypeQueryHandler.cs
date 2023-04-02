@@ -30,7 +30,7 @@ namespace Application.Endpoints.OrderTypes.Queries
         public async Task<EndpointResult<IEnumerable<OrderTypeViewModel>>> Handle(GetOrderTypeQuery request, CancellationToken cancellationToken)
         {
             var predicates = _queryBuilder.BuildPredicate<OrderType, GetOrderTypeQuery>(request);
-            var orderTypes = await _repository.OrderType.GetAllAsync(predicates, cancellationToken);
+            var orderTypes = (await _repository.OrderType.GetAllAsync(predicates, cancellationToken)).Where(q => q.RowStatus == 0);
 
             return new EndpointResult<IEnumerable<OrderTypeViewModel>>(EndpointResultStatus.Success, _mapper.Map<IEnumerable<OrderTypeViewModel>>(orderTypes));
         }
