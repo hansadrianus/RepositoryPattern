@@ -15,10 +15,12 @@ namespace Domain.Entities
         public DateTime OrderDate { get; set; }
         public string CustomerName { get; set; }
         public string CustomerAddress { get; set; }
-        public string PaymentType { get; set; }
+        public int PaymentTypeId { get; set; }
 
         [ForeignKey("OrderTypeId")]
         public OrderType OrderType { get; set; }
+        [ForeignKey("PaymentTypeId")]
+        public PaymentType PaymentType { get; set; }
         public virtual ICollection<SalesOrderDetail> SalesOrderDetails { get; set;}
     }
 }

@@ -4,6 +4,7 @@ using Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,13 +12,15 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    partial class ApplicationContextModelSnapshot : ModelSnapshot
+    [Migration("20230402033310_AddPaymentTypeEntity")]
+    partial class AddPaymentTypeEntity
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "7.0.2")
+                .HasAnnotation("ProductVersion", "7.0.1")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
@@ -86,7 +89,7 @@ namespace Infrastructure.Migrations
                         {
                             Id = 1,
                             CreatedBy = "",
-                            CreatedTime = new DateTime(2023, 4, 8, 20, 12, 23, 177, DateTimeKind.Utc).AddTicks(9926),
+                            CreatedTime = new DateTime(2023, 4, 2, 3, 33, 9, 262, DateTimeKind.Utc).AddTicks(9000),
                             CssClass = "fas fa-dollar-sign",
                             MenuAction = "",
                             MenuController = "Sales",
@@ -100,7 +103,7 @@ namespace Infrastructure.Migrations
                         {
                             Id = 2,
                             CreatedBy = "",
-                            CreatedTime = new DateTime(2023, 4, 8, 20, 12, 23, 177, DateTimeKind.Utc).AddTicks(9932),
+                            CreatedTime = new DateTime(2023, 4, 2, 3, 33, 9, 262, DateTimeKind.Utc).AddTicks(9008),
                             CssClass = "",
                             MenuAction = "CreateSalesOrder",
                             MenuController = "Sales",
@@ -114,7 +117,7 @@ namespace Infrastructure.Migrations
                         {
                             Id = 3,
                             CreatedBy = "",
-                            CreatedTime = new DateTime(2023, 4, 8, 20, 12, 23, 177, DateTimeKind.Utc).AddTicks(9934),
+                            CreatedTime = new DateTime(2023, 4, 2, 3, 33, 9, 262, DateTimeKind.Utc).AddTicks(9011),
                             CssClass = "",
                             MenuAction = "ChangeSalesOrder",
                             MenuController = "Sales",
@@ -128,7 +131,7 @@ namespace Infrastructure.Migrations
                         {
                             Id = 4,
                             CreatedBy = "",
-                            CreatedTime = new DateTime(2023, 4, 8, 20, 12, 23, 177, DateTimeKind.Utc).AddTicks(9936),
+                            CreatedTime = new DateTime(2023, 4, 2, 3, 33, 9, 262, DateTimeKind.Utc).AddTicks(9013),
                             CssClass = "",
                             MenuAction = "DisplaySalesOrder",
                             MenuController = "Sales",
@@ -624,7 +627,7 @@ namespace Infrastructure.Migrations
                         {
                             Id = 1,
                             CreatedBy = "",
-                            CreatedTime = new DateTime(2023, 4, 8, 20, 12, 23, 178, DateTimeKind.Utc).AddTicks(220),
+                            CreatedTime = new DateTime(2023, 4, 2, 3, 33, 9, 262, DateTimeKind.Utc).AddTicks(9205),
                             Description = "English",
                             IsDefaultLanguage = true,
                             LCID = 1033,
@@ -634,7 +637,7 @@ namespace Infrastructure.Migrations
                         {
                             Id = 2,
                             CreatedBy = "",
-                            CreatedTime = new DateTime(2023, 4, 8, 20, 12, 23, 178, DateTimeKind.Utc).AddTicks(222),
+                            CreatedTime = new DateTime(2023, 4, 2, 3, 33, 9, 262, DateTimeKind.Utc).AddTicks(9208),
                             Description = "Indonesia",
                             IsDefaultLanguage = false,
                             LCID = 1057,
@@ -685,7 +688,7 @@ namespace Infrastructure.Migrations
                         {
                             Id = 1,
                             CreatedBy = "",
-                            CreatedTime = new DateTime(2023, 4, 8, 20, 12, 23, 178, DateTimeKind.Utc).AddTicks(294),
+                            CreatedTime = new DateTime(2023, 4, 2, 3, 33, 9, 262, DateTimeKind.Utc).AddTicks(9223),
                             Name = "Sales Quotation",
                             RowStatus = (short)0
                         },
@@ -693,7 +696,7 @@ namespace Infrastructure.Migrations
                         {
                             Id = 2,
                             CreatedBy = "",
-                            CreatedTime = new DateTime(2023, 4, 8, 20, 12, 23, 178, DateTimeKind.Utc).AddTicks(295),
+                            CreatedTime = new DateTime(2023, 4, 2, 3, 33, 9, 262, DateTimeKind.Utc).AddTicks(9225),
                             Name = "Sales Order",
                             RowStatus = (short)0
                         },
@@ -701,7 +704,7 @@ namespace Infrastructure.Migrations
                         {
                             Id = 3,
                             CreatedBy = "",
-                            CreatedTime = new DateTime(2023, 4, 8, 20, 12, 23, 178, DateTimeKind.Utc).AddTicks(296),
+                            CreatedTime = new DateTime(2023, 4, 2, 3, 33, 9, 262, DateTimeKind.Utc).AddTicks(9226),
                             Name = "Sales Contract",
                             RowStatus = (short)0
                         });
@@ -750,7 +753,7 @@ namespace Infrastructure.Migrations
                         {
                             Id = 1,
                             CreatedBy = "",
-                            CreatedTime = new DateTime(2023, 4, 8, 20, 12, 23, 178, DateTimeKind.Utc).AddTicks(319),
+                            CreatedTime = new DateTime(2023, 4, 2, 3, 33, 9, 262, DateTimeKind.Utc).AddTicks(9248),
                             Name = "Cash",
                             RowStatus = (short)0
                         },
@@ -758,7 +761,7 @@ namespace Infrastructure.Migrations
                         {
                             Id = 2,
                             CreatedBy = "",
-                            CreatedTime = new DateTime(2023, 4, 8, 20, 12, 23, 178, DateTimeKind.Utc).AddTicks(320),
+                            CreatedTime = new DateTime(2023, 4, 2, 3, 33, 9, 262, DateTimeKind.Utc).AddTicks(9249),
                             Name = "Credit",
                             RowStatus = (short)0
                         },
@@ -766,7 +769,7 @@ namespace Infrastructure.Migrations
                         {
                             Id = 3,
                             CreatedBy = "",
-                            CreatedTime = new DateTime(2023, 4, 8, 20, 12, 23, 178, DateTimeKind.Utc).AddTicks(322),
+                            CreatedTime = new DateTime(2023, 4, 2, 3, 33, 9, 262, DateTimeKind.Utc).AddTicks(9251),
                             Name = "Split Payment",
                             RowStatus = (short)0
                         });
@@ -798,7 +801,8 @@ namespace Infrastructure.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<decimal>("Price")
-                        .HasColumnType("decimal(18,2)");
+                        .HasPrecision(38, 38)
+                        .HasColumnType("decimal(38,38)");
 
                     b.Property<string>("ProductCode")
                         .IsRequired()
@@ -826,32 +830,6 @@ namespace Infrastructure.Migrations
                         .IsUnique();
 
                     b.ToTable("Product", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            CreatedBy = "",
-                            CreatedTime = new DateTime(2023, 4, 8, 20, 12, 23, 178, DateTimeKind.Utc).AddTicks(345),
-                            Name = "Sample Product 1",
-                            Price = 10000m,
-                            ProductCode = "SAMPLE0001",
-                            RowStatus = (short)0,
-                            Stock = 100,
-                            Type = "Sample"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            CreatedBy = "",
-                            CreatedTime = new DateTime(2023, 4, 8, 20, 12, 23, 178, DateTimeKind.Utc).AddTicks(347),
-                            Name = "Sample Product 2",
-                            Price = 20000m,
-                            ProductCode = "SAMPLE0002",
-                            RowStatus = (short)0,
-                            Stock = 100,
-                            Type = "Sample"
-                        });
                 });
 
             modelBuilder.Entity("Domain.Entities.SalesOrderDetail", b =>
@@ -879,13 +857,15 @@ namespace Infrastructure.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Notes")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("OrderId")
                         .HasColumnType("int");
 
                     b.Property<decimal>("Price")
-                        .HasColumnType("decimal(18,2)");
+                        .HasPrecision(38, 38)
+                        .HasColumnType("decimal(38,38)");
 
                     b.Property<int>("ProductId")
                         .HasColumnType("int");

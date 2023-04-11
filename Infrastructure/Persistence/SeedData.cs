@@ -33,9 +33,21 @@ namespace Infrastructure.Persistence
             );
 
             builder.Entity<OrderType>().HasData(
-                new OrderType { Id = 1, Name = "Cash", CreatedBy = "", CreatedTime = DateTime.UtcNow, RowStatus = 0 },
-                new OrderType { Id = 2, Name = "Credit", CreatedBy = "", CreatedTime = DateTime.UtcNow, RowStatus = 0 },
-                new OrderType { Id = 3, Name = "Split Payment", CreatedBy = "", CreatedTime = DateTime.UtcNow, RowStatus = 0 }
+                new OrderType { Id = 1, Name = "Sales Quotation", CreatedBy = "", CreatedTime = DateTime.UtcNow, RowStatus = 0 },
+                new OrderType { Id = 2, Name = "Sales Order", CreatedBy = "", CreatedTime = DateTime.UtcNow, RowStatus = 0 },
+                new OrderType { Id = 3, Name = "Sales Contract", CreatedBy = "", CreatedTime = DateTime.UtcNow, RowStatus = 0 }
+            );
+
+            builder.Entity<PaymentType>().HasData(
+                new PaymentType { Id = 1, Name = "Cash", CreatedBy = "", CreatedTime = DateTime.UtcNow, RowStatus = 0 },
+                new PaymentType { Id = 2, Name = "Credit", CreatedBy = "", CreatedTime = DateTime.UtcNow, RowStatus = 0 },
+                new PaymentType { Id = 3, Name = "Split Payment", CreatedBy = "", CreatedTime = DateTime.UtcNow, RowStatus = 0 }
+            );
+
+            //Sample data
+            builder.Entity<Product>().HasData(
+                new Product { Id = 1, ProductCode = "SAMPLE0001", Name = "Sample Product 1", Price = 10000, Stock = 100, Type = "Sample", CreatedBy = "", CreatedTime = DateTime.UtcNow, RowStatus = 0 },
+                new Product { Id = 2, ProductCode = "SAMPLE0002", Name = "Sample Product 2", Price = 20000, Stock = 100, Type = "Sample", CreatedBy = "", CreatedTime = DateTime.UtcNow, RowStatus = 0 }
             );
         }
 

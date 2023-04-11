@@ -31,7 +31,7 @@ namespace Application.Endpoints.Auths.Commands
             RuleFor(x => x.DateOfBirth)
                 .NotEmpty()
                 .NotNull()
-                .LessThanOrEqualTo(DateTime.Now.AddDays(1));
+                .LessThanOrEqualTo(DateTime.Parse(DateTime.Now.ToShortDateString()));
         }
     }
 }

@@ -2,6 +2,7 @@
 using Application.Interfaces.Persistence.Auths;
 using Application.Interfaces.Persistence.LanguageCultures;
 using Application.Interfaces.Persistence.OrderTypes;
+using Application.Interfaces.Persistence.PaymentTypes;
 using Application.Interfaces.Persistence.Products;
 using Application.Interfaces.Persistence.SalesOrders;
 
@@ -16,6 +17,7 @@ namespace Application.Interfaces.Wrappers
         IRoleRepository Role { get; }
         IUserRoleRepository UserRoles { get; }
         IOrderTypeRepository OrderType { get; }
+        IPaymentTypeRepository PaymentType { get; }
         IProductRepository Product { get; }
         ISalesOrderRepository SalesOrder { get; }
 

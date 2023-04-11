@@ -7,27 +7,30 @@
                         <div class="card-header">
                             <h3 class="card-title">Order Header</h3>
                         </div>
-                        <form class="form-horizontal">
-                            <div class="card-body">
-                                <div class="form-group row">
-                                    <label for="customerName" class="col-sm-2 col-form-label">Customer Name</label>
-                                    <div class="col-sm-4">
-                                        <input type="text" class="form-control" id="customerName">
-                                    </div>
-                                    <label for="orderType" class="col-sm-2 col-form-label">Order Type</label>
-                                    <div class="col-sm-4">
-                                        <select class="form-control select2" id="select_orderType">
-                                        </select>
-                                    </div>
+                        <div class="card-body">
+                            <div class="form-group row">
+                                <label for="customerName" class="col-sm-2 col-form-label">Customer Name</label>
+                                <div class="col-sm-4">
+                                    <input type="text" class="form-control" id="customerName" name="customerName">
                                 </div>
-                                <div class="form-group row">
-                                    <label for="customerAddress" class="col-sm-2 col-form-label">Customer Address</label>
-                                    <div class="col-sm-4">
-                                        <textarea class="form-control" id="customerAddress" rows="3"></textarea>
-                                    </div>
+                                <label for="orderType" class="col-sm-2 col-form-label">Order Type</label>
+                                <div class="col-sm-4">
+                                    <select class="form-control select2" id="select_orderType" name="orderType">
+                                    </select>
                                 </div>
                             </div>
-                        </form>
+                            <div class="form-group row">
+                                <label for="customerAddress" class="col-sm-2 col-form-label">Customer Address</label>
+                                <div class="col-sm-4">
+                                    <textarea class="form-control" id="customerAddress" name="customerAddress" rows="3"></textarea>
+                                </div>
+                                <label for="paymentType" class="col-sm-2 col-form-label">Payment Type</label>
+                                <div class="col-sm-4">
+                                    <select class="form-control select2" id="select_paymentType" name="paymentType">
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -42,6 +45,10 @@
                         <div class="card-body">
                             <div id="orderDetailGrid" style="overflow: visible"></div>
                         </div>
+
+                        <div class="card-footer">
+                            <button type="submit" id="submitBtn" class="btn btn-primary float-right">Submit</button>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -50,35 +57,107 @@
 </div>
 
 @section Styles{
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jsgrid/1.5.3/jsgrid.min.css" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jsgrid/1.5.3/jsgrid-theme.min.css" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.min.css" />
 }
 
 @section Scripts{
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jsgrid/1.5.3/jsgrid.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.17.1/moment.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js"></script>
     <script>
-        $(function () {
-            $.ajax({
-                type: 'GET',
-                url: '../Sales/GetOrderTypes',
-                dataType: 'json',
-                success: function (response) {
-                    $("#select_orderType").append("<option value='0'> - Select Type - </option>");
+        var order = {};
+        var orderItem = new Array();
+        var jsGridCustomDateTimeField = function (config) {
+            jsGrid.Field.call(this, config);
+        };
 
-                    for (var i = 0; i < response.data.length; i++) {
-                        var id = response.data[i]['id'];
-                        var name = response.data[i]['name'];
+        jsGridCustomDateTimeField.prototype = new jsGrid.Field({
+            sorter: function (date1, date2) {
+                return new Date(date1) - new Date(date2);
+            },
 
-                        $("#select_orderType").append("<option value='" + id + "'>" + name + "</option>");
-                    }
+            itemTemplate: function (value) {
+                if (value === null) {
+                    return '';
+                } else {
+                    return moment(value).format('DD/MM/YYYY');
                 }
-            });
+            },
 
+            insertTemplate: function (value) {
+                this._insertPicker = $('<input>').datetimepicker({
+                    format: 'DD/MM/YYYY',
+                    date: moment(),
+                    widgetPositioning: {
+                        horizontal: 'auto',
+                        vertical: 'auto'
+                    },
+                    minDate: new Date(),
+                    icons: {
+                        time: 'fa fa-clock-o',
+                        date: 'fa fa-calendar',
+                        up: 'fa fa-chevron-up',
+                        down: 'fa fa-chevron-down',
+                        previous: 'fa fa-chevron-left',
+                        next: 'fa fa-chevron-right',
+                        today: 'fa fa-check',
+                        clear: 'fa fa-trash',
+                        close: 'fa fa-times'
+                    }
+                });
+
+                this._insertPicker.data('DateTimePicker').date(moment());
+                return this._insertPicker;
+            },
+
+            editTemplate: function (value) {
+                this._editPicker = $('<input>').datetimepicker({
+                    format: 'DD/MM/YYYY',
+                    widgetPositioning: {
+                        horizontal: 'auto',
+                        vertical: 'auto'
+                    },
+                    minDate: new Date(),
+                    icons: {
+                        time: 'fa fa-clock-o',
+                        date: 'fa fa-calendar',
+                        up: 'fa fa-chevron-up',
+                        down: 'fa fa-chevron-down',
+                        previous: 'fa fa-chevron-left',
+                        next: 'fa fa-chevron-right',
+                        today: 'fa fa-check',
+                        clear: 'fa fa-trash',
+                        close: 'fa fa-times'
+                    }
+                });
+
+                if (value !== null) {
+                    this._editPicker.data('DateTimePicker').defaultDate(moment(value));
+                    this._editPicker.data('DateTimePicker').date(moment(value));
+                }
+                return this._editPicker;
+            },
+
+            insertValue: function () {
+                var insertValue = this._insertPicker.data('DateTimePicker').date();
+                if (typeof insertValue !== 'undefined' && insertValue !== null) {
+                    return insertValue.format('MM/DD/YYYY');
+                } else {
+                    return null;
+                }
+            },
+
+            editValue: function () {
+                var editValue = this._editPicker.data('DateTimePicker').date();
+                if (typeof editValue !== 'undefined' && editValue !== null) {
+                    return editValue.format('MM/DD/YYYY');
+                } else {
+                    return null;
+                }
+            }
+        });
+
+        jsGrid.fields.jsGridCustomDateTimeField = jsGridCustomDateTimeField;
+
+        GetOrderTypes();
+        GetPaymentTypes();
+        GetProducts().then((data) => {
             $("#orderDetailGrid").jsGrid({
                 height: "300px",
                 width: "100%",
@@ -87,19 +166,94 @@
                 inserting: true,
                 editing: true,
 
-                fields: [
-                    { title: "Name", name: "name", type: "text", validate: "required" },
-                    { title: "Status", name: "rowStatus", type: "checkbox", width: 50, inserting: false },
-                    {
-                        title: "Action", align: "center", width: 50,
-                        itemTemplate: function (value, item) {
-                            var $link = $("<a>").attr("href", "../Auth/MenuRoles/" + item.id).text("Menus");
-                            return $("<div>").append($link);
-                        }
+                deleteConfirm: "Are you sure do you want to delete this item?",
+
+                controller: {
+                    insertItem: function (item) {
+                        orderItem.push(item);
                     },
-                    { type: "control", width: 200, align: "center", editButton: true, deleteButton: false }
+                    deleteItem: function (item) {
+                        let arrIdx = orderItem.indexOf(item);
+                        if (arrIdx > -1) {
+                            orderItem.splice(arrIdx, 1);
+                        }
+                    }
+                },
+
+                fields: [
+                    {
+                        title: "Product", name: "productId", type: "select", items: data, valueField: "id", textField: "name", validate: "required",
+                        insertTemplate: function () {
+                            var grid = this._grid;
+                            var insertResult = jsGrid.fields.select.prototype.insertTemplate.call(this, arguments);
+
+                            insertResult.on("change", function () {
+                                const selectedValue = insertResult.val();
+                                if (selectedValue != 0) {
+                                    const product = GetSelectedProduct(selectedValue);
+                                    grid.option("fields")[2].insertControl.val(product.price);
+                                }
+                                else {
+                                    grid.option("fields")[2].insertControl.val(0);
+                                }
+                            });
+                            return insertResult;
+                        },
+                        editTemplate: function (value) {
+                            var grid = this._grid;
+                            var editResult = jsGrid.fields.select.prototype.editTemplate.call(this, value);
+
+                            editResult.on("change", function () {
+                                const selectedValue = editResult.val();
+                                if (selectedValue != 0) {
+                                    const product = GetSelectedProduct(selectedValue);
+                                    grid.option("fields")[2].editControl.val(product.price);
+
+                                }
+                                else {
+                                    grid.option("fields")[2].editControl.val(0);
+                                }
+                            });
+                            return editResult;
+                        },
+                    },
+                    { title: "Quantity", name: "quantity", type: "number", validate: "required" },
+                    { title: "Price", name: "price", type: "number", width: 50, validate: "required" },
+                    { title: "Delivery Date", name: "deliveryDate", type: "jsGridCustomDateTimeField", width: 50, validate: "required" },
+                    { title: "Note", name: "note", type: "text", width: 200 },
+                    { type: "control", align: "center" }
                 ]
             });
+        });
+
+        $("#submitBtn").click(function (e) {
+            var d = $.Deferred();
+            order["orderDate"] = moment()._d.toLocaleDateString();
+            order["customerName"] = document.getElementById("customerName").value;
+            order["customerAddress"] = document.getElementById("customerAddress").value;
+            order["orderTypeId"] = document.getElementById("select_orderType").value;
+            order["paymentTypeId"] = document.getElementById("select_paymentType").value;
+            order["orderDetails"] = orderItem;
+            
+            if (order["customerName"] != "" && order["customerAddress"] != "" && order["orderTypeId"] > 0 && order["paymentTypeId"] > 0 && order["orderDetails"].length > 0){
+            $.ajax({
+                type: "POST",
+                url: "../Sales/AddSalesOrder",
+                data: order,
+                dataType: "json"
+            }).done(function (response) {
+                d.resolve(response.data);
+                $(function () { Swal.fire({ icon: 'success', title: 'Success!', text: 'Sales order has been created successfully with order number: ' + response.data.orderNumber + '.' }).then(() => { window.location.reload(); }); });
+            }).fail(function (response) {
+                $(function () { Swal.fire({ icon: 'error', title: 'Error!', text: response.data.message }) });
+            });
+            }
+            else
+            {
+                $(function () { Swal.fire({ icon: 'error', title: 'Error!', text: "Invalid sales order input." }) });
+            }
+
+            return d.promise();
         });
     </script>
 }

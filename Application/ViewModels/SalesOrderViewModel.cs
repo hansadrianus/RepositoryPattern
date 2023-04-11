@@ -14,7 +14,7 @@ namespace Application.ViewModels
         public DateTime OrderDate { get; set; }
         public string CustomerName { get; set; }
         public string CustomerAddress { get; set; }
-        public string PaymentType { get; set; }
+        public int PaymentTypeId { get; set; }
         public ICollection<OrderDetail> OrderDetails { get; set; }
 
         public record OrderDetail

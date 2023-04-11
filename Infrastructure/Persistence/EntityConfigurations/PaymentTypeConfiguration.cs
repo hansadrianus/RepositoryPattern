@@ -9,12 +9,11 @@ using System.Threading.Tasks;
 
 namespace Infrastructure.Persistence.EntityConfigurations
 {
-    public class ProductConfiguration : IEntityTypeConfiguration<Product>
+    public class PaymentTypeConfiguration : IEntityTypeConfiguration<PaymentType>
     {
-        public void Configure(EntityTypeBuilder<Product> builder)
+        public void Configure(EntityTypeBuilder<PaymentType> builder)
         {
-            builder.ToTable("Product");
-            builder.HasIndex(q => q.ProductCode).IsUnique();
+            builder.ToTable("PaymentType");
         }
     }
 }

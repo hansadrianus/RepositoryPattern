@@ -51,63 +51,61 @@
 @section Scripts{
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jsgrid/1.5.3/jsgrid.min.js"></script>
     <script>
-        $(function () {
-            $("#userRolesGrid").jsGrid({
-                height: "500px",
-                width: "100%",
+        $("#userRolesGrid").jsGrid({
+            height: "500px",
+            width: "100%",
 
-                filtering: true,
-                sorting: true,
-                paging: false,
-                editing: true,
-                autoload: true,
+            filtering: true,
+            sorting: true,
+            paging: false,
+            editing: true,
+            autoload: true,
 
-                onItemUpdating: function (args) {
-                    previousItem = args.previousItem;
+            onItemUpdating: function (args) {
+                previousItem = args.previousItem;
+            },
+
+            controller: {
+                loadData: function (filter) {
+                    var d = $.Deferred();
+
+                    $.ajax({
+                        type: "GET",
+                        url: "../GetUserRoles/" + @Model.Id,
+                        data: filter,
+                        dataType: "json"
+                    }).done(function (response) {
+                        d.resolve(response.data);
+                    });
+
+                    return d.promise();
                 },
+                updateItem: function (item) {
+                    var d = $.Deferred();
 
-                controller: {
-                    loadData: function (filter) {
-                        var d = $.Deferred();
+                    $.ajax({
+                        type: "PUT",
+                        url: "../UpdateUserRoles/" + @Model.Id,
+                        data: item,
+                        dataType: "json"
+                    }).done(function (response) {
+                        d.resolve(response.data);
+                        $(function () { Swal.fire({ icon: 'success', title: 'Success!', text: 'User role updated successfully.' }) });
+                    }).fail(function (response) {
+                        d.resolve(previousItem);
+                        $(function () { Swal.fire({ icon: 'error', title: 'Error!', text: response.data.message }) });
+                    });
 
-                        $.ajax({
-                            type: "GET",
-                            url: "../GetUserRoles/" + @Model.Id,
-                            data: filter,
-                            dataType: "json"
-                        }).done(function (response) {
-                            d.resolve(response.data);
-                        });
+                    return d.promise();
+                }
+            },
 
-                        return d.promise();
-                    },
-                    updateItem: function (item) {
-                        var d = $.Deferred();
-
-                        $.ajax({
-                            type: "PUT",
-                            url: "../UpdateUserRoles/" + @Model.Id,
-                            data: item,
-                            dataType: "json"
-                        }).done(function (response) {
-                            d.resolve(response.data);
-                            $(function () { Swal.fire({ icon: 'success', title: 'Success!', text: 'User role updated successfully.' }) });
-                        }).fail(function (response) {
-                            d.resolve(previousItem);
-                            $(function () { Swal.fire({ icon: 'error', title: 'Error!', text: response.data.message }) });
-                        });
-
-                        return d.promise();
-                    }
-                },
-
-                fields: [
-                    { title: "ID", name: "roleId", type: "number", width: 50, align: "center", editing: false },
-                    { title: "Name", name: "roleName", type: "text", editing: false },
-                    { title: "Selected", name: "isSelected", type: "checkbox", width: 50, filtering: false },
-                    { type: "control", deleteButton: false }
-                ]
-            });
+            fields: [
+                { title: "ID", name: "roleId", type: "number", width: 50, align: "center", editing: false },
+                { title: "Name", name: "roleName", type: "text", editing: false },
+                { title: "Selected", name: "isSelected", type: "checkbox", width: 50, filtering: false },
+                { type: "control", deleteButton: false }
+            ]
         });
     </script>
 }

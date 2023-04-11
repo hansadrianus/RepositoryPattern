@@ -3,6 +3,7 @@ using Application.Interfaces.Persistence.AppMenus;
 using Application.Interfaces.Persistence.Auths;
 using Application.Interfaces.Persistence.LanguageCultures;
 using Application.Interfaces.Persistence.OrderTypes;
+using Application.Interfaces.Persistence.PaymentTypes;
 using Application.Interfaces.Persistence.Products;
 using Application.Interfaces.Persistence.SalesOrders;
 using Application.Interfaces.Wrappers;
@@ -11,6 +12,7 @@ using Infrastructure.Repositories.AppMenus;
 using Infrastructure.Repositories.Auths;
 using Infrastructure.Repositories.LanguageCultures;
 using Infrastructure.Repositories.OrderTypes;
+using Infrastructure.Repositories.PaymentTypes;
 using Infrastructure.Repositories.Products;
 using Infrastructure.Repositories.SalesOrders;
 using Microsoft.AspNetCore.Identity;
@@ -30,6 +32,7 @@ namespace Infrastructure.Wrappers
         private IRoleRepository _role;
         private IUserRoleRepository _userRole;
         private IOrderTypeRepository _orderType;
+        private IPaymentTypeRepository _paymentType;
         private IProductRepository _product;
         private ISalesOrderRepository _salesOrder;
 
@@ -100,6 +103,15 @@ namespace Infrastructure.Wrappers
             {
                 _orderType ??= new OrderTypeRepository(_context);
                 return _orderType;
+            }
+        }
+
+        public IPaymentTypeRepository PaymentType
+        {
+            get
+            {
+                _paymentType ??= new PaymentTypeRepository(_context);
+                return _paymentType;
             }
         }
 
