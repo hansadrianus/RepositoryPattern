@@ -16,6 +16,8 @@ namespace Application.Mappings
         {
             CreateMap<SalesOrderHeader, SalesOrderViewModel>()
                 .ReverseMap();
+            CreateMap<SalesOrderDetail, SalesOrderViewModel.OrderDetailViewModel>()
+                .ReverseMap();
             CreateMap<AddSalesOrderCommand, SalesOrderHeader>()
                 .ForMember(dest => dest.Id, opt => opt.Ignore())
                 .ForMember(dest => dest.OrderNumber, opt => opt.Ignore())

@@ -2,6 +2,7 @@
 using Application.Endpoints.PaymentTypes.Queries;
 using Application.Endpoints.Products.Queries;
 using Application.Endpoints.SalesOrders.Commands;
+using Application.Endpoints.SalesOrders.Queries;
 using Application.Interfaces.Services;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -20,17 +21,37 @@ namespace WebMVC.Controllers
         #region View Controllers
         public IActionResult CreateSalesOrder()
         {
+            ViewData["Title"] = "Create Sales Order";
             return View();
         }
 
         public IActionResult ChangeSalesOrder()
         {
+            ViewData["Title"] = "Change Sales Order";
             return View();
         }
 
         public IActionResult DisplaySalesOrder()
         {
+            ViewData["Title"] = "Display Sales Order";
             return View();
+        }
+
+        public async Task<IActionResult> SearchOrderToChange(string orderNumber)
+        {
+            GetSalesOrderQuery query = new GetSalesOrderQuery()
+            {
+                OrderNumber = orderNumber
+            };
+            ViewData["Title"] = "Change Sales Order";
+
+            return View("SalesOrderToChange", await _mediator.Send(query));
+        }
+
+        public async Task<IActionResult> SearchOrderToDisplay(string orderNumber)
+        {
+            ViewData["Title"] = "Display Sales Order";
+            return View("SalesOrderToDisplay", orderNumber);
         }
         #endregion
 
@@ -50,6 +71,10 @@ namespace WebMVC.Controllers
         [HttpPost]
         public async Task<IActionResult> AddSalesOrder([FromForm] AddSalesOrderCommand command)
             => Json(await _mediator.Send(command));
+
+        [HttpGet]
+        public async Task<IActionResult> GetSalesOrderByDocumentNumber([FromQuery] GetSalesOrderQuery query)
+            => Json(await _mediator.Send(query));
         #endregion
     }
 }

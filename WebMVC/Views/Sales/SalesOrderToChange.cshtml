@@ -1,4 +1,6 @@
-﻿<div class="content-wrapper">
+﻿@model EndpointResult<IEnumerable<SalesOrderViewModel>>
+
+<div class="content-wrapper">
     <section class="content-header">
         <div class="container-fluid">
             <div class="row mb-2">
@@ -21,7 +23,7 @@
                             <div class="form-group row">
                                 <label for="customerName" class="col-sm-2 col-form-label">Customer Name</label>
                                 <div class="col-sm-4">
-                                    <input type="text" class="form-control" id="customerName" name="customerName">
+                                    <input type="text" class="form-control" id="customerName" name="customerName" value="@Model.Data.FirstOrDefault().CustomerName">
                                 </div>
                                 <label for="orderType" class="col-sm-2 col-form-label">Order Type</label>
                                 <div class="col-sm-4">
@@ -32,7 +34,7 @@
                             <div class="form-group row">
                                 <label for="customerAddress" class="col-sm-2 col-form-label">Customer Address</label>
                                 <div class="col-sm-4">
-                                    <textarea class="form-control" id="customerAddress" name="customerAddress" rows="3"></textarea>
+                                    <textarea class="form-control" id="customerAddress" name="customerAddress" rows="3">@Model.Data.FirstOrDefault().CustomerAddress</textarea>
                                 </div>
                                 <label for="paymentType" class="col-sm-2 col-form-label">Payment Type</label>
                                 <div class="col-sm-4">
@@ -57,7 +59,8 @@
                         </div>
 
                         <div class="card-footer">
-                            <button type="submit" id="submitBtn" class="btn btn-primary float-right">Submit</button>
+                            <button type="submit" id="updateBtn" class="btn btn-primary float-right">Update</button>
+                            <button type="submit" id="backBtn" class="btn btn-primary float-right" onclick="history.back()">Back</button>
                         </div>
                     </div>
                 </div>
@@ -167,6 +170,8 @@
 
         GetOrderTypes();
         GetPaymentTypes();
+        GetAndSetOrderTypes(@Model.Data.FirstOrDefault().OrderTypeId);
+        GetAndSetPaymentTypes(@Model.Data.FirstOrDefault().PaymentTypeId);
         GetProducts().then((data) => {
             $("#orderDetailGrid").jsGrid({
                 height: "300px",
@@ -236,7 +241,7 @@
             });
         });
 
-        $("#submitBtn").click(function (e) {
+        $("#updateBtn").click(function (e) {
             var d = $.Deferred();
             order["orderDate"] = moment()._d.toLocaleDateString();
             order["customerName"] = document.getElementById("customerName").value;
@@ -244,22 +249,21 @@
             order["orderTypeId"] = document.getElementById("select_orderType").value;
             order["paymentTypeId"] = document.getElementById("select_paymentType").value;
             order["orderDetails"] = orderItem;
-            
-            if (order["customerName"] != "" && order["customerAddress"] != "" && order["orderTypeId"] > 0 && order["paymentTypeId"] > 0 && order["orderDetails"].length > 0){
-            $.ajax({
-                type: "POST",
-                url: "../Sales/AddSalesOrder",
-                data: order,
-                dataType: "json"
-            }).done(function (response) {
-                d.resolve(response.data);
-                $(function () { Swal.fire({ icon: 'success', title: 'Success!', text: 'Sales order has been created successfully with order number: ' + response.data.orderNumber + '.' }).then(() => { window.location.reload(); }); });
-            }).fail(function (response) {
-                $(function () { Swal.fire({ icon: 'error', title: 'Error!', text: response.data.message }) });
-            });
+
+            if (order["customerName"] != "" && order["customerAddress"] != "" && order["orderTypeId"] > 0 && order["paymentTypeId"] > 0 && order["orderDetails"].length > 0) {
+                $.ajax({
+                    type: "POST",
+                    url: "../Sales/UpdateSalesOrder",
+                    data: order,
+                    dataType: "json"
+                }).done(function (response) {
+                    d.resolve(response.data);
+                    $(function () { Swal.fire({ icon: 'success', title: 'Success!', text: 'Sales order has been updated successfully.' }).then(() => { window.location.reload(); }); });
+                }).fail(function (response) {
+                    $(function () { Swal.fire({ icon: 'error', title: 'Error!', text: response.data.message }) });
+                });
             }
-            else
-            {
+            else {
                 $(function () { Swal.fire({ icon: 'error', title: 'Error!', text: "Invalid sales order input." }) });
             }
 

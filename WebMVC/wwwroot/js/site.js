@@ -20,6 +20,28 @@ async function GetOrderTypes() {
     });
 }
 
+async function GetAndSetOrderTypes(setId) {
+    await $.ajax({
+        type: 'GET',
+        url: '../Sales/GetOrderTypes',
+        dataType: 'json',
+        success: function (response) {
+            $("#select_orderType").append("<option value='0'> - Select Order Type - </option>");
+
+            for (var i = 0; i < response.data.length; i++) {
+                var id = response.data[i]['id'];
+                var name = response.data[i]['name'];
+                if (id == setId) {
+                    $("#select_orderType").append("<option selected value='" + id + "'>" + name + "</option>");
+                }
+                else {
+                    $("#select_orderType").append("<option value='" + id + "'>" + name + "</option>");
+                }
+            }
+        }
+    });
+}
+
 async function GetPaymentTypes() {
     await $.ajax({
         type: 'GET',
@@ -33,6 +55,28 @@ async function GetPaymentTypes() {
                 var name = response.data[i]['name'];
 
                 $("#select_paymentType").append("<option value='" + id + "'>" + name + "</option>");
+            }
+        }
+    });
+}
+
+async function GetAndSetPaymentTypes(setId) {
+    await $.ajax({
+        type: 'GET',
+        url: '../Sales/GetPaymentTypes',
+        dataType: 'json',
+        success: function (response) {
+            $("#select_paymentType").append("<option value='0'> - Select Payment Type - </option>");
+
+            for (var i = 0; i < response.data.length; i++) {
+                var id = response.data[i]['id'];
+                var name = response.data[i]['name'];
+                if (id == setId) {
+                    $("#select_paymentType").append("<option selected value='" + id + "'>" + name + "</option>");
+                }
+                else {
+                    $("#select_paymentType").append("<option value='" + id + "'>" + name + "</option>");
+                }
             }
         }
     });
