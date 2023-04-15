@@ -19,10 +19,6 @@ namespace Application.Endpoints.SalesOrders.Commands
                 .NotEmpty()
                 .NotNull()
                 .GreaterThan(0);
-            RuleFor(x => x.OrderDate)
-                .NotEmpty()
-                .NotNull()
-                .GreaterThanOrEqualTo(DateTime.Parse(DateTime.Now.ToShortDateString()));
             RuleFor(x => x.CustomerName)
                 .NotEmpty()
                 .NotNull();

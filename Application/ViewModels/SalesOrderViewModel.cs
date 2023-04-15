@@ -9,6 +9,7 @@ namespace Application.ViewModels
 {
     public record SalesOrderViewModel
     {
+        public int Id { get; set; }
         public string OrderNumber { get; set; }
         public int OrderTypeId { get; set; }
         public DateTime OrderDate { get; set; }

@@ -6,6 +6,8 @@ using Application.Endpoints.SalesOrders.Queries;
 using Application.Interfaces.Services;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Build.Execution;
+using System.Runtime.CompilerServices;
 
 namespace WebMVC.Controllers
 {
@@ -39,13 +41,8 @@ namespace WebMVC.Controllers
 
         public async Task<IActionResult> SearchOrderToChange(string orderNumber)
         {
-            GetSalesOrderQuery query = new GetSalesOrderQuery()
-            {
-                OrderNumber = orderNumber
-            };
             ViewData["Title"] = "Change Sales Order";
-
-            return View("SalesOrderToChange", await _mediator.Send(query));
+            return View("SalesOrderToChange", orderNumber);
         }
 
         public async Task<IActionResult> SearchOrderToDisplay(string orderNumber)
@@ -72,8 +69,16 @@ namespace WebMVC.Controllers
         public async Task<IActionResult> AddSalesOrder([FromForm] AddSalesOrderCommand command)
             => Json(await _mediator.Send(command));
 
+        [HttpPut]
+        public async Task<IActionResult> UpdateSalesOrder(int id, [FromForm] UpdateSalesOrderCommand command)
+        {
+            command.Id = id;
+
+            return Json(await _mediator.Send(command));
+        }
+
         [HttpGet]
-        public async Task<IActionResult> GetSalesOrderByDocumentNumber([FromQuery] GetSalesOrderQuery query)
+        public async Task<IActionResult> GetSalesOrderByOrderNumber([FromQuery] GetSalesOrderQuery query)
             => Json(await _mediator.Send(query));
         #endregion
     }

@@ -22,7 +22,7 @@ namespace Infrastructure.Services
         public string GenerateOrderNumber(string type, string lastNumberOfTheDay, int padLeftNum)
         {
             string orderNumber = string.Format("{0}{1}", type, DateTime.UtcNow.ToString("yyyyMMdd"));
-            if (string.IsNullOrEmpty(lastNumberOfTheDay))
+            if (string.IsNullOrEmpty(lastNumberOfTheDay) && lastNumberOfTheDay.Contains(DateTime.UtcNow.ToString("yyyyMMdd")))
                 return orderNumber + 1.ToString().PadLeft(padLeftNum, '0');
 
             int newNumber = int.Parse(lastNumberOfTheDay.Substring(lastNumberOfTheDay.Length - padLeftNum)) + 1;

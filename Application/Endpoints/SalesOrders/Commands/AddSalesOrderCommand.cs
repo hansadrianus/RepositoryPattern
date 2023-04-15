@@ -13,7 +13,6 @@ namespace Application.Endpoints.SalesOrders.Commands
     public class AddSalesOrderCommand : IRequest<EndpointResult<SalesOrderViewModel>>
     {
         public int OrderTypeId { get; set; }
-        public DateTime OrderDate { get; set; }
         public string CustomerName { get; set; }
         public string CustomerAddress { get; set; }
         public int PaymentTypeId { get; set; }

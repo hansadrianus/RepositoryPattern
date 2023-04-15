@@ -72,7 +72,7 @@
 @section Scripts{
     <script>
         var order = {};
-        var orderItem = new Array();
+        var orderItems = new Array();
         var jsGridCustomDateTimeField = function (config) {
             jsGrid.Field.call(this, config);
         };
@@ -98,7 +98,7 @@
                         horizontal: 'auto',
                         vertical: 'auto'
                     },
-                    minDate: new Date(),
+                    minDate: new Date().toLocaleDateString(),
                     icons: {
                         time: 'fa fa-clock-o',
                         date: 'fa fa-calendar',
@@ -123,7 +123,8 @@
                         horizontal: 'auto',
                         vertical: 'auto'
                     },
-                    minDate: new Date(),
+                    date: moment(value),
+                    minDate: new Date().toLocaleDateString(),
                     icons: {
                         time: 'fa fa-clock-o',
                         date: 'fa fa-calendar',
@@ -138,9 +139,9 @@
                 });
 
                 if (value !== null) {
-                    this._editPicker.data('DateTimePicker').defaultDate(moment(value));
-                    this._editPicker.data('DateTimePicker').date(moment(value));
+                    this._editPicker.data('DateTimePicker').defaultDate(moment());
                 }
+
                 return this._editPicker;
             },
 
@@ -180,19 +181,19 @@
 
                 controller: {
                     insertItem: function (item) {
-                        orderItem.push(item);
+                        orderItems.push(item);
                     },
                     deleteItem: function (item) {
-                        let arrIdx = orderItem.indexOf(item);
+                        let arrIdx = orderItems.indexOf(item);
                         if (arrIdx > -1) {
-                            orderItem.splice(arrIdx, 1);
+                            orderItems.splice(arrIdx, 1);
                         }
                     }
                 },
 
                 fields: [
                     {
-                        title: "Product", name: "productId", type: "select", items: data, valueField: "id", textField: "name", validate: "required",
+                        title: "Product", name: "productId", type: "select", items: data, valueField: "id", textField: "name", validate: { message: "Please select the product.", validator: function (value) { return value > 0; } },
                         insertTemplate: function () {
                             var grid = this._grid;
                             var insertResult = jsGrid.fields.select.prototype.insertTemplate.call(this, arguments);
@@ -227,10 +228,10 @@
                             return editResult;
                         },
                     },
-                    { title: "Quantity", name: "quantity", type: "number", validate: "required" },
-                    { title: "Price", name: "price", type: "number", width: 50, validate: "required" },
-                    { title: "Delivery Date", name: "deliveryDate", type: "jsGridCustomDateTimeField", width: 50, validate: "required" },
-                    { title: "Note", name: "note", type: "text", width: 200 },
+                    { title: "Quantity", name: "quantity", type: "number", validate: { message: "Please insert quantity.", validator: function (value) { return (value != null && value != "" && value != undefined) } } },
+                    { title: "Price", name: "price", type: "number", width: 50, validate: { message: "Please insert price.", validator: function (value) { return (value != null && value != "" && value != undefined) } } },
+                    { title: "Delivery Date", name: "deliveryDate", type: "jsGridCustomDateTimeField", width: 50, validate: { message: "Please select delivery date.", validator: function (value) { return (value != null && value != "" && value != undefined) } } },
+                    { title: "Note", name: "notes", type: "text", width: 200 },
                     { type: "control", align: "center" }
                 ]
             });
@@ -238,25 +239,24 @@
 
         $("#submitBtn").click(function (e) {
             var d = $.Deferred();
-            order["orderDate"] = moment()._d.toLocaleDateString();
             order["customerName"] = document.getElementById("customerName").value;
             order["customerAddress"] = document.getElementById("customerAddress").value;
             order["orderTypeId"] = document.getElementById("select_orderType").value;
             order["paymentTypeId"] = document.getElementById("select_paymentType").value;
-            order["orderDetails"] = orderItem;
+            order["orderDetails"] = orderItems;
             
             if (order["customerName"] != "" && order["customerAddress"] != "" && order["orderTypeId"] > 0 && order["paymentTypeId"] > 0 && order["orderDetails"].length > 0){
-            $.ajax({
-                type: "POST",
-                url: "../Sales/AddSalesOrder",
-                data: order,
-                dataType: "json"
-            }).done(function (response) {
-                d.resolve(response.data);
-                $(function () { Swal.fire({ icon: 'success', title: 'Success!', text: 'Sales order has been created successfully with order number: ' + response.data.orderNumber + '.' }).then(() => { window.location.reload(); }); });
-            }).fail(function (response) {
-                $(function () { Swal.fire({ icon: 'error', title: 'Error!', text: response.data.message }) });
-            });
+                $.ajax({
+                    type: "POST",
+                    url: "../Sales/AddSalesOrder",
+                    data: order,
+                    dataType: "json"
+                }).done(function (response) {
+                    d.resolve(response.data);
+                    $(function () { Swal.fire({ icon: 'success', title: 'Success!', text: 'Sales order has been created successfully with order number: ' + response.data.orderNumber + '.' }).then(() => { window.location.reload(); }); });
+                }).fail(function (response) {
+                    $(function () { Swal.fire({ icon: 'error', title: 'Error!', text: response.data.message }) });
+                });
             }
             else
             {

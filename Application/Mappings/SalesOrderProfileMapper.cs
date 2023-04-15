@@ -21,6 +21,7 @@ namespace Application.Mappings
             CreateMap<AddSalesOrderCommand, SalesOrderHeader>()
                 .ForMember(dest => dest.Id, opt => opt.Ignore())
                 .ForMember(dest => dest.OrderNumber, opt => opt.Ignore())
+                .ForMember(dest => dest.OrderDate, opt => opt.MapFrom(src => DateTime.Now))
                 .ForMember(dest => dest.CreatedBy, opt => opt.Ignore())
                 .ForMember(dest => dest.CreatedTime, opt => opt.Ignore())
                 .ForMember(dest => dest.ModifiedBy, opt => opt.Ignore())

@@ -59,7 +59,7 @@
                         </div>
 
                         <div class="card-footer">
-                            <button type="submit" id="backBtn" class="btn btn-primary float-right" onclick="history.back()">Back</button>
+                            <button id="backBtn" class="btn btn-secondary float-right" onclick="history.back()">Back</button>
                         </div>
                     </div>
                 </div>
@@ -75,7 +75,7 @@
     <script>
         $.ajax({
             type: 'GET',
-            url: '../Sales/GetSalesOrderByDocumentNumber?documentNumber=@Model',
+            url: '../Sales/GetSalesOrderByOrderNumber?orderNumber=@Model',
             dataType: 'json',
             success: function (response) {
                 var jsGridCustomDateTimeField = function (config) {
@@ -110,7 +110,6 @@
                         paging: false,
                         inserting: false,
                         editing: false,
-                        autoload: true,
 
                         data: response.data[0].salesOrderDetails,
 
@@ -119,7 +118,7 @@
                             { title: "Quantity", name: "quantity", type: "number", validate: "required" },
                             { title: "Price", name: "price", type: "number", width: 50, validate: "required" },
                             { title: "Delivery Date", name: "deliveryDate", type: "jsGridCustomDateTimeField", width: 50, validate: "required" },
-                            { title: "Note", name: "note", type: "text", width: 200 }
+                            { title: "Note", name: "notes", type: "text", width: 200 }
                         ]
                     });
                 });
