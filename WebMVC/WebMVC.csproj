@@ -10,6 +10,7 @@
 
   <ItemGroup>
     <None Remove="Areas\Identity\Pages\Account\xj2lzfco.rs1~" />
+    <None Remove="Views\Products\CreateProduct.cshtml~RF5cb2c748.TMP" />
     <None Remove="Views\Sales\zpovoeyb.zy1~" />
   </ItemGroup>
 

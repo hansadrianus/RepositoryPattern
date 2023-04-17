@@ -4,6 +4,7 @@ using Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    partial class ApplicationContextModelSnapshot : ModelSnapshot
+    [Migration("20230416173528_AddDescriptionPropertyForProductTable")]
+    partial class AddDescriptionPropertyForProductTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -86,7 +89,7 @@ namespace Infrastructure.Migrations
                         {
                             Id = 1,
                             CreatedBy = "",
-                            CreatedTime = new DateTime(2023, 4, 17, 1, 44, 0, 853, DateTimeKind.Utc).AddTicks(316),
+                            CreatedTime = new DateTime(2023, 4, 16, 17, 35, 28, 26, DateTimeKind.Utc).AddTicks(1970),
                             CssClass = "fas fa-dollar-sign",
                             MenuAction = "",
                             MenuController = "Sales",
@@ -100,7 +103,7 @@ namespace Infrastructure.Migrations
                         {
                             Id = 2,
                             CreatedBy = "",
-                            CreatedTime = new DateTime(2023, 4, 17, 1, 44, 0, 853, DateTimeKind.Utc).AddTicks(326),
+                            CreatedTime = new DateTime(2023, 4, 16, 17, 35, 28, 26, DateTimeKind.Utc).AddTicks(1975),
                             CssClass = "",
                             MenuAction = "CreateSalesOrder",
                             MenuController = "Sales",
@@ -114,7 +117,7 @@ namespace Infrastructure.Migrations
                         {
                             Id = 3,
                             CreatedBy = "",
-                            CreatedTime = new DateTime(2023, 4, 17, 1, 44, 0, 853, DateTimeKind.Utc).AddTicks(328),
+                            CreatedTime = new DateTime(2023, 4, 16, 17, 35, 28, 26, DateTimeKind.Utc).AddTicks(1978),
                             CssClass = "",
                             MenuAction = "ChangeSalesOrder",
                             MenuController = "Sales",
@@ -128,7 +131,7 @@ namespace Infrastructure.Migrations
                         {
                             Id = 4,
                             CreatedBy = "",
-                            CreatedTime = new DateTime(2023, 4, 17, 1, 44, 0, 853, DateTimeKind.Utc).AddTicks(330),
+                            CreatedTime = new DateTime(2023, 4, 16, 17, 35, 28, 26, DateTimeKind.Utc).AddTicks(1980),
                             CssClass = "",
                             MenuAction = "DisplaySalesOrder",
                             MenuController = "Sales",
@@ -136,62 +139,6 @@ namespace Infrastructure.Migrations
                             MenuName = "Display Sales Order",
                             MenuOrder = 3,
                             MenuParent = 1,
-                            RowStatus = (short)0
-                        },
-                        new
-                        {
-                            Id = 5,
-                            CreatedBy = "",
-                            CreatedTime = new DateTime(2023, 4, 17, 1, 44, 0, 853, DateTimeKind.Utc).AddTicks(333),
-                            CssClass = "fas fa-tags",
-                            MenuAction = "",
-                            MenuController = "Products",
-                            MenuLevel = 0,
-                            MenuName = "Product",
-                            MenuOrder = 0,
-                            MenuParent = 0,
-                            RowStatus = (short)0
-                        },
-                        new
-                        {
-                            Id = 6,
-                            CreatedBy = "",
-                            CreatedTime = new DateTime(2023, 4, 17, 1, 44, 0, 853, DateTimeKind.Utc).AddTicks(335),
-                            CssClass = "",
-                            MenuAction = "CreateProduct",
-                            MenuController = "Products",
-                            MenuLevel = 1,
-                            MenuName = "Create Product",
-                            MenuOrder = 1,
-                            MenuParent = 5,
-                            RowStatus = (short)0
-                        },
-                        new
-                        {
-                            Id = 7,
-                            CreatedBy = "",
-                            CreatedTime = new DateTime(2023, 4, 17, 1, 44, 0, 853, DateTimeKind.Utc).AddTicks(337),
-                            CssClass = "",
-                            MenuAction = "ChangeProduct",
-                            MenuController = "Products",
-                            MenuLevel = 1,
-                            MenuName = "Change Product",
-                            MenuOrder = 2,
-                            MenuParent = 5,
-                            RowStatus = (short)0
-                        },
-                        new
-                        {
-                            Id = 8,
-                            CreatedBy = "",
-                            CreatedTime = new DateTime(2023, 4, 17, 1, 44, 0, 853, DateTimeKind.Utc).AddTicks(339),
-                            CssClass = "",
-                            MenuAction = "DisplayProduct",
-                            MenuController = "Products",
-                            MenuLevel = 1,
-                            MenuName = "Display Product",
-                            MenuOrder = 3,
-                            MenuParent = 5,
                             RowStatus = (short)0
                         });
                 });
@@ -680,7 +627,7 @@ namespace Infrastructure.Migrations
                         {
                             Id = 1,
                             CreatedBy = "",
-                            CreatedTime = new DateTime(2023, 4, 17, 1, 44, 0, 853, DateTimeKind.Utc).AddTicks(696),
+                            CreatedTime = new DateTime(2023, 4, 16, 17, 35, 28, 26, DateTimeKind.Utc).AddTicks(2249),
                             Description = "English",
                             IsDefaultLanguage = true,
                             LCID = 1033,
@@ -690,7 +637,7 @@ namespace Infrastructure.Migrations
                         {
                             Id = 2,
                             CreatedBy = "",
-                            CreatedTime = new DateTime(2023, 4, 17, 1, 44, 0, 853, DateTimeKind.Utc).AddTicks(698),
+                            CreatedTime = new DateTime(2023, 4, 16, 17, 35, 28, 26, DateTimeKind.Utc).AddTicks(2252),
                             Description = "Indonesia",
                             IsDefaultLanguage = false,
                             LCID = 1057,
@@ -741,7 +688,7 @@ namespace Infrastructure.Migrations
                         {
                             Id = 1,
                             CreatedBy = "",
-                            CreatedTime = new DateTime(2023, 4, 17, 1, 44, 0, 853, DateTimeKind.Utc).AddTicks(731),
+                            CreatedTime = new DateTime(2023, 4, 16, 17, 35, 28, 26, DateTimeKind.Utc).AddTicks(2332),
                             Name = "Sales Quotation",
                             RowStatus = (short)0
                         },
@@ -749,7 +696,7 @@ namespace Infrastructure.Migrations
                         {
                             Id = 2,
                             CreatedBy = "",
-                            CreatedTime = new DateTime(2023, 4, 17, 1, 44, 0, 853, DateTimeKind.Utc).AddTicks(733),
+                            CreatedTime = new DateTime(2023, 4, 16, 17, 35, 28, 26, DateTimeKind.Utc).AddTicks(2334),
                             Name = "Sales Order",
                             RowStatus = (short)0
                         },
@@ -757,7 +704,7 @@ namespace Infrastructure.Migrations
                         {
                             Id = 3,
                             CreatedBy = "",
-                            CreatedTime = new DateTime(2023, 4, 17, 1, 44, 0, 853, DateTimeKind.Utc).AddTicks(734),
+                            CreatedTime = new DateTime(2023, 4, 16, 17, 35, 28, 26, DateTimeKind.Utc).AddTicks(2335),
                             Name = "Sales Contract",
                             RowStatus = (short)0
                         });
@@ -806,7 +753,7 @@ namespace Infrastructure.Migrations
                         {
                             Id = 1,
                             CreatedBy = "",
-                            CreatedTime = new DateTime(2023, 4, 17, 1, 44, 0, 853, DateTimeKind.Utc).AddTicks(769),
+                            CreatedTime = new DateTime(2023, 4, 16, 17, 35, 28, 26, DateTimeKind.Utc).AddTicks(2360),
                             Name = "Cash",
                             RowStatus = (short)0
                         },
@@ -814,7 +761,7 @@ namespace Infrastructure.Migrations
                         {
                             Id = 2,
                             CreatedBy = "",
-                            CreatedTime = new DateTime(2023, 4, 17, 1, 44, 0, 853, DateTimeKind.Utc).AddTicks(771),
+                            CreatedTime = new DateTime(2023, 4, 16, 17, 35, 28, 26, DateTimeKind.Utc).AddTicks(2364),
                             Name = "Credit",
                             RowStatus = (short)0
                         },
@@ -822,7 +769,7 @@ namespace Infrastructure.Migrations
                         {
                             Id = 3,
                             CreatedBy = "",
-                            CreatedTime = new DateTime(2023, 4, 17, 1, 44, 0, 853, DateTimeKind.Utc).AddTicks(773),
+                            CreatedTime = new DateTime(2023, 4, 16, 17, 35, 28, 26, DateTimeKind.Utc).AddTicks(2365),
                             Name = "Split Payment",
                             RowStatus = (short)0
                         });
@@ -844,6 +791,7 @@ namespace Infrastructure.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Description")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ModifiedBy")
@@ -891,7 +839,7 @@ namespace Infrastructure.Migrations
                         {
                             Id = 1,
                             CreatedBy = "",
-                            CreatedTime = new DateTime(2023, 4, 17, 1, 44, 0, 853, DateTimeKind.Utc).AddTicks(803),
+                            CreatedTime = new DateTime(2023, 4, 16, 17, 35, 28, 26, DateTimeKind.Utc).AddTicks(2386),
                             Description = "",
                             Name = "Sample Product 1",
                             Price = 10000m,
@@ -904,7 +852,7 @@ namespace Infrastructure.Migrations
                         {
                             Id = 2,
                             CreatedBy = "",
-                            CreatedTime = new DateTime(2023, 4, 17, 1, 44, 0, 853, DateTimeKind.Utc).AddTicks(863),
+                            CreatedTime = new DateTime(2023, 4, 16, 17, 35, 28, 26, DateTimeKind.Utc).AddTicks(2389),
                             Description = "",
                             Name = "Sample Product 2",
                             Price = 20000m,

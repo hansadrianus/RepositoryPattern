@@ -52,7 +52,7 @@ namespace WebMVC.Controllers
         }
         #endregion
 
-        #region JSON API Controller
+        #region JSON API Controllers
         [HttpGet]
         public async Task<IActionResult> GetOrderTypes([FromQuery] GetOrderTypeQuery query)
             => Json(await _mediator.Send(query));

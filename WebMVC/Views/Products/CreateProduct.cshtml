@@ -1,0 +1,115 @@
+﻿<div class="content-wrapper">
+    <section class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1>@ViewData["Title"]</h1>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="content">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title">Create New Product</h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="bs-stepper">
+                                <div class="bs-stepper-header" role="tablist">
+                                    <div class="step" data-target="#basic-part">
+                                        <button type="button" class="step-trigger" role="tab" aria-controls="basic-part" id="basic-part-trigger">
+                                            <span class="bs-stepper-circle">1</span>
+                                            <span class="bs-stepper-label">Basic Information</span>
+                                        </button>
+                                    </div>
+                                    <div class="line"></div>
+                                    <div class="step" data-target="#additional-part">
+                                        <button type="button" class="step-trigger" role="tab" aria-controls="information-part" id="additional-part-trigger">
+                                            <span class="bs-stepper-circle">2</span>
+                                            <span class="bs-stepper-label">Additional Information</span>
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="bs-stepper-content">
+                                    <div id="basic-part" class="content" role="tabpanel" aria-labelledby="basic-part-trigger">
+                                        <div class="form-group required">
+                                            <label for="productType">Type</label>
+                                            <input type="text" class="form-control" id="productType" placeholder="Product type" required>
+                                        </div>
+                                        <div class="form-group required">
+                                            <label for="productName">Name</label>
+                                            <input type="text" class="form-control" id="productName" placeholder="Product name" required>
+                                        </div>
+                                        <div class="form-group required">
+                                            <label for="productPrice">Unit Price</label>
+                                            <input type="number" class="form-control" id="productPrice" step="any" placeholder="Product price" required>
+                                        </div>
+                                        <div class="form-group required">
+                                            <label for="productStock">Stock</label>
+                                            <input type="number" class="form-control" id="productStock" placeholder="Product stock" required>
+                                        </div>
+                                        <button class="btn btn-secondary float-right" onclick="stepper.next()">Next</button>
+                                    </div>
+                                    <div id="additional-part" class="content" role="tabpanel" aria-labelledby="additional-part-trigger">
+                                        <div class="form-group">
+                                            <label for="productDescription">Description</label>
+                                            <textarea class="form-control" id="productDescription" placeholder="Description" rows="5"></textarea>
+                                        </div>
+                                        <button class="btn btn-secondary float-left" onclick="stepper.previous()">Previous</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-footer">
+                            <button type="submit" id="submitBtn" class="btn btn-primary">Submit</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+
+@section Styles {
+}
+
+@section Scripts {
+    <script>
+        var product = {};
+        document.addEventListener('DOMContentLoaded', function () {
+            window.stepper = new Stepper(document.querySelector('.bs-stepper'));
+        });
+
+        $("#submitBtn").click(function (e) {
+            var d = $.Deferred();
+            product["type"] = document.getElementById("productType").value;
+            product["name"] = document.getElementById("productName").value;
+            product["price"] = document.getElementById("productPrice").value;
+            product["stock"] = document.getElementById("productStock").value;
+            product["description"] = document.getElementById("productDescription").value;
+
+            if (product["type"] != "" && product["name"] != "" && product["price"] != '' && product["stock"] != '') {
+                $.ajax({
+                    type: "POST",
+                    url: "../Products/AddProduct",
+                    data: product,
+                    dataType: "json"
+                }).done(function (response) {
+                    d.resolve(response.data);
+                    $(function () { Swal.fire({ icon: 'success', title: 'Success!', text: 'Product has been created successfully with product code: ' + response.data.productCode + '.' }).then(() => { window.location.reload(); }); });
+                }).fail(function (response) {
+                    $(function () { Swal.fire({ icon: 'error', title: 'Error!', text: response.data.message }) });
+                });
+            }
+            else {
+                $(function () { Swal.fire({ icon: 'error', title: 'Error!', text: "Invalid inputs." }) });
+            }
+
+            return d.promise();
+        });
+    </script>
+}
