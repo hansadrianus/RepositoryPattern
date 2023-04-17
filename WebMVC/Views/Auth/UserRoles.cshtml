@@ -1,34 +1,43 @@
 ﻿@model UserProfileViewModel
 
 <div class="content-wrapper">
-    <div class="row">
-        <div class="col-12">
-            <div class="card card-widget widget-user-2 shadow-sm">
-                <div class="widget-user-header bg-warning">
-                    <div class="widget-user-image">
-                        @if (Model.ProfilePicture.Length > 0 && Model.ProfilePicture != null)
-                        {
-                            <img class="img-circle elevation-2" src="data:image/*;base64,@(Convert.ToBase64String(Model.ProfilePicture))" alt="Profile Picture" style="width:70px; height:70px; object-fit:cover; border-radius:100%">
-                        }
-                        else
-                        {
-                            <img class="img-circle elevation-2" src="~/assets/img/avatar.png" alt="Profile Picture" style="width:70px; height:70px; object-fit:cover; border-radius:100%">
-                        }
+    <section class="content">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-12">
+                    <div class="card card-widget widget-user-2 shadow-sm">
+                        <div class="widget-user-header bg-primary">
+                            <div class="widget-user-image">
+                                @if (Model.ProfilePicture.Length > 0 && Model.ProfilePicture != null)
+                                {
+                                    <img class="img-circle elevation-2" src="data:image/*;base64,@(Convert.ToBase64String(Model.ProfilePicture))" alt="Profile Picture" style="width:70px; height:70px; object-fit:cover; border-radius:100%">
+                                }
+                                else
+                                {
+                                    <img class="img-circle elevation-2" src="~/assets/img/avatar.png" alt="Profile Picture" style="width:70px; height:70px; object-fit:cover; border-radius:100%">
+                                }
+                            </div>
+                            <h3 class="widget-user-username">
+                                @Model.FirstName @Model.LastName
+                                <button class="float-right btn btn-lg btn-secondary" onclick="history.back()">Go Back</button>
+                            </h3>
+                            <h5 class="widget-user-desc">@Model.UserName</h5>
+                        </div>
                     </div>
-                    <h3 class="widget-user-username">@Model.FirstName @Model.LastName</h3>
-                    <h5 class="widget-user-desc">@Model.UserName</h5>
                 </div>
             </div>
-        </div>
-    </div>
 
-    <section class="content">
-        <div class="card">
-            <div class="card-header">
-                <h3 class="card-title">User Roles</h3>
-            </div>
-            <div class="card-body">
-                <div id="userRolesGrid" style="overflow: visible"></div>
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title">User Roles</h3>
+                        </div>
+                        <div class="card-body">
+                            <div id="userRolesGrid" style="overflow: visible"></div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
@@ -42,63 +51,61 @@
 @section Scripts{
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jsgrid/1.5.3/jsgrid.min.js"></script>
     <script>
-        $(function () {
-            $("#userRolesGrid").jsGrid({
-                height: "500px",
-                width: "100%",
+        $("#userRolesGrid").jsGrid({
+            height: "500px",
+            width: "100%",
 
-                filtering: true,
-                sorting: true,
-                paging: false,
-                editing: true,
-                autoload: true,
+            filtering: true,
+            sorting: true,
+            paging: false,
+            editing: true,
+            autoload: true,
 
-                onItemUpdating: function (args) {
-                    previousItem = args.previousItem;
+            onItemUpdating: function (args) {
+                previousItem = args.previousItem;
+            },
+
+            controller: {
+                loadData: function (filter) {
+                    var d = $.Deferred();
+
+                    $.ajax({
+                        type: "GET",
+                        url: "../GetUserRoles/" + @Model.Id,
+                        data: filter,
+                        dataType: "json"
+                    }).done(function (response) {
+                        d.resolve(response.data);
+                    });
+
+                    return d.promise();
                 },
+                updateItem: function (item) {
+                    var d = $.Deferred();
 
-                controller: {
-                    loadData: function (filter) {
-                        var d = $.Deferred();
+                    $.ajax({
+                        type: "PUT",
+                        url: "../UpdateUserRoles/" + @Model.Id,
+                        data: item,
+                        dataType: "json"
+                    }).done(function (response) {
+                        d.resolve(response.data);
+                        $(function () { Swal.fire({ icon: 'success', title: 'Success!', text: 'User role updated successfully.' }) });
+                    }).fail(function (response) {
+                        d.resolve(previousItem);
+                        $(function () { Swal.fire({ icon: 'error', title: 'Error!', text: response.data.message }) });
+                    });
 
-                        $.ajax({
-                            type: "GET",
-                            url: "../GetUserRoles/" + @Model.Id,
-                            data: filter,
-                            dataType: "json"
-                        }).done(function (response) {
-                            d.resolve(response.data);
-                        });
+                    return d.promise();
+                }
+            },
 
-                        return d.promise();
-                    },
-                    updateItem: function (item) {
-                        var d = $.Deferred();
-
-                        $.ajax({
-                            type: "PUT",
-                            url: "../UpdateUserRoles/" + @Model.Id,
-                            data: item,
-                            dataType: "json"
-                        }).done(function (response) {
-                            d.resolve(response.data);
-                            $(function () { Swal.fire({ icon: 'success', title: 'Success!', text: 'User role updated successfully.' }) });
-                        }).fail(function (response) {
-                            d.resolve(previousItem);
-                            $(function () { Swal.fire({ icon: 'error', title: 'Error!', text: response.data.message }) });
-                        });
-
-                        return d.promise();
-                    }
-                },
-
-                fields: [
-                    { title: "ID", name: "roleId", type: "number", width: 50, align: "center", editing: false },
-                    { title: "Name", name: "roleName", type: "text", editing: false },
-                    { title: "Selected", name: "isSelected", type: "checkbox", width: 50, filtering: false },
-                    { type: "control", deleteButton: false }
-                ]
-            });
+            fields: [
+                { title: "ID", name: "roleId", type: "number", width: 50, align: "center", editing: false },
+                { title: "Name", name: "roleName", type: "text", editing: false },
+                { title: "Selected", name: "isSelected", type: "checkbox", width: 50, filtering: false },
+                { type: "control", deleteButton: false }
+            ]
         });
     </script>
 }

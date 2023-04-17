@@ -15,7 +15,7 @@ namespace Domain.Entities
         public decimal Price { get; set; }
         public int Quantity { get; set; }
         public DateTime DeliveryDate { get; set; }
-        public string Notes { get; set; }
+        public string? Notes { get; set; }
 
         [ForeignKey("OrderId")]
         public virtual SalesOrderHeader OrderHeader { get; set; }

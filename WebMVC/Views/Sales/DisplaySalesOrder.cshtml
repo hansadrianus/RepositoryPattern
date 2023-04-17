@@ -1,8 +1,4 @@
-﻿@{
-    ViewData["Title"] = "Display Sales Order";
-}
-
-<div class="content-wrapper">
+﻿<div class="content-wrapper">
     <section class="content-header">
         <div class="container-fluid">
             <div class="row mb-2">
@@ -18,15 +14,22 @@
             <div class="row">
                 <div class="col-12">
                     <div class="card">
-                        <div class="card-header">
-                            <h3 class="card-title">Title</h3>
-                        </div>
-                        <div class="card-body">
-                            <h1>This is @ViewData["Title"] Page!</h1>
-                        </div>
-                        <div class="card-footer">
-                            Footer
-                        </div>
+                        <form method="get" asp-action="SearchOrderToDisplay">
+                            <div class="card-header">
+                                <h3 class="card-title">Search Document Number</h3>
+                            </div>
+                            <div class="card-body">
+                                <div class="form-group row">
+                                    <label for="orderNumber" class="col-sm-2 col-form-label">Document No.</label>
+                                    <div class="col-sm-4">
+                                        <input type="text" class="form-control" id="orderNumber" name="orderNumber">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-footer">
+                                <button type="submit" id="btnSearch" class="btn btn-secondary float-right">Search</button>
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>

@@ -9,7 +9,10 @@ namespace Application.Interfaces.Persistence
     public interface IApplicationContext
     {
         DbSet<AppMenu> AppMenu { get; set; }
+        DbSet<AppMenuRole> MenuRoles { get; set; }
         DbSet<LanguageCulture> LanguageCulture { get; set; }
+        DbSet<OrderType> OrderType { get; set; }
+        DbSet<PaymentType> PaymentType { get; set; }
         DbSet<Product> Product { get; set; }
         DbSet<SalesOrderHeader> SalesOrderHeader { get; set; }
         DbSet<SalesOrderDetail> SalesOrderDetail { get; set; }

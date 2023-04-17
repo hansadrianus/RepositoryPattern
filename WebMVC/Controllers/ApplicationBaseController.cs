@@ -1,4 +1,5 @@
-﻿using Application.Models.Enumerations;
+﻿using Application.Interfaces.Services;
+using Application.Models.Enumerations;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 

@@ -12,14 +12,18 @@ namespace Application.Endpoints.Products.Commands
         public AddProductCommandValidator()
         {
             RuleFor(x => x.Name)
+                .NotNull()
                 .NotEmpty();
             RuleFor(x => x.Price)
+                .NotNull()
                 .NotEmpty()
                 .GreaterThanOrEqualTo(0);
             RuleFor(x => x.Stock)
+                .NotNull()
                 .NotEmpty()
                 .GreaterThanOrEqualTo(0);
             RuleFor(x => x.Type)
+                .NotNull()
                 .NotEmpty();
         }
     }

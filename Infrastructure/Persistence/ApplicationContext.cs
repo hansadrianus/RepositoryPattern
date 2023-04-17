@@ -35,7 +35,10 @@ namespace Infrastructure.Persistence
         }
 
         public DbSet<AppMenu> AppMenu { get; set; }
+        public DbSet<AppMenuRole> MenuRoles { get; set; }
         public DbSet<LanguageCulture> LanguageCulture { get; set; }
+        public DbSet<OrderType> OrderType { get; set; }
+        public DbSet<PaymentType> PaymentType { get; set; }
         public DbSet<Product> Product { get; set; }
         public DbSet<SalesOrderHeader> SalesOrderHeader { get; set; }
         public DbSet<SalesOrderDetail> SalesOrderDetail { get; set; }
