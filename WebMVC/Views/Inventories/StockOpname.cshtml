@@ -15,11 +15,11 @@
                 <div class="col-12">
                     <div class="card">
                         <div class="card-header">
-                            <h3 class="card-title">List of Roles</h3>
+                            <h3 class="card-title">Physical Inventory Adjustment</h3>
                         </div>
 
                         <div class="card-body">
-                            <div id="rolesGrid" style="overflow: visible"></div>
+                            <div id="inventoryGrid" style="overflow: visible"></div>
                         </div>
                     </div>
                 </div>
@@ -33,16 +33,18 @@
 
 @section Scripts{
     <script>
-        $("#rolesGrid").jsGrid({
+        $("#inventoryGrid").jsGrid({
             height: "500px",
             width: "100%",
 
             filtering: true,
             sorting: true,
-            paging: false,
-            inserting: true,
+            paging: true,
             editing: true,
             autoload: true,
+
+            pageSize: 5,
+            pageButtonCount: 5,
 
             onItemUpdating: function (args) {
                 previousItem = args.previousItem;
@@ -61,28 +63,11 @@
 
                     $.ajax({
                         type: "GET",
-                        url: "../Auth/GetRoles",
+                        url: "../Inventories/GetInventoryStocks",
                         data: filter,
                         dataType: "json"
                     }).done(function (response) {
                         d.resolve(response.data);
-                    });
-
-                    return d.promise();
-                },
-                insertItem: function (item) {
-                    var d = $.Deferred();
-
-                    $.ajax({
-                        type: "POST",
-                        url: "../Auth/AddRole",
-                        data: item,
-                        dataType: "json"
-                    }).done(function (response) {
-                        d.resolve(response.data);
-                        $(function () { Swal.fire({ icon: 'success', title: 'Success!', text: 'Role created successfully.' }) });
-                    }).fail(function (response) {
-                        $(function () { Swal.fire({ icon: 'error', title: 'Error!', text: response.data.message }) });
                     });
 
                     return d.promise();
@@ -99,12 +84,12 @@
 
                     $.ajax({
                         type: "PUT",
-                        url: "../Auth/UpdateRole/" + item.id,
+                        url: "../Inventories/UpdateInventoryStock/" + item.id,
                         data: item,
                         dataType: "json"
                     }).done(function (response) {
                         d.resolve(response.data);
-                        $(function () { Swal.fire({ icon: 'success', title: 'Success!', text: 'Role updated successfully.' }) });
+                        $(function () { Swal.fire({ icon: 'success', title: 'Success!', text: 'User ' + response.data.userName + ' has been updated successfully.' }) });
                     }).fail(function (response) {
                         d.resolve(previousItem);
                         $(function () { Swal.fire({ icon: 'error', title: 'Error!', text: response.data.message }) });
@@ -115,16 +100,10 @@
             },
 
             fields: [
-                { title: "ID", name: "id", type: "number", width: 50, align: "center", editing: false, inserting: false },
-                { title: "Name", name: "name", type: "text", validate: "required" },
-                { title: "Status", name: "rowStatus", type: "checkbox", width: 50, inserting: false },
-                {
-                    title: "Action", align: "center", width: 50,
-                    itemTemplate: function (value, item) {
-                        var $link = $("<a>").attr("href", "../Auth/MenuRoles/" + item.id).text("Menus");
-                        return $("<div>").append($link);
-                    }
-                },
+                { title: "ID", name: "id", type: "number", width: 50, align: "center", editing: false },
+                { title: "Product Code", name: "productCode", type: "text", editing: false },
+                { title: "Name", name: "name", type: "text", editing: false },
+                { title: "Stock", name: "stock", type: "number", validate: { message: "Please insert valid number.", validator: function (value) { return (value != null && value != "" && value != undefined && value >= 0) } } },
                 { type: "control", width: 200, align: "center", editButton: true, deleteButton: false }
             ]
         });

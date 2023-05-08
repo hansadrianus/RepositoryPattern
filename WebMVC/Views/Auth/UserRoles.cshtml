@@ -1,6 +1,16 @@
 ﻿@model UserProfileViewModel
 
 <div class="content-wrapper">
+    <section class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1>@ViewData["Title"]</h1>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <section class="content">
         <div class="container-fluid">
             <div class="row">
@@ -44,12 +54,9 @@
 </div>
 
 @section Styles{
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jsgrid/1.5.3/jsgrid.min.css" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jsgrid/1.5.3/jsgrid-theme.min.css" />
 }
 
 @section Scripts{
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jsgrid/1.5.3/jsgrid.min.js"></script>
     <script>
         $("#userRolesGrid").jsGrid({
             height: "500px",

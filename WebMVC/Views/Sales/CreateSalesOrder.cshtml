@@ -228,8 +228,8 @@
                             return editResult;
                         },
                     },
-                    { title: "Quantity", name: "quantity", type: "number", validate: { message: "Please insert quantity.", validator: function (value) { return (value != null && value != "" && value != undefined) } } },
-                    { title: "Price", name: "price", type: "number", width: 50, validate: { message: "Please insert price.", validator: function (value) { return (value != null && value != "" && value != undefined) } } },
+                    { title: "Quantity", name: "quantity", type: "number", validate: { message: "Please insert quantity.", validator: function (value) { return (value != null && value != "" && value != undefined && value >= 0) } } },
+                    { title: "Price", name: "price", type: "number", width: 50, validate: { message: "Please insert price.", validator: function (value) { return (value != null && value != "" && value != undefined && value >= 0) } } },
                     { title: "Delivery Date", name: "deliveryDate", type: "jsGridCustomDateTimeField", width: 50, validate: { message: "Please select delivery date.", validator: function (value) { return (value != null && value != "" && value != undefined) } } },
                     { title: "Note", name: "notes", type: "text", width: 200 },
                     { type: "control", align: "center" }

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Application.ViewModels
 {
-    public record ProductViewModel
+    public record ProductStockViewModel
     {
         public int Id { get; set; }
         public string ProductCode { get; set; }
