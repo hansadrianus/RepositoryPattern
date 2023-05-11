@@ -11,6 +11,5 @@ namespace Domain.Entities
     public class ApplicationRole : AuditableRoleEntity
     {
         public virtual ICollection<ApplicationUserRole> UserRoles { get; set; }
-        public virtual ICollection<AppMenuRole>? MenuRoles { get; set; }
     }
 }

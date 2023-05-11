@@ -20,39 +20,7 @@ namespace Infrastructure.Persistence
         {
             // TODO: Use this file to seed the database with any initial data that
             // should exist the first time the application is run.
-            builder.Entity<AppMenu>().HasData(
-                new AppMenu { Id = 1, MenuController = "Sales", MenuAction = "", MenuOrder = 0, MenuLevel = 0, MenuName = "Sales", CssClass = "fas fa-dollar-sign", CreatedBy = "", CreatedTime = DateTime.UtcNow, RowStatus = 0 },
-                new AppMenu { Id = 2, MenuController = "Sales", MenuAction = "CreateSalesOrder", MenuOrder = 1, MenuLevel = 1, MenuName = "Create Sales Order", CssClass = "", MenuParent = 1, CreatedBy = "", CreatedTime = DateTime.UtcNow, RowStatus = 0 },
-                new AppMenu { Id = 3, MenuController = "Sales", MenuAction = "ChangeSalesOrder", MenuOrder = 2, MenuLevel = 1, MenuName = "Change Sales Order", CssClass = "", MenuParent = 1, CreatedBy = "", CreatedTime = DateTime.UtcNow, RowStatus = 0 },
-                new AppMenu { Id = 4, MenuController = "Sales", MenuAction = "DisplaySalesOrder", MenuOrder = 3, MenuLevel = 1, MenuName = "Display Sales Order", CssClass = "", MenuParent = 1, CreatedBy = "", CreatedTime = DateTime.UtcNow, RowStatus = 0 },
-                new AppMenu { Id = 5, MenuController = "Products", MenuAction = "", MenuOrder = 0, MenuLevel = 0, MenuName = "Product", CssClass = "fas fa-tags", CreatedBy = "", CreatedTime = DateTime.UtcNow, RowStatus = 0 },
-                new AppMenu { Id = 6, MenuController = "Products", MenuAction = "CreateProduct", MenuOrder = 1, MenuLevel = 1, MenuName = "Create Product", CssClass = "", MenuParent = 5, CreatedBy = "", CreatedTime = DateTime.UtcNow, RowStatus = 0 },
-                new AppMenu { Id = 7, MenuController = "Products", MenuAction = "ChangeProduct", MenuOrder = 2, MenuLevel = 1, MenuName = "Change Product", CssClass = "", MenuParent = 5, CreatedBy = "", CreatedTime = DateTime.UtcNow, RowStatus = 0 },
-                new AppMenu { Id = 8, MenuController = "Products", MenuAction = "DisplayProduct", MenuOrder = 3, MenuLevel = 1, MenuName = "Display Product", CssClass = "", MenuParent = 5, CreatedBy = "", CreatedTime = DateTime.UtcNow, RowStatus = 0 }
-            );
 
-            builder.Entity<LanguageCulture>().HasData(
-                new LanguageCulture { Id = 1, LCID = 1033, Description = "English", IsDefaultLanguage = true, CreatedBy = "", CreatedTime = DateTime.UtcNow, RowStatus = 0 },
-                new LanguageCulture { Id = 2, LCID = 1057, Description = "Indonesia", IsDefaultLanguage = false, CreatedBy = "", CreatedTime = DateTime.UtcNow, RowStatus = 0 }
-            );
-
-            builder.Entity<OrderType>().HasData(
-                new OrderType { Id = 1, Name = "Sales Quotation", CreatedBy = "", CreatedTime = DateTime.UtcNow, RowStatus = 0 },
-                new OrderType { Id = 2, Name = "Sales Order", CreatedBy = "", CreatedTime = DateTime.UtcNow, RowStatus = 0 },
-                new OrderType { Id = 3, Name = "Sales Contract", CreatedBy = "", CreatedTime = DateTime.UtcNow, RowStatus = 0 }
-            );
-
-            builder.Entity<PaymentType>().HasData(
-                new PaymentType { Id = 1, Name = "Cash", CreatedBy = "", CreatedTime = DateTime.UtcNow, RowStatus = 0 },
-                new PaymentType { Id = 2, Name = "Credit", CreatedBy = "", CreatedTime = DateTime.UtcNow, RowStatus = 0 },
-                new PaymentType { Id = 3, Name = "Split Payment", CreatedBy = "", CreatedTime = DateTime.UtcNow, RowStatus = 0 }
-            );
-
-            //Sample data
-            builder.Entity<Product>().HasData(
-                new Product { Id = 1, ProductCode = "SAMPLE0001", Name = "Sample Product 1", Description = "", Price = 10000, Stock = 100, Type = "Sample", CreatedBy = "", CreatedTime = DateTime.UtcNow, RowStatus = 0 },
-                new Product { Id = 2, ProductCode = "SAMPLE0002", Name = "Sample Product 2", Description = "", Price = 20000, Stock = 100, Type = "Sample", CreatedBy = "", CreatedTime = DateTime.UtcNow, RowStatus = 0 }
-            );
         }
 
         public static async Task SeedDevelopmentData(this WebApplication? app)
