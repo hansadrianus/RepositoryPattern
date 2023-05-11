@@ -11,16 +11,6 @@ services:
     networks:
       - dbnetwork
 
-  mvc:
-    image: ${DOCKER_REGISTRY-}repository-pattern-mvc
-    build:
-      context: .
-      dockerfile: WebMVC/Dockerfile
-    depends_on:
-      - db
-    networks:
-      - dbnetwork
-
   db:
     image: mcr.microsoft.com/mssql/server:2022-latest
     ports:
