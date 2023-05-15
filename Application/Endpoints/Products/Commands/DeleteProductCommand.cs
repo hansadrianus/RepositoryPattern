@@ -11,6 +11,6 @@ namespace Application.Endpoints.Products.Commands
 {
     public class DeleteProductCommand : IRequest<EndpointResult<ProductViewModel>>
     {
-        public int? Id { get; set; }
+        public int Id { get; set; }
     }
 }

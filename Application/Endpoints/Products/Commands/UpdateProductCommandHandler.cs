@@ -38,12 +38,12 @@ namespace Application.Endpoints.Products.Commands
 
             try
             {
-                var productToUpdate = _mapper.Map<Product>(request);
-                var sourceProduct = await _repository.Product.GetAsync(q => q.Id == productToUpdate.Id && q.RowStatus == 0, cancellationToken);
+                var pidToUpdate = _mapper.Map<Product>(request);
+                var sourceProduct = await _repository.Product.GetAsync(q => q.Id == pidToUpdate.Id && q.RowStatus == 0, cancellationToken);
                 if (sourceProduct == null)
                     return new EndpointResult<ProductViewModel>(EndpointResultStatus.Success, "Data not found.");
 
-                var updatedProduct = _entityMapper.MapValues(sourceProduct, productToUpdate);
+                var updatedProduct = _entityMapper.MapValues(sourceProduct, pidToUpdate);
                 _repository.Product.Update(updatedProduct);
                 await _repository.SaveAsync(cancellationToken);
 

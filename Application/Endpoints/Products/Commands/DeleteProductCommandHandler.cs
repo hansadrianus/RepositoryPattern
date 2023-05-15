@@ -35,16 +35,16 @@ namespace Application.Endpoints.Products.Commands
 
             try
             {
-                var product = _mapper.Map<Product>(request);
-                var productToDelete = await _repository.Product.GetAsync(q => q.Id == product.Id && q.RowStatus == 0, cancellationToken);
-                if (productToDelete == null)
+                var pid = _mapper.Map<Product>(request);
+                var pidToDelete = await _repository.Product.GetAsync(q => q.Id == pid.Id && q.RowStatus == 0, cancellationToken);
+                if (pidToDelete == null)
                     return new EndpointResult<ProductViewModel>(EndpointResultStatus.NotFound, "Data not found");
 
-                productToDelete.RowStatus = 1;
-                _repository.Product.Update(productToDelete);
+                pidToDelete.RowStatus = 1;
+                _repository.Product.Update(pidToDelete);
                 await _repository.SaveAsync(cancellationToken);
 
-                return new EndpointResult<ProductViewModel>(EndpointResultStatus.Success, _mapper.Map<ProductViewModel>(productToDelete));
+                return new EndpointResult<ProductViewModel>(EndpointResultStatus.Success, _mapper.Map<ProductViewModel>(pidToDelete));
             }
             catch (Exception ex)
             {

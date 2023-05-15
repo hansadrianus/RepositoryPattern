@@ -7,9 +7,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Application.Endpoints.SalesOrders.Commands
+namespace Application.Endpoints.PhysicalInventoryDocuments.Commands
 {
-    public class DeleteSalesOrderCommand : IRequest<EndpointResult<SalesOrderViewModel>>
+    public class DeletePhysicalInventoryDocumentCommand : IRequest<EndpointResult<PhysicalInventoryDocumentViewModel>>
     {
         public int Id { get; set; }
     }

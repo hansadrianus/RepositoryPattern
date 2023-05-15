@@ -11,7 +11,7 @@ namespace Application.Endpoints.Products.Commands
 {
     public class UpdateProductCommand : IRequest<EndpointResult<ProductViewModel>>
     {
-        public int? Id { get; set; }
+        public int Id { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
         public decimal Valuation { get; set; }

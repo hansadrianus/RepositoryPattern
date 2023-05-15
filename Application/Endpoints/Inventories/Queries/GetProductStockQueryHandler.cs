@@ -31,9 +31,9 @@ namespace Application.Endpoints.Inventories.Queries
         public async Task<EndpointResult<IEnumerable<ProductStockViewModel>>> Handle(GetProductStockQuery request, CancellationToken cancellationToken)
         {
             var predicates = _queryBuilder.BuildPredicate<Product, GetProductStockQuery>(request);
-            var products = (await _repository.Product.GetAllAsync(predicates, cancellationToken)).Where(q => q.RowStatus == 0);
+            var pids = (await _repository.Product.GetAllAsync(predicates, cancellationToken)).Where(q => q.RowStatus == 0);
 
-            return new EndpointResult<IEnumerable<ProductStockViewModel>>(EndpointResultStatus.Success, _mapper.Map<ProductStockViewModel[]>(products));
+            return new EndpointResult<IEnumerable<ProductStockViewModel>>(EndpointResultStatus.Success, _mapper.Map<ProductStockViewModel[]>(pids));
         }
     }
 }

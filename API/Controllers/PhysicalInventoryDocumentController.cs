@@ -38,5 +38,13 @@ namespace API.Controllers
 
             return (await _mediator.Send(command)).ToActionResult();
         }
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeletePhysicalInventoryDocument(int id, [FromBody] DeletePhysicalInventoryDocumentCommand command)
+        {
+            command.Id = id;
+
+            return (await _mediator.Send(command)).ToActionResult();
+        }
     }
 }

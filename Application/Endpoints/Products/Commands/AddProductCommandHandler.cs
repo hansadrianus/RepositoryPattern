@@ -33,13 +33,13 @@ namespace Application.Endpoints.Products.Commands
 
             try
             {
-                var product = _mapper.Map<Product>(request);
+                var pid = _mapper.Map<Product>(request);
                 var lastProduct = await _repository.Product.GetLastAsync(q => q.Type == request.Type, q => q.Id, cancellationToken);
-                product.ProductCode = _autoGenerateNumberService.GenerateCode(request.Type, (lastProduct is null) ? null : lastProduct.ProductCode, 4);
-                await _repository.Product.AddAsync(product, cancellationToken); 
+                pid.ProductCode = _autoGenerateNumberService.GenerateCode(request.Type, (lastProduct is null) ? null : lastProduct.ProductCode, 4);
+                await _repository.Product.AddAsync(pid, cancellationToken); 
                 await _repository.SaveAsync(cancellationToken);
 
-                return new EndpointResult<ProductViewModel>(EndpointResultStatus.Success, _mapper.Map<ProductViewModel>(product));
+                return new EndpointResult<ProductViewModel>(EndpointResultStatus.Success, _mapper.Map<ProductViewModel>(pid));
             }
             catch (Exception ex)
             {
