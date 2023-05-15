@@ -16,6 +16,7 @@ namespace Application.ViewModels
         public string CustomerName { get; set; }
         public string CustomerAddress { get; set; }
         public int PaymentTypeId { get; set; }
+        public bool IsDraft { get; set; }
         public ICollection<OrderDetailViewModel> SalesOrderDetails { get; set; }
 
         public record OrderDetailViewModel

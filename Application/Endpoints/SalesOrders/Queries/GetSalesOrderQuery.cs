@@ -18,6 +18,7 @@ namespace Application.Endpoints.SalesOrders.Queries
         public string? CustomerName { get; set; }
         public string? CustomerAddress { get; set; }
         public string? PaymentType { get; set; }
+        public bool? IsDraft { get; set; }
         public DateTime? OrderDate_GreaterThanEqual { get; set; }
         public DateTime? OrderDate_LessThanEqual { get; set; }
     }

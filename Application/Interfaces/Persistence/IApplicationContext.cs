@@ -16,6 +16,8 @@ namespace Application.Interfaces.Persistence
         DbSet<Product> Product { get; set; }
         DbSet<SalesOrderHeader> SalesOrderHeader { get; set; }
         DbSet<SalesOrderDetail> SalesOrderDetail { get; set; }
+        DbSet<PhysicalInventoryDocumentHeader> PhysicalInventoryDocumentHeader { get; set; }
+        DbSet<PhysicalInventoryDocumentDetail> PhysicalInventoryDocumentDetail { get; set; }
 
         EntityEntry Add(object entity);
         EntityEntry<TEntity> Add<TEntity>(TEntity entity) where TEntity : class;

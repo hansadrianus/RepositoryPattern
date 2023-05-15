@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace Application.Endpoints.SalesOrders.Commands
 {
-    public class AddSalesOrderCommandValidator : AbstractValidator<AddSalesOrderCommand>
+    public class DraftSalesOrderCommandValidator : AbstractValidator<DraftSalesOrderCommand>
     {
-        public AddSalesOrderCommandValidator()
+        public DraftSalesOrderCommandValidator()
         {
             RuleFor(x => x.OrderTypeId)
                 .NotEmpty()

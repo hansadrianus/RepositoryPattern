@@ -18,32 +18,49 @@ namespace Application.Mappings
                 .ReverseMap();
             CreateMap<SalesOrderDetail, SalesOrderViewModel.OrderDetailViewModel>()
                 .ReverseMap();
-            CreateMap<AddSalesOrderCommand, SalesOrderHeader>()
+            CreateMap<DraftSalesOrderCommand, SalesOrderHeader>()
                 .ForMember(dest => dest.Id, opt => opt.Ignore())
                 .ForMember(dest => dest.OrderNumber, opt => opt.Ignore())
-                .ForMember(dest => dest.OrderDate, opt => opt.MapFrom(src => DateTime.Now))
+                .ForMember(dest => dest.OrderDate, opt => opt.Ignore())
+                .ForMember(dest => dest.IsDraft, opt => opt.MapFrom(src => true))
                 .ForMember(dest => dest.CreatedBy, opt => opt.Ignore())
                 .ForMember(dest => dest.CreatedTime, opt => opt.Ignore())
                 .ForMember(dest => dest.ModifiedBy, opt => opt.Ignore())
                 .ForMember(dest => dest.ModifiedTime, opt => opt.Ignore())
                 .ForMember(dest => dest.RowVersion, opt => opt.Ignore());
-                //.AfterMap((src, dest) =>
-                //{
-                //    dest.SalesOrderDetails = new List<SalesOrderDetail>();
-                //    foreach (var srcItem in src.OrderDetails)
-                //    {
-                //        SalesOrderDetail orderDetail = new SalesOrderDetail()
-                //        {
-                //            ProductId = srcItem.ProductId,
-                //            Price = srcItem.Price,
-                //            Quantity = srcItem.Quantity,
-                //            DeliveryDate = srcItem.DeliveryDate,
-                //            Notes = srcItem.Notes
-                //        };
-                //        dest.SalesOrderDetails.Add(orderDetail);
-                //    }
-                //});
-            CreateMap<UpdateSalesOrderCommand, SalesOrderHeader>()
+            CreateMap<PostSalesOrderCommand, SalesOrderHeader>()
+                .ForMember(dest => dest.Id, opt => opt.Ignore())
+                .ForMember(dest => dest.OrderNumber, opt => opt.Ignore())
+                .ForMember(dest => dest.OrderDate, opt => opt.MapFrom(src => DateTime.Now))
+                .ForMember(dest => dest.IsDraft, opt => opt.MapFrom(src => false))
+                .ForMember(dest => dest.CreatedBy, opt => opt.Ignore())
+                .ForMember(dest => dest.CreatedTime, opt => opt.Ignore())
+                .ForMember(dest => dest.ModifiedBy, opt => opt.Ignore())
+                .ForMember(dest => dest.ModifiedTime, opt => opt.Ignore())
+                .ForMember(dest => dest.RowVersion, opt => opt.Ignore());
+            //.AfterMap((src, dest) =>
+            //{
+            //    dest.SalesOrderDetails = new List<SalesOrderDetail>();
+            //    foreach (var srcItem in src.OrderDetails)
+            //    {
+            //        SalesOrderDetail orderDetail = new SalesOrderDetail()
+            //        {
+            //            ProductId = srcItem.ProductId,
+            //            Price = srcItem.Price,
+            //            Quantity = srcItem.Quantity,
+            //            DeliveryDate = srcItem.DeliveryDate,
+            //            Notes = srcItem.Notes
+            //        };
+            //        dest.SalesOrderDetails.Add(orderDetail);
+            //    }
+            //});
+            CreateMap<UpdatePostSalesOrderCommand, SalesOrderHeader>()
+                .ForMember(dest => dest.CreatedBy, opt => opt.Ignore())
+                .ForMember(dest => dest.CreatedTime, opt => opt.Ignore())
+                .ForMember(dest => dest.ModifiedBy, opt => opt.Ignore())
+                .ForMember(dest => dest.ModifiedTime, opt => opt.Ignore())
+                .ForMember(dest => dest.RowVersion, opt => opt.Ignore());
+            CreateMap<UpdateDraftSalesOrderCommand, SalesOrderHeader>()
                 .ForMember(dest => dest.CreatedBy, opt => opt.Ignore())
                 .ForMember(dest => dest.CreatedTime, opt => opt.Ignore())
                 .ForMember(dest => dest.ModifiedBy, opt => opt.Ignore())

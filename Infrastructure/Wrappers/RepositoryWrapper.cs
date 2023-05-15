@@ -4,6 +4,7 @@ using Application.Interfaces.Persistence.Auths;
 using Application.Interfaces.Persistence.LanguageCultures;
 using Application.Interfaces.Persistence.OrderTypes;
 using Application.Interfaces.Persistence.PaymentTypes;
+using Application.Interfaces.Persistence.PhysicalInventoryDocuments;
 using Application.Interfaces.Persistence.Products;
 using Application.Interfaces.Persistence.SalesOrders;
 using Application.Interfaces.Wrappers;
@@ -13,6 +14,7 @@ using Infrastructure.Repositories.Auths;
 using Infrastructure.Repositories.LanguageCultures;
 using Infrastructure.Repositories.OrderTypes;
 using Infrastructure.Repositories.PaymentTypes;
+using Infrastructure.Repositories.PhysicalInventoryDocuments;
 using Infrastructure.Repositories.Products;
 using Infrastructure.Repositories.SalesOrders;
 using Microsoft.AspNetCore.Identity;
@@ -35,6 +37,7 @@ namespace Infrastructure.Wrappers
         private IPaymentTypeRepository _paymentType;
         private IProductRepository _product;
         private ISalesOrderRepository _salesOrder;
+        private IPhysicalInventoryDocumentRepository _physicalInventoryDocument;
 
         public RepositoryWrapper(IApplicationContext context, UserManager<ApplicationUser> userManager, IConfiguration configuration)
         {
@@ -130,6 +133,15 @@ namespace Infrastructure.Wrappers
             {
                 _salesOrder ??= new SalesOrderRepository(_context);
                 return _salesOrder;
+            }
+        }
+
+        public IPhysicalInventoryDocumentRepository PhysicalInventoryDocument
+        {
+            get
+            {
+                _physicalInventoryDocument ??= new PhysicalInventoryDocumentRepository(_context);
+                return _physicalInventoryDocument;
             }
         }
 

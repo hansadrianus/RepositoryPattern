@@ -27,11 +27,23 @@ namespace API.Controllers
             => (await _mediator.Send(query)).ToActionResult();
 
         [HttpPost]
-        public async Task<IActionResult> AddSalesOrderAsync([FromBody] AddSalesOrderCommand command)
+        public async Task<IActionResult> DraftSalesOrderAsync([FromBody] DraftSalesOrderCommand command)
+            => (await _mediator.Send(command)).ToActionResult();
+
+        [HttpPost]
+        public async Task<IActionResult> PostSalesOrderAsync([FromBody] PostSalesOrderCommand command)
             => (await _mediator.Send(command)).ToActionResult();
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateSalesOrderAsync(int id, [FromBody] UpdateSalesOrderCommand command)
+        public async Task<IActionResult> UpdatePostSalesOrderAsync(int id, [FromBody] UpdatePostSalesOrderCommand command)
+        {
+            command.Id = id;
+
+            return (await _mediator.Send(command)).ToActionResult();
+        }
+
+        [HttpPut("{id}")]
+        public async Task<IActionResult> UpdateDraftSalesOrderAsync(int id, [FromBody] UpdateDraftSalesOrderCommand command)
         {
             command.Id = id;
 

@@ -1,5 +1,6 @@
 ﻿using Application.Models;
 using Application.ViewModels;
+using Domain.Entities;
 using MediatR;
 using System;
 using System.Collections.Generic;
@@ -9,9 +10,8 @@ using System.Threading.Tasks;
 
 namespace Application.Endpoints.SalesOrders.Commands
 {
-    public class UpdateSalesOrderCommand : IRequest<EndpointResult<SalesOrderViewModel>>
+    public class PostSalesOrderCommand : IRequest<EndpointResult<SalesOrderViewModel>>
     {
-        public int? Id { get; set; }
         public int OrderTypeId { get; set; }
         public string CustomerName { get; set; }
         public string CustomerAddress { get; set; }

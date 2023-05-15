@@ -19,7 +19,7 @@ namespace Infrastructure.Services
             return (code + newNumber.ToString().PadLeft(padLeftNum, '0')).ToUpper();
         }
 
-        public string GenerateOrderNumber(string type, string lastNumberOfTheDay, int padLeftNum)
+        public string GenerateCodeWithUtcDate(string type, string lastNumberOfTheDay, int padLeftNum)
         {
             string orderNumber = string.Format("{0}{1}", type.Replace(" ",""), DateTime.UtcNow.ToString("yyyyMMdd"));
             if (string.IsNullOrEmpty(lastNumberOfTheDay))

@@ -41,7 +41,7 @@ namespace Application.Endpoints.Auths.Commands
                 var userToUpdate = _mapper.Map<ApplicationUser>(request);
                 var sourceUser = await _repository.Auth.GetAsync(q => q.Id == userToUpdate.Id && q.RowStatus == 0, cancellationToken);
                 if (sourceUser == null)
-                    return new EndpointResult<UserViewModel>(EndpointResultStatus.Invalid, "Data not found.");
+                    return new EndpointResult<UserViewModel>(EndpointResultStatus.Success, "Data not found.");
 
                 var updatedUser = _entityMapper.MapValues(sourceUser, userToUpdate);
                 _repository.Auth.Update(updatedUser);

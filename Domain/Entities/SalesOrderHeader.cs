@@ -10,12 +10,13 @@ namespace Domain.Entities
 {
     public class SalesOrderHeader : AuditableEntity 
     {
-        public string OrderNumber { get; set; }
+        public string? OrderNumber { get; set; }
         public int OrderTypeId { get; set; }
-        public DateTime OrderDate { get; set; }
+        public DateTime? OrderDate { get; set; }
         public string CustomerName { get; set; }
         public string CustomerAddress { get; set; }
         public int PaymentTypeId { get; set; }
+        public bool IsDraft { get; set; }
 
         [ForeignKey("OrderTypeId")]
         public OrderType OrderType { get; set; }

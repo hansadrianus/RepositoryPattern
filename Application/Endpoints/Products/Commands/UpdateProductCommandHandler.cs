@@ -41,7 +41,7 @@ namespace Application.Endpoints.Products.Commands
                 var productToUpdate = _mapper.Map<Product>(request);
                 var sourceProduct = await _repository.Product.GetAsync(q => q.Id == productToUpdate.Id && q.RowStatus == 0, cancellationToken);
                 if (sourceProduct == null)
-                    return new EndpointResult<ProductViewModel>(EndpointResultStatus.Invalid, "Data not found.");
+                    return new EndpointResult<ProductViewModel>(EndpointResultStatus.Success, "Data not found.");
 
                 var updatedProduct = _entityMapper.MapValues(sourceProduct, productToUpdate);
                 _repository.Product.Update(updatedProduct);

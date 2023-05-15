@@ -15,14 +15,14 @@ using System.Threading.Tasks;
 
 namespace Application.Endpoints.SalesOrders.Commands
 {
-    public class UpdateSalesOrderCommandHandler : IRequestHandler<UpdateSalesOrderCommand, EndpointResult<SalesOrderViewModel>>
+    public class UpdateDraftSalesOrderCommandHandler : IRequestHandler<UpdateDraftSalesOrderCommand, EndpointResult<SalesOrderViewModel>>
     {
-        private readonly IRequestValidator<UpdateSalesOrderCommand> _requestValidator;
+        private readonly IRequestValidator<UpdateDraftSalesOrderCommand> _requestValidator;
         private readonly IRepositoryWrapper _repository;
         private readonly IMapper _mapper;
         private readonly IEntityMapperService _entityMapperService;
 
-        public UpdateSalesOrderCommandHandler(IRequestValidator<UpdateSalesOrderCommand> requestValidator, IRepositoryWrapper repository, IMapper mapper, IEntityMapperService entityMapperService)
+        public UpdateDraftSalesOrderCommandHandler(IRequestValidator<UpdateDraftSalesOrderCommand> requestValidator, IRepositoryWrapper repository, IMapper mapper, IEntityMapperService entityMapperService)
         {
             _requestValidator = requestValidator;
             _repository = repository;
@@ -30,7 +30,7 @@ namespace Application.Endpoints.SalesOrders.Commands
             _entityMapperService = entityMapperService;
         }
 
-        public async Task<EndpointResult<SalesOrderViewModel>> Handle(UpdateSalesOrderCommand request, CancellationToken cancellationToken)
+        public async Task<EndpointResult<SalesOrderViewModel>> Handle(UpdateDraftSalesOrderCommand request, CancellationToken cancellationToken)
         {
             var validationErrors = _requestValidator.ValidateRequest(request);
             if (validationErrors.Any())
@@ -40,9 +40,9 @@ namespace Application.Endpoints.SalesOrders.Commands
             {
                 var orderToUpdate = _mapper.Map<SalesOrderHeader>(request);
                 orderToUpdate.SalesOrderDetails = _mapper.Map<IList<SalesOrderDetail>>(request.OrderDetails);
-                var sourceOrder = await _repository.SalesOrder.GetAsync(q => q.Id == orderToUpdate.Id && q.RowStatus == 0, cancellationToken);
+                var sourceOrder = await _repository.SalesOrder.GetAsync(q => q.Id == orderToUpdate.Id && q.RowStatus == 0 && q.IsDraft == true, cancellationToken);
                 if (sourceOrder == null)
-                    return new EndpointResult<SalesOrderViewModel>(EndpointResultStatus.Invalid, "Data not found.");
+                    return new EndpointResult<SalesOrderViewModel>(EndpointResultStatus.Success, "Data not found.");
 
                 var updatedOrder = _entityMapperService.MapValues(sourceOrder, orderToUpdate);
                 _repository.SalesOrder.Update(updatedOrder);

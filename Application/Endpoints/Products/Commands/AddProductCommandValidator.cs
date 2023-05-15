@@ -14,6 +14,10 @@ namespace Application.Endpoints.Products.Commands
             RuleFor(x => x.Name)
                 .NotNull()
                 .NotEmpty();
+            RuleFor(x => x.Valuation)
+                .NotNull()
+                .NotEmpty()
+                .GreaterThanOrEqualTo(0);
             RuleFor(x => x.Price)
                 .NotNull()
                 .NotEmpty()

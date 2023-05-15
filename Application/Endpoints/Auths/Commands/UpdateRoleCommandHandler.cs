@@ -40,7 +40,7 @@ namespace Application.Endpoints.Auths.Commands
                 var roleToUpdate = _mapper.Map<ApplicationRole>(request);
                 var sourceRole = await _repository.Role.GetAsync(q => q.Id == roleToUpdate.Id && q.RowStatus == 0, cancellationToken);
                 if (sourceRole != null)
-                    return new EndpointResult<RoleViewModel>(Models.Enumerations.EndpointResultStatus.Invalid, "Data not found.");
+                    return new EndpointResult<RoleViewModel>(Models.Enumerations.EndpointResultStatus.Success, "Data not found.");
 
                 var updatedRole = _entityMapper.MapValues(sourceRole, roleToUpdate);
                 _repository.Role.Update(updatedRole);

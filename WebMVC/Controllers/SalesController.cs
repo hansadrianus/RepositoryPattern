@@ -66,11 +66,11 @@ namespace WebMVC.Controllers
             => Json(await _mediator.Send(query));
 
         [HttpPost]
-        public async Task<IActionResult> AddSalesOrder([FromForm] AddSalesOrderCommand command)
+        public async Task<IActionResult> AddSalesOrder([FromForm] PostSalesOrderCommand command)
             => Json(await _mediator.Send(command));
 
         [HttpPut]
-        public async Task<IActionResult> UpdateSalesOrder(int id, [FromForm] UpdateSalesOrderCommand command)
+        public async Task<IActionResult> UpdateSalesOrder(int id, [FromForm] UpdateDraftSalesOrderCommand command)
         {
             command.Id = id;
 
