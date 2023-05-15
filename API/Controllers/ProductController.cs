@@ -34,10 +34,6 @@ namespace API.Controllers
 
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteProductAsync(int id)
-        {
-            DeleteProductCommand command = new DeleteProductCommand() { Id = id };
-
-            return (await _mediator.Send(command)).ToActionResult();
-        }
+            => (await _mediator.Send(new DeleteProductCommand() { Id = id })).ToActionResult();
     }
 }
