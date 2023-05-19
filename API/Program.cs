@@ -1,10 +1,12 @@
 using API.Services;
 using Application;
 using Application.Interfaces.Persistence;
+using Application.Interfaces.Securities;
 using Application.Interfaces.Services;
 using Domain.Entities;
 using Infrastructure;
 using Infrastructure.Persistence;
+using Infrastructure.Securities;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Hosting;
@@ -27,7 +29,11 @@ namespace API
             builder.Services.AddApplication(builder.Configuration);
             // Adds in Infrastructure dependencies
             builder.Services.AddInfrastructure(builder.Configuration);
-            builder.Services.AddAuthentication();
+            builder.Services.AddAuthentication(options =>
+            {
+                options.DefaultAuthenticateScheme = "Custom";
+            })
+            .AddScheme<CustomAuthenticationOptions, CustomAuthenticationHandler>("Custom", null);
             builder.Services.ConfigureIdentity();
             builder.Services.ConfigureJWT(builder.Configuration);
 
