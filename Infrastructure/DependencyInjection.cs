@@ -148,6 +148,8 @@ namespace Infrastructure
         public static IServiceCollection ConfigureOperationFilter(this IServiceCollection services)
         {
             services.AddSwaggerGen(c => c.OperationFilter<AuthorizationHeaderParameterOperationFilter>());
+
+            return services;
         }
     }
 }

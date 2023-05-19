@@ -1,15 +1,10 @@
 using API.Services;
 using Application;
-using Application.Interfaces.Persistence;
-using Application.Interfaces.Securities;
 using Application.Interfaces.Services;
-using Domain.Entities;
 using Infrastructure;
 using Infrastructure.Persistence;
 using Infrastructure.Securities;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Hosting;
 using Microsoft.Net.Http.Headers;
 using Microsoft.OpenApi.Models;
 
