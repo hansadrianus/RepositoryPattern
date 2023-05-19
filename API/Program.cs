@@ -36,6 +36,7 @@ namespace API
             .AddScheme<CustomAuthenticationOptions, CustomAuthenticationHandler>("Custom", null);
             builder.Services.ConfigureIdentity();
             builder.Services.ConfigureJWT(builder.Configuration);
+            builder.Services.ConfigureOperationFilter();
 
             builder.Services.AddHttpContextAccessor();
             builder.Services.AddHealthChecks();

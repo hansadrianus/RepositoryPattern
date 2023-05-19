@@ -4,6 +4,7 @@ using Application.Interfaces.Services;
 using Application.Interfaces.Wrappers;
 using Domain.Entities;
 using Infrastructure.Attributes;
+using Infrastructure.Filters;
 using Infrastructure.Persistence;
 using Infrastructure.Persistence.Configurations;
 using Infrastructure.Services;
@@ -142,6 +143,11 @@ namespace Infrastructure
             });
 
             return services;
+        }
+
+        public static IServiceCollection ConfigureOperationFilter(this IServiceCollection services)
+        {
+            services.AddSwaggerGen(c => c.OperationFilter<AuthorizationHeaderParameterOperationFilter>());
         }
     }
 }
