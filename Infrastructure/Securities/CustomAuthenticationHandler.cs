@@ -17,6 +17,7 @@ namespace Infrastructure.Securities
 
         protected override Task<AuthenticateResult> HandleAuthenticateAsync()
         {
+            //Custom Authentication Goes Here...
             throw new NotImplementedException();
         }
     }
