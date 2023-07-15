@@ -73,6 +73,49 @@ namespace Infrastructure
             return configBuilder;
         }
 
+        public static IServiceCollection AddSwaggerGenForJWT(this IServiceCollection services)
+        {
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new OpenApiInfo
+                {
+                    Title = "Repository.Api",
+                    Version = "v1",
+                    Description = "Repository Main API",
+                    Contact = new OpenApiContact
+                    {
+                        Name = "Hans Adrianus H"
+                    }
+                });
+                c.ResolveConflictingActions(apiDescription => apiDescription.First());
+                c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+                {
+                    Name = "Authorization",
+                    Type = SecuritySchemeType.ApiKey,
+                    Scheme = "Bearer",
+                    BearerFormat = "JWT",
+                    In = ParameterLocation.Header,
+                    Description = "JWT Authorization header using the Bearer scheme."
+                });
+                c.AddSecurityRequirement(new OpenApiSecurityRequirement
+                {
+                    {
+                        new OpenApiSecurityScheme
+                        {
+                            Reference = new OpenApiReference
+                            {
+                                Type = ReferenceType.SecurityScheme,
+                                Id = "Bearer"
+                            }
+                        },
+                        new string[] { }
+                    }
+                });
+            });
+
+            return services;
+        }
+
         public static IServiceCollection ConfigureCookies(this IServiceCollection services, IConfiguration configuration)
         {
             var config = configuration.GetSection("AuthConfig");
