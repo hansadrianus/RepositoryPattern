@@ -1,4 +1,5 @@
 using System.Diagnostics.CodeAnalysis;
+using Asp.Versioning;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
