@@ -59,8 +59,16 @@ namespace Infrastructure
         public static IConfigurationBuilder AddSharedConfiguration(this IConfigurationBuilder configBuilder, IHostEnvironment hostEnvironment)
         {
             var environment = hostEnvironment.EnvironmentName;
-            configBuilder.AddJsonFile(Path.Combine(hostEnvironment.ContentRootPath, (hostEnvironment.IsDevelopment()) ? "Debug" : "Release", "net7.0", "appsettings.json"), false, true)
-                .AddJsonFile(Path.Combine(Directory.GetCurrentDirectory(), (hostEnvironment.IsDevelopment()) ? "Debug" : "Release", "net7.0", $"appsettings.{environment}.json"), true, true);
+            if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+            {
+                configBuilder.AddJsonFile(Path.Combine(hostEnvironment.ContentRootPath, "..", "Shared", "appsettings.json"), false, true)
+                    .AddJsonFile(Path.Combine(Directory.GetCurrentDirectory(), "..", "Shared", $"appsettings.{environment}.json"), true, true);
+            }
+            else
+            {
+                configBuilder.AddJsonFile(Path.Combine(hostEnvironment.ContentRootPath, "..", "src", "Shared", "appsettings.json"), false, true)
+                    .AddJsonFile(Path.Combine(Directory.GetCurrentDirectory(), "..", "src", "Shared", $"appsettings.{environment}.json"), true, true);
+            }
 
             return configBuilder;
         }
