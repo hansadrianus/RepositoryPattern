@@ -63,7 +63,7 @@ namespace Infrastructure
             {
                 configBuilder.AddJsonFile(Path.Combine(hostEnvironment.ContentRootPath, "..", "Shared", "appsettings.json"), true, true)
                     .AddJsonFile(Path.Combine(Directory.GetCurrentDirectory(), "..", "Shared", $"appsettings.{environment}.json"), true, true)
-                    .AddJsonFile(Path.Combine(hostEnvironment.ContentRootPath, "..", "wwwroot", "appsettings.json"), false, true)
+                    .AddJsonFile(Path.Combine(hostEnvironment.ContentRootPath, "..", "wwwroot", "appsettings.json"), true, true)
                     .AddJsonFile(Path.Combine(hostEnvironment.ContentRootPath, "..", "wwwroot", $"appsettings.{environment}.json"), true, true)
                     .AddJsonFile(Path.Combine(hostEnvironment.ContentRootPath, "..", "wwwroot", "Shared", "appsettings.json"), true, true)
                     .AddJsonFile(Path.Combine(hostEnvironment.ContentRootPath, "..", "wwwroot", "Shared", $"appsettings.{environment}.json"), true, true);
