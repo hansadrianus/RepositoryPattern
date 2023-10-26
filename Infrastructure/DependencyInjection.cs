@@ -59,6 +59,7 @@ namespace Infrastructure
         public static IConfigurationBuilder AddSharedConfiguration(this IConfigurationBuilder configBuilder, IHostEnvironment hostEnvironment)
         {
             var environment = hostEnvironment.EnvironmentName;
+            Console.WriteLine(hostEnvironment.ContentRootPath);
             if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
             {
                 configBuilder.AddJsonFile(Path.Combine(hostEnvironment.ContentRootPath, "..", "Shared", "appsettings.json"), true, true)
