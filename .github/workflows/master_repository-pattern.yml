@@ -25,14 +25,14 @@ jobs:
       - name: Build with dotnet
         run: dotnet build RepositoryPattern.sln --configuration Release
 
-      - name: dotnet publish
-        run: dotnet publish RepositoryPattern.sln -c Release -o ${{env.DOTNET_ROOT}}/myapp
+      - name: dotnet publish API project
+        run: dotnet publish API/API.csproj -c Release -o ${{env.DOTNET_ROOT}}/API/myapp
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v3
         with:
           name: .net-app
-          path: ${{env.DOTNET_ROOT}}/myapp
+          path: ${{env.DOTNET_ROOT}}/API/myapp
 
   deploy:
     runs-on: windows-latest
