@@ -62,13 +62,19 @@ namespace Infrastructure
             var environment = hostEnvironment.EnvironmentName;
             if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
             {
-                configBuilder.AddJsonFile(Path.Combine(hostEnvironment.ContentRootPath, "..", "Shared", "appsettings.json"), false, true)
-                    .AddJsonFile(Path.Combine(Directory.GetCurrentDirectory(), "..", "Shared", $"appsettings.{environment}.json"), true, true);
+                configBuilder.AddJsonFile(Path.Combine(hostEnvironment.ContentRootPath, "..", "Shared", "appsettings.json"), true, true)
+                    .AddJsonFile(Path.Combine(Directory.GetCurrentDirectory(), "..", "Shared", $"appsettings.{environment}.json"), true, true)
+                    .AddJsonFile(Path.Combine(hostEnvironment.ContentRootPath, "..", "wwwroot", "appsettings.json"), true, true)
+                    .AddJsonFile(Path.Combine(hostEnvironment.ContentRootPath, "..", "wwwroot", $"appsettings.{environment}.json"), true, true)
+                    .AddJsonFile(Path.Combine(hostEnvironment.ContentRootPath, "..", "wwwroot", "Shared", "appsettings.json"), true, true)
+                    .AddJsonFile(Path.Combine(hostEnvironment.ContentRootPath, "..", "wwwroot", "Shared", $"appsettings.{environment}.json"), true, true);
             }
             else
             {
-                configBuilder.AddJsonFile(Path.Combine(hostEnvironment.ContentRootPath, "..", "src", "Shared", "appsettings.json"), false, true)
-                    .AddJsonFile(Path.Combine(Directory.GetCurrentDirectory(), "..", "src", "Shared", $"appsettings.{environment}.json"), true, true);
+                configBuilder.AddJsonFile(Path.Combine(hostEnvironment.ContentRootPath, "..", "src", "Shared", "appsettings.json"), true, true)
+                    .AddJsonFile(Path.Combine(Directory.GetCurrentDirectory(), "..", "src", "Shared", $"appsettings.{environment}.json"), true, true)
+                    .AddJsonFile(Path.Combine(hostEnvironment.ContentRootPath, "..", "src", "appsettings.json"), true, true)
+                    .AddJsonFile(Path.Combine(hostEnvironment.ContentRootPath, "..", "src", $"appsettings.{environment}.json"), true, true);
             }
 
             return configBuilder;
