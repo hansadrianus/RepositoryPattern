@@ -18,6 +18,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Endpoints\LanguageCultures\Commands\" />
     <Folder Include="Endpoints\PhysicalInventoryDocuments\Queries\" />
   </ItemGroup>
 

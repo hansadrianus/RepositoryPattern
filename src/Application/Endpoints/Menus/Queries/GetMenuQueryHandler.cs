@@ -31,9 +31,9 @@ namespace Application.Endpoints.Menus.Queries
         public async Task<EndpointResult<IEnumerable<MenuViewModel>>> Handle(GetMenuQuery request, CancellationToken cancellationToken)
         {
             var predicates = _queryBuilder.BuildPredicate<AppMenu, GetMenuQuery>(request);
-            var menuRoles = await _repository.AppMenu.GetAllAsync(predicates, cancellationToken);
+            var menus = await _repository.AppMenu.GetAllAsync(predicates, cancellationToken);
 
-            return new EndpointResult<IEnumerable<MenuViewModel>>(Models.Enumerations.EndpointResultStatus.Success, _mapper.Map<IEnumerable<MenuViewModel>>(menuRoles));
+            return new EndpointResult<IEnumerable<MenuViewModel>>(Models.Enumerations.EndpointResultStatus.Success, _mapper.Map<IEnumerable<MenuViewModel>>(menus));
         }
     }
 }
