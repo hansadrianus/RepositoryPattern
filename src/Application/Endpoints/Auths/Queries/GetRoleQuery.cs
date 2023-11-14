@@ -11,7 +11,7 @@ namespace Application.Endpoints.Auths.Queries
 {
     public class GetRoleQuery : IRequest<EndpointResult<IEnumerable<RoleViewModel>>>
     {
-        public int? Id { get; set; }
+        public Guid? Uid { get; set; }
         public string? Name { get; set; }
         public short? RowStatus { get; set; }
     }

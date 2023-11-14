@@ -9,10 +9,10 @@ using System.Threading.Tasks;
 
 namespace Application.Endpoints.Menus.Commands
 {
-    public class MenuRolesCommand : IRequest<EndpointResult<MenuRoleViewModel>>
+    public class UpdateMenuRolesCommand : IRequest<EndpointResult<MenuRoleViewModel>>
     {
-        public int AppMenuId { get; set; }
-        public int? RoleId { get; set; }
+        public Guid AppMenuId { get; set; }
+        public Guid? RoleId { get; set; }
         public bool IsSelected { get; set; }
     }
 }

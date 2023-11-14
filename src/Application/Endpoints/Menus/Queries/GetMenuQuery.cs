@@ -11,7 +11,7 @@ namespace Application.Endpoints.Menus.Queries
 {
     public class GetMenuQuery : IRequest<EndpointResult<IEnumerable<MenuViewModel>>>
     {
-        public int? Id { get; set; }
+        public Guid? Uid { get; set; }
         public string? MenuName { get; set; }
         public short? RowStatus { get; set; }
     }

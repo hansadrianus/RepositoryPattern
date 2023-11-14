@@ -1,5 +1,6 @@
 ﻿using Application.Interfaces.Persistence;
 using Application.Interfaces.Persistence.PhysicalInventoryDocuments;
+using Application.Interfaces.Services;
 using Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -15,7 +16,7 @@ namespace Infrastructure.Repositories.PhysicalInventoryDocuments
     {
         private readonly IApplicationContext _context;
 
-        public PhysicalInventoryDocumentRepository(IApplicationContext context) : base(context)
+        public PhysicalInventoryDocumentRepository(IApplicationContext context, IDistributedCacheService distributedCacheService) : base(context, distributedCacheService)
         {
             _context = context;
         }

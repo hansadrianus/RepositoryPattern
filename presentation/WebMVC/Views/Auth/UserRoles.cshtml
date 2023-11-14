@@ -78,7 +78,7 @@
 
                     $.ajax({
                         type: "GET",
-                        url: "../GetUserRoles/" + @Model.Id,
+                        url: "../GetUserRoles/" + @Model.Uid,
                         data: filter,
                         dataType: "json"
                     }).done(function (response) {
@@ -92,7 +92,7 @@
 
                     $.ajax({
                         type: "PUT",
-                        url: "../UpdateUserRoles/" + @Model.Id,
+                        url: "../UpdateUserRoles/" + @Model.Uid,
                         data: item,
                         dataType: "json"
                     }).done(function (response) {

@@ -70,9 +70,9 @@ namespace WebMVC.Controllers
             => Json(await _mediator.Send(command));
 
         [HttpPut]
-        public async Task<IActionResult> UpdateSalesOrder(int id, [FromForm] UpdateDraftSalesOrderCommand command)
+        public async Task<IActionResult> UpdateSalesOrder(Guid id, [FromForm] UpdateDraftSalesOrderCommand command)
         {
-            command.Id = id;
+            command.Uid = id;
 
             return Json(await _mediator.Send(command));
         }

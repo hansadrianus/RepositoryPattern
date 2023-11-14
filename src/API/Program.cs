@@ -2,6 +2,7 @@ using API.Services;
 using Application;
 using Application.Interfaces.Services;
 using Infrastructure;
+using Infrastructure.Filters;
 using Infrastructure.Persistence;
 using Infrastructure.Securities;
 using Microsoft.AspNetCore.Mvc;
@@ -81,6 +82,7 @@ namespace API
                         new string[] { }
                     }
                 });
+                c.OperationFilter<JsonIgnoreFilter>();
             });
 
             var app = builder.Build();

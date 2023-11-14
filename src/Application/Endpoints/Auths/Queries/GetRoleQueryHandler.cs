@@ -5,6 +5,7 @@ using Application.ViewModels;
 using AutoMapper;
 using Domain.Entities;
 using MediatR;
+using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,17 +19,20 @@ namespace Application.Endpoints.Auths.Queries
         private readonly IRepositoryWrapper _repository;
         private readonly IMapper _mapper;
         private readonly IQueryBuilderService _queryBuilder;
+        private readonly IDistributedCacheService _distributedCacheService;
+        private readonly DateTimeOffset _expireTime;
 
-        public GetRoleQueryHandler(IRepositoryWrapper repository, IMapper mapper, IQueryBuilderService queryBuilder)
+        public GetRoleQueryHandler(IRepositoryWrapper repository, IMapper mapper, IQueryBuilderService queryBuilder, IDistributedCacheService distributedCacheService)
         {
             _repository = repository;
             _mapper = mapper;
             _queryBuilder = queryBuilder;
+            _distributedCacheService = distributedCacheService;
         }
 
         public async Task<EndpointResult<IEnumerable<RoleViewModel>>> Handle(GetRoleQuery request, CancellationToken cancellationToken)
         {
-            var predicates = _queryBuilder.BuildPredicate<ApplicationRole, GetRoleQuery>(_mapper.Map<GetRoleQuery>(request));
+            var predicates = _queryBuilder.BuildPredicate<ApplicationRole, GetRoleQuery>(request);
             var roles = await _repository.Role.GetAllAsync(predicates, cancellationToken);
 
             return new EndpointResult<IEnumerable<RoleViewModel>>(Models.Enumerations.EndpointResultStatus.Success, _mapper.Map<IEnumerable<RoleViewModel>>(roles));

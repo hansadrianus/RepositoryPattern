@@ -2,6 +2,7 @@
 using Application.Interfaces.Services;
 using Application.Interfaces.Wrappers;
 using Application.Models;
+using Application.Models.Enumerations;
 using Application.ViewModels;
 using AutoMapper;
 using Domain.Entities;
@@ -14,14 +15,14 @@ using System.Threading.Tasks;
 
 namespace Application.Endpoints.Auths.Commands
 {
-    public class UpdateRoleCommandHandler : IRequestHandler<UpdateRoleCommand, EndpointResult<RoleViewModel>>
+    public class DeleteRoleCommandHandler : IRequestHandler<DeleteRoleCommand, EndpointResult<RoleViewModel>>
     {
-        private readonly IRequestValidator<UpdateRoleCommand> _requestValidator;
+        private readonly IRequestValidator<DeleteRoleCommand> _requestValidator;
         private readonly IRepositoryWrapper _repository;
         private readonly IMapper _mapper;
         private readonly IEntityMapperService _entityMapper;
 
-        public UpdateRoleCommandHandler(IRequestValidator<UpdateRoleCommand> requestValidator, IRepositoryWrapper repository, IMapper mapper, IEntityMapperService entityMapper)
+        public DeleteRoleCommandHandler(IRequestValidator<DeleteRoleCommand> requestValidator, IRepositoryWrapper repository, IMapper mapper, IEntityMapperService entityMapper)
         {
             _requestValidator = requestValidator;
             _repository = repository;
@@ -29,7 +30,7 @@ namespace Application.Endpoints.Auths.Commands
             _entityMapper = entityMapper;
         }
 
-        public async Task<EndpointResult<RoleViewModel>> Handle(UpdateRoleCommand request, CancellationToken cancellationToken)
+        public async Task<EndpointResult<RoleViewModel>> Handle(DeleteRoleCommand request, CancellationToken cancellationToken)
         {
             var validationErrors = _requestValidator.ValidateRequest(request);
             if (validationErrors.Any())
@@ -37,16 +38,16 @@ namespace Application.Endpoints.Auths.Commands
 
             try
             {
-                var roleToUpdate = _mapper.Map<ApplicationRole>(request);
-                var sourceRole = await _repository.Role.GetAsync(q => q.Uid == roleToUpdate.Uid && q.RowStatus == 0, cancellationToken);
+                var roleToRemove = _mapper.Map<ApplicationRole>(request);
+                var sourceRole = await _repository.Role.GetAsync(q => q.Uid == roleToRemove.Uid && q.RowStatus == 0, cancellationToken);
                 if (sourceRole != null)
                     return new EndpointResult<RoleViewModel>(Models.Enumerations.EndpointResultStatus.Success, "Data not found.");
 
-                var updatedRole = _entityMapper.MapValues(sourceRole, roleToUpdate);
-                _repository.Role.Update(updatedRole);
+                var removedRole = _entityMapper.MapValues(sourceRole, roleToRemove);
+                _repository.Role.Remove(removedRole);
                 await _repository.SaveAsync(cancellationToken);
 
-                return new EndpointResult<RoleViewModel>(Models.Enumerations.EndpointResultStatus.Success, _mapper.Map<RoleViewModel>(updatedRole));
+                return new EndpointResult<RoleViewModel>(Models.Enumerations.EndpointResultStatus.Success, _mapper.Map<RoleViewModel>(removedRole));
             }
             catch (Exception ex)
             {

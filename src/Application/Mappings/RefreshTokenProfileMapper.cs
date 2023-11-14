@@ -13,6 +13,7 @@ namespace Application.Mappings
                 .ReverseMap();
             CreateMap<RefreshTokenCommand, ApplicationUser>()
                 .ForMember(dest => dest.Id, opt => opt.Ignore())
+                .ForMember(dest => dest.Uid, opt => opt.Ignore())
                 .ForMember(dest => dest.FirstName, opt => opt.Ignore())
                 .ForMember(dest => dest.LastName, opt => opt.Ignore())
                 .ForMember(dest => dest.DateOfBirth, opt => opt.Ignore())

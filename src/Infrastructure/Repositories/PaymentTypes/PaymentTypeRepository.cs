@@ -1,5 +1,6 @@
 ﻿using Application.Interfaces.Persistence;
 using Application.Interfaces.Persistence.PaymentTypes;
+using Application.Interfaces.Services;
 using Domain.Entities;
 using System;
 using System.Collections.Generic;
@@ -11,7 +12,7 @@ namespace Infrastructure.Repositories.PaymentTypes
 {
     public class PaymentTypeRepository : RepositoryBase<PaymentType>, IPaymentTypeRepository
     {
-        public PaymentTypeRepository(IApplicationContext context) : base(context)
+        public PaymentTypeRepository(IApplicationContext context, IDistributedCacheService distributedCacheService) : base(context, distributedCacheService)
         {
         }
     }

@@ -8,6 +8,8 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
+using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using System;
@@ -18,6 +20,7 @@ using System.Linq.Expressions;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using Z.EntityFramework.Plus;
 
 namespace Infrastructure.Persistence
 {
@@ -33,6 +36,18 @@ namespace Infrastructure.Persistence
             _dateTimeService = dateTimeService;
             _configuration = configuration;
         }
+
+        public override DatabaseFacade Database => base.Database;
+        public override ChangeTracker ChangeTracker => base.ChangeTracker;
+        public override IModel Model => base.Model;
+        public override DbContextId ContextId => base.ContextId;
+        public override DbSet<ApplicationUser> Users { get => base.Users; set => base.Users = value; }
+        public override DbSet<ApplicationUserClaim> UserClaims { get => base.UserClaims; set => base.UserClaims = value; }
+        public override DbSet<ApplicationUserLogin> UserLogins { get => base.UserLogins; set => base.UserLogins = value; }
+        public override DbSet<ApplicationUserToken> UserTokens { get => base.UserTokens; set => base.UserTokens = value; }
+        public override DbSet<ApplicationUserRole> UserRoles { get => base.UserRoles; set => base.UserRoles = value; }
+        public override DbSet<ApplicationRole> Roles { get => base.Roles; set => base.Roles = value; }
+        public override DbSet<ApplicationRoleClaim> RoleClaims { get => base.RoleClaims; set => base.RoleClaims = value; }
 
         public DbSet<AppMenu> AppMenu { get; set; }
         public DbSet<AppMenuRole> MenuRoles { get; set; }
@@ -67,7 +82,7 @@ namespace Infrastructure.Persistence
 
         public override void AddRange(params object[] entities)
         {
-            base.AddRange(entities);
+            this.AddRange(entities);
         }
 
         public override void AddRange(IEnumerable<object> entities)
@@ -192,277 +207,25 @@ namespace Infrastructure.Persistence
 
         public override int SaveChanges()
         {
-            foreach (var entity in ChangeTracker.Entries<AuditableEntity>())
-            {
-                switch (entity.State)
-                {
-                    case EntityState.Added:
-                        entity.Entity.CreatedBy = _principalService.UserId;
-                        entity.Entity.CreatedTime = _dateTimeService.UtcNow;
-                        entity.Entity.RowStatus = 0;
-                        break;
-                    case EntityState.Modified:
-                        entity.Entity.ModifiedBy = _principalService.UserId;
-                        entity.Entity.ModifiedTime = _dateTimeService.UtcNow;
-                        break;
-                }
-            }
-
-            foreach (var entity in ChangeTracker.Entries<AuditableIdentityEntity>())
-            {
-                switch (entity.State)
-                {
-                    case EntityState.Added:
-                        entity.Entity.CreatedBy = _principalService.UserId;
-                        entity.Entity.CreatedTime = _dateTimeService.UtcNow;
-                        entity.Entity.RowStatus = 0;
-                        break;
-                    case EntityState.Modified:
-                        entity.Entity.ModifiedBy = _principalService.UserId;
-                        entity.Entity.ModifiedTime = _dateTimeService.UtcNow;
-                        break;
-                }
-            }
-
-            foreach (var entity in ChangeTracker.Entries<AuditableRoleEntity>())
-            {
-                switch (entity.State)
-                {
-                    case EntityState.Added:
-                        entity.Entity.CreatedBy = _principalService.UserId;
-                        entity.Entity.CreatedTime = _dateTimeService.UtcNow;
-                        entity.Entity.RowStatus = 0;
-                        break;
-                    case EntityState.Modified:
-                        entity.Entity.ModifiedBy = _principalService.UserId;
-                        entity.Entity.ModifiedTime = _dateTimeService.UtcNow;
-                        break;
-                }
-            }
-
-            foreach (var entity in ChangeTracker.Entries<AuditableUserRoleEntity>())
-            {
-                switch (entity.State)
-                {
-                    case EntityState.Added:
-                        entity.Entity.CreatedBy = _principalService.UserId;
-                        entity.Entity.CreatedTime = _dateTimeService.UtcNow;
-                        entity.Entity.RowStatus = 0;
-                        break;
-                    case EntityState.Modified:
-                        entity.Entity.ModifiedBy = _principalService.UserId;
-                        entity.Entity.ModifiedTime = _dateTimeService.UtcNow;
-                        break;
-                }
-            }
-
+            SetAuditableEntity();
             return base.SaveChanges();
         }
 
         public override int SaveChanges(bool acceptAllChangesOnSuccess)
         {
-            foreach (var entity in ChangeTracker.Entries<AuditableEntity>())
-            {
-                switch (entity.State)
-                {
-                    case EntityState.Added:
-                        entity.Entity.CreatedBy = _principalService.UserId;
-                        entity.Entity.CreatedTime = _dateTimeService.UtcNow;
-                        entity.Entity.RowStatus = 0;
-                        break;
-                    case EntityState.Modified:
-                        entity.Entity.ModifiedBy = _principalService.UserId;
-                        entity.Entity.ModifiedTime = _dateTimeService.UtcNow;
-                        break;
-                }
-            }
-
-            foreach (var entity in ChangeTracker.Entries<AuditableIdentityEntity>())
-            {
-                switch (entity.State)
-                {
-                    case EntityState.Added:
-                        entity.Entity.CreatedBy = _principalService.UserId;
-                        entity.Entity.CreatedTime = _dateTimeService.UtcNow;
-                        entity.Entity.RowStatus = 0;
-                        break;
-                    case EntityState.Modified:
-                        entity.Entity.ModifiedBy = _principalService.UserId;
-                        entity.Entity.ModifiedTime = _dateTimeService.UtcNow;
-                        break;
-                }
-            }
-
-            foreach (var entity in ChangeTracker.Entries<AuditableRoleEntity>())
-            {
-                switch (entity.State)
-                {
-                    case EntityState.Added:
-                        entity.Entity.CreatedBy = _principalService.UserId;
-                        entity.Entity.CreatedTime = _dateTimeService.UtcNow;
-                        entity.Entity.RowStatus = 0;
-                        break;
-                    case EntityState.Modified:
-                        entity.Entity.ModifiedBy = _principalService.UserId;
-                        entity.Entity.ModifiedTime = _dateTimeService.UtcNow;
-                        break;
-                }
-            }
-
-            foreach (var entity in ChangeTracker.Entries<AuditableUserRoleEntity>())
-            {
-                switch (entity.State)
-                {
-                    case EntityState.Added:
-                        entity.Entity.CreatedBy = _principalService.UserId;
-                        entity.Entity.CreatedTime = _dateTimeService.UtcNow;
-                        entity.Entity.RowStatus = 0;
-                        break;
-                    case EntityState.Modified:
-                        entity.Entity.ModifiedBy = _principalService.UserId;
-                        entity.Entity.ModifiedTime = _dateTimeService.UtcNow;
-                        break;
-                }
-            }
-
+            SetAuditableEntity();
             return base.SaveChanges(acceptAllChangesOnSuccess);
         }
 
         public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
         {
-            foreach (var entity in ChangeTracker.Entries<AuditableEntity>())
-            {
-                switch (entity.State)
-                {
-                    case EntityState.Added:
-                        entity.Entity.CreatedBy = _principalService.UserId;
-                        entity.Entity.CreatedTime = _dateTimeService.UtcNow;
-                        entity.Entity.RowStatus = 0;
-                        break;
-                    case EntityState.Modified:
-                        entity.Entity.ModifiedBy = _principalService.UserId;
-                        entity.Entity.ModifiedTime = _dateTimeService.UtcNow;
-                        break;
-                }
-            }
-
-            foreach (var entity in ChangeTracker.Entries<AuditableIdentityEntity>())
-            {
-                switch (entity.State)
-                {
-                    case EntityState.Added:
-                        entity.Entity.CreatedBy = _principalService.UserId;
-                        entity.Entity.CreatedTime = _dateTimeService.UtcNow;
-                        entity.Entity.RowStatus = 0;
-                        break;
-                    case EntityState.Modified:
-                        entity.Entity.ModifiedBy = _principalService.UserId;
-                        entity.Entity.ModifiedTime = _dateTimeService.UtcNow;
-                        break;
-                }
-            }
-
-            foreach (var entity in ChangeTracker.Entries<AuditableRoleEntity>())
-            {
-                switch (entity.State)
-                {
-                    case EntityState.Added:
-                        entity.Entity.CreatedBy = _principalService.UserId;
-                        entity.Entity.CreatedTime = _dateTimeService.UtcNow;
-                        entity.Entity.RowStatus = 0;
-                        break;
-                    case EntityState.Modified:
-                        entity.Entity.ModifiedBy = _principalService.UserId;
-                        entity.Entity.ModifiedTime = _dateTimeService.UtcNow;
-                        break;
-                }
-            }
-
-            foreach (var entity in ChangeTracker.Entries<AuditableUserRoleEntity>())
-            {
-                switch (entity.State)
-                {
-                    case EntityState.Added:
-                        entity.Entity.CreatedBy = _principalService.UserId;
-                        entity.Entity.CreatedTime = _dateTimeService.UtcNow;
-                        entity.Entity.RowStatus = 0;
-                        break;
-                    case EntityState.Modified:
-                        entity.Entity.ModifiedBy = _principalService.UserId;
-                        entity.Entity.ModifiedTime = _dateTimeService.UtcNow;
-                        break;
-                }
-            }
-
+            SetAuditableEntity();
             return base.SaveChangesAsync(cancellationToken);
         }
 
         public override Task<int> SaveChangesAsync(bool acceptAllChangesOnSuccess, CancellationToken cancellationToken = default)
         {
-            foreach (var entity in ChangeTracker.Entries<AuditableEntity>())
-            {
-                switch (entity.State)
-                {
-                    case EntityState.Added:
-                        entity.Entity.CreatedBy = _principalService.UserId;
-                        entity.Entity.CreatedTime = _dateTimeService.UtcNow;
-                        entity.Entity.RowStatus = 0;
-                        break;
-                    case EntityState.Modified:
-                        entity.Entity.ModifiedBy = _principalService.UserId;
-                        entity.Entity.ModifiedTime = _dateTimeService.UtcNow;
-                        break;
-                }
-            }
-
-            foreach (var entity in ChangeTracker.Entries<AuditableIdentityEntity>())
-            {
-                switch (entity.State)
-                {
-                    case EntityState.Added:
-                        entity.Entity.CreatedBy = _principalService.UserId;
-                        entity.Entity.CreatedTime = _dateTimeService.UtcNow;
-                        entity.Entity.RowStatus = 0;
-                        break;
-                    case EntityState.Modified:
-                        entity.Entity.ModifiedBy = _principalService.UserId;
-                        entity.Entity.ModifiedTime = _dateTimeService.UtcNow;
-                        break;
-                }
-            }
-
-            foreach (var entity in ChangeTracker.Entries<AuditableRoleEntity>())
-            {
-                switch (entity.State)
-                {
-                    case EntityState.Added:
-                        entity.Entity.CreatedBy = _principalService.UserId;
-                        entity.Entity.CreatedTime = _dateTimeService.UtcNow;
-                        entity.Entity.RowStatus = 0;
-                        break;
-                    case EntityState.Modified:
-                        entity.Entity.ModifiedBy = _principalService.UserId;
-                        entity.Entity.ModifiedTime = _dateTimeService.UtcNow;
-                        break;
-                }
-            }
-
-            foreach (var entity in ChangeTracker.Entries<AuditableUserRoleEntity>())
-            {
-                switch (entity.State)
-                {
-                    case EntityState.Added:
-                        entity.Entity.CreatedBy = _principalService.UserId;
-                        entity.Entity.CreatedTime = _dateTimeService.UtcNow;
-                        entity.Entity.RowStatus = 0;
-                        break;
-                    case EntityState.Modified:
-                        entity.Entity.ModifiedBy = _principalService.UserId;
-                        entity.Entity.ModifiedTime = _dateTimeService.UtcNow;
-                        break;
-                }
-            }
-
+            SetAuditableEntity();
             return base.SaveChangesAsync(acceptAllChangesOnSuccess, cancellationToken);
         }
 
@@ -525,6 +288,73 @@ namespace Infrastructure.Persistence
 
             builder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
             builder.SeedData();
+        }
+
+        private void SetAuditableEntity()
+        {
+            foreach (var entity in ChangeTracker.Entries<AuditableEntity>())
+            {
+                switch (entity.State)
+                {
+                    case EntityState.Added:
+                        entity.Entity.CreatedBy = _principalService.UserId;
+                        entity.Entity.CreatedTime = _dateTimeService.UtcNow;
+                        entity.Entity.RowStatus = 0;
+                        break;
+                    case EntityState.Modified:
+                        entity.Entity.ModifiedBy = _principalService.UserId;
+                        entity.Entity.ModifiedTime = _dateTimeService.UtcNow;
+                        break;
+                }
+            }
+
+            foreach (var entity in ChangeTracker.Entries<AuditableIdentityEntity>())
+            {
+                switch (entity.State)
+                {
+                    case EntityState.Added:
+                        entity.Entity.CreatedBy = _principalService.UserId;
+                        entity.Entity.CreatedTime = _dateTimeService.UtcNow;
+                        entity.Entity.RowStatus = 0;
+                        break;
+                    case EntityState.Modified:
+                        entity.Entity.ModifiedBy = _principalService.UserId;
+                        entity.Entity.ModifiedTime = _dateTimeService.UtcNow;
+                        break;
+                }
+            }
+
+            foreach (var entity in ChangeTracker.Entries<AuditableRoleEntity>())
+            {
+                switch (entity.State)
+                {
+                    case EntityState.Added:
+                        entity.Entity.CreatedBy = _principalService.UserId;
+                        entity.Entity.CreatedTime = _dateTimeService.UtcNow;
+                        entity.Entity.RowStatus = 0;
+                        break;
+                    case EntityState.Modified:
+                        entity.Entity.ModifiedBy = _principalService.UserId;
+                        entity.Entity.ModifiedTime = _dateTimeService.UtcNow;
+                        break;
+                }
+            }
+
+            foreach (var entity in ChangeTracker.Entries<AuditableUserRoleEntity>())
+            {
+                switch (entity.State)
+                {
+                    case EntityState.Added:
+                        entity.Entity.CreatedBy = _principalService.UserId;
+                        entity.Entity.CreatedTime = _dateTimeService.UtcNow;
+                        entity.Entity.RowStatus = 0;
+                        break;
+                    case EntityState.Modified:
+                        entity.Entity.ModifiedBy = _principalService.UserId;
+                        entity.Entity.ModifiedTime = _dateTimeService.UtcNow;
+                        break;
+                }
+            }
         }
     }
 }

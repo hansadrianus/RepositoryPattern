@@ -12,15 +12,15 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    [Migration("20230408200433_AddNullableToNotesForSalesOrderDetailEntity")]
-    partial class AddNullableToNotesForSalesOrderDetailEntity
+    [Migration("20231111174008_DisableMappingForUserRoleUID")]
+    partial class DisableMappingForUserRoleUID
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "7.0.2")
+                .HasAnnotation("ProductVersion", "7.0.13")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
@@ -80,6 +80,10 @@ namespace Infrastructure.Migrations
                         .ValueGeneratedOnAddOrUpdate()
                         .HasColumnType("rowversion");
 
+                    b.Property<Guid>("Uid")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
                     b.HasKey("Id");
 
                     b.ToTable("Menu", (string)null);
@@ -89,7 +93,7 @@ namespace Infrastructure.Migrations
                         {
                             Id = 1,
                             CreatedBy = "",
-                            CreatedTime = new DateTime(2023, 4, 8, 20, 4, 32, 682, DateTimeKind.Utc).AddTicks(5897),
+                            CreatedTime = new DateTime(2023, 11, 11, 17, 40, 8, 270, DateTimeKind.Utc).AddTicks(230),
                             CssClass = "fas fa-dollar-sign",
                             MenuAction = "",
                             MenuController = "Sales",
@@ -97,13 +101,14 @@ namespace Infrastructure.Migrations
                             MenuName = "Sales",
                             MenuOrder = 0,
                             MenuParent = 0,
-                            RowStatus = (short)0
+                            RowStatus = (short)0,
+                            Uid = new Guid("5096a021-c591-4f26-bde9-3f05a3f8aa3f")
                         },
                         new
                         {
                             Id = 2,
                             CreatedBy = "",
-                            CreatedTime = new DateTime(2023, 4, 8, 20, 4, 32, 682, DateTimeKind.Utc).AddTicks(5904),
+                            CreatedTime = new DateTime(2023, 11, 11, 17, 40, 8, 270, DateTimeKind.Utc).AddTicks(252),
                             CssClass = "",
                             MenuAction = "CreateSalesOrder",
                             MenuController = "Sales",
@@ -111,13 +116,14 @@ namespace Infrastructure.Migrations
                             MenuName = "Create Sales Order",
                             MenuOrder = 1,
                             MenuParent = 1,
-                            RowStatus = (short)0
+                            RowStatus = (short)0,
+                            Uid = new Guid("f8b6e84c-f872-443d-ae74-5531d83fa059")
                         },
                         new
                         {
                             Id = 3,
                             CreatedBy = "",
-                            CreatedTime = new DateTime(2023, 4, 8, 20, 4, 32, 682, DateTimeKind.Utc).AddTicks(5906),
+                            CreatedTime = new DateTime(2023, 11, 11, 17, 40, 8, 270, DateTimeKind.Utc).AddTicks(257),
                             CssClass = "",
                             MenuAction = "ChangeSalesOrder",
                             MenuController = "Sales",
@@ -125,13 +131,14 @@ namespace Infrastructure.Migrations
                             MenuName = "Change Sales Order",
                             MenuOrder = 2,
                             MenuParent = 1,
-                            RowStatus = (short)0
+                            RowStatus = (short)0,
+                            Uid = new Guid("97bcdcb5-445a-4064-9932-bbd5c439e7fa")
                         },
                         new
                         {
                             Id = 4,
                             CreatedBy = "",
-                            CreatedTime = new DateTime(2023, 4, 8, 20, 4, 32, 682, DateTimeKind.Utc).AddTicks(5909),
+                            CreatedTime = new DateTime(2023, 11, 11, 17, 40, 8, 270, DateTimeKind.Utc).AddTicks(261),
                             CssClass = "",
                             MenuAction = "DisplaySalesOrder",
                             MenuController = "Sales",
@@ -139,7 +146,98 @@ namespace Infrastructure.Migrations
                             MenuName = "Display Sales Order",
                             MenuOrder = 3,
                             MenuParent = 1,
-                            RowStatus = (short)0
+                            RowStatus = (short)0,
+                            Uid = new Guid("c047a073-8ba4-4348-afda-5c4e41950d08")
+                        },
+                        new
+                        {
+                            Id = 5,
+                            CreatedBy = "",
+                            CreatedTime = new DateTime(2023, 11, 11, 17, 40, 8, 270, DateTimeKind.Utc).AddTicks(266),
+                            CssClass = "fas fa-tags",
+                            MenuAction = "",
+                            MenuController = "Products",
+                            MenuLevel = 0,
+                            MenuName = "Product",
+                            MenuOrder = 0,
+                            MenuParent = 0,
+                            RowStatus = (short)0,
+                            Uid = new Guid("96451bb5-bb9b-46d4-a710-b8e93c7769d0")
+                        },
+                        new
+                        {
+                            Id = 6,
+                            CreatedBy = "",
+                            CreatedTime = new DateTime(2023, 11, 11, 17, 40, 8, 270, DateTimeKind.Utc).AddTicks(270),
+                            CssClass = "",
+                            MenuAction = "CreateProduct",
+                            MenuController = "Products",
+                            MenuLevel = 1,
+                            MenuName = "Create Product",
+                            MenuOrder = 1,
+                            MenuParent = 5,
+                            RowStatus = (short)0,
+                            Uid = new Guid("da085a7d-3107-4ec8-84cc-796a0e2cf3fc")
+                        },
+                        new
+                        {
+                            Id = 7,
+                            CreatedBy = "",
+                            CreatedTime = new DateTime(2023, 11, 11, 17, 40, 8, 270, DateTimeKind.Utc).AddTicks(274),
+                            CssClass = "",
+                            MenuAction = "ChangeProduct",
+                            MenuController = "Products",
+                            MenuLevel = 1,
+                            MenuName = "Change Product",
+                            MenuOrder = 2,
+                            MenuParent = 5,
+                            RowStatus = (short)0,
+                            Uid = new Guid("d892fe54-bd15-4847-97f8-adfa3b6f6317")
+                        },
+                        new
+                        {
+                            Id = 8,
+                            CreatedBy = "",
+                            CreatedTime = new DateTime(2023, 11, 11, 17, 40, 8, 270, DateTimeKind.Utc).AddTicks(278),
+                            CssClass = "",
+                            MenuAction = "DisplayProduct",
+                            MenuController = "Products",
+                            MenuLevel = 1,
+                            MenuName = "Display Product",
+                            MenuOrder = 3,
+                            MenuParent = 5,
+                            RowStatus = (short)0,
+                            Uid = new Guid("1023fc70-f74b-4deb-96a1-ee8494ae5fb4")
+                        },
+                        new
+                        {
+                            Id = 9,
+                            CreatedBy = "",
+                            CreatedTime = new DateTime(2023, 11, 11, 17, 40, 8, 270, DateTimeKind.Utc).AddTicks(282),
+                            CssClass = "fas fa-tags",
+                            MenuAction = "",
+                            MenuController = "Inventories",
+                            MenuLevel = 0,
+                            MenuName = "Inventory",
+                            MenuOrder = 0,
+                            MenuParent = 0,
+                            RowStatus = (short)0,
+                            Uid = new Guid("9275f160-c408-47bf-9075-ff9df58be419")
+                        },
+                        new
+                        {
+                            Id = 10,
+                            CreatedBy = "",
+                            CreatedTime = new DateTime(2023, 11, 11, 17, 40, 8, 270, DateTimeKind.Utc).AddTicks(290),
+                            CssClass = "",
+                            MenuAction = "StockOpname",
+                            MenuController = "Inventories",
+                            MenuLevel = 1,
+                            MenuName = "Stock Opname",
+                            MenuOrder = 1,
+                            MenuParent = 9,
+                            RowStatus = (short)0,
+                            Uid = new Guid("d67a6ba2-c44e-431c-93ad-f817681a9460")
                         });
                 });
 
@@ -178,6 +276,10 @@ namespace Infrastructure.Migrations
                         .IsRequired()
                         .ValueGeneratedOnAddOrUpdate()
                         .HasColumnType("rowversion");
+
+                    b.Property<Guid>("Uid")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
 
@@ -229,6 +331,10 @@ namespace Infrastructure.Migrations
                         .IsRequired()
                         .ValueGeneratedOnAddOrUpdate()
                         .HasColumnType("rowversion");
+
+                    b.Property<Guid>("Uid")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
 
@@ -282,6 +388,10 @@ namespace Infrastructure.Migrations
                         .IsRequired()
                         .ValueGeneratedOnAddOrUpdate()
                         .HasColumnType("rowversion");
+
+                    b.Property<Guid>("Uid")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
 
@@ -383,6 +493,10 @@ namespace Infrastructure.Migrations
                     b.Property<bool>("TwoFactorEnabled")
                         .HasColumnType("bit");
 
+                    b.Property<Guid>("Uid")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<string>("UserName")
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
@@ -444,6 +558,10 @@ namespace Infrastructure.Migrations
                         .ValueGeneratedOnAddOrUpdate()
                         .HasColumnType("rowversion");
 
+                    b.Property<Guid>("Uid")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<int>("UserId")
                         .HasColumnType("int");
 
@@ -486,6 +604,10 @@ namespace Infrastructure.Migrations
                         .IsRequired()
                         .ValueGeneratedOnAddOrUpdate()
                         .HasColumnType("rowversion");
+
+                    b.Property<Guid>("Uid")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<int>("UserId")
                         .HasColumnType("int");
@@ -567,6 +689,10 @@ namespace Infrastructure.Migrations
                         .ValueGeneratedOnAddOrUpdate()
                         .HasColumnType("rowversion");
 
+                    b.Property<Guid>("Uid")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<string>("Value")
                         .HasColumnType("nvarchar(max)");
 
@@ -615,6 +741,10 @@ namespace Infrastructure.Migrations
                         .ValueGeneratedOnAddOrUpdate()
                         .HasColumnType("rowversion");
 
+                    b.Property<Guid>("Uid")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
                     b.HasKey("Id");
 
                     b.HasIndex("LCID")
@@ -627,21 +757,23 @@ namespace Infrastructure.Migrations
                         {
                             Id = 1,
                             CreatedBy = "",
-                            CreatedTime = new DateTime(2023, 4, 8, 20, 4, 32, 682, DateTimeKind.Utc).AddTicks(6170),
+                            CreatedTime = new DateTime(2023, 11, 11, 17, 40, 8, 270, DateTimeKind.Utc).AddTicks(868),
                             Description = "English",
                             IsDefaultLanguage = true,
                             LCID = 1033,
-                            RowStatus = (short)0
+                            RowStatus = (short)0,
+                            Uid = new Guid("1e19d2a4-5136-4d45-bcbb-dca689105135")
                         },
                         new
                         {
                             Id = 2,
                             CreatedBy = "",
-                            CreatedTime = new DateTime(2023, 4, 8, 20, 4, 32, 682, DateTimeKind.Utc).AddTicks(6172),
+                            CreatedTime = new DateTime(2023, 11, 11, 17, 40, 8, 270, DateTimeKind.Utc).AddTicks(872),
                             Description = "Indonesia",
                             IsDefaultLanguage = false,
                             LCID = 1057,
-                            RowStatus = (short)0
+                            RowStatus = (short)0,
+                            Uid = new Guid("313af8ea-ca28-4863-84ba-339c34238d2b")
                         });
                 });
 
@@ -679,6 +811,10 @@ namespace Infrastructure.Migrations
                         .ValueGeneratedOnAddOrUpdate()
                         .HasColumnType("rowversion");
 
+                    b.Property<Guid>("Uid")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
                     b.HasKey("Id");
 
                     b.ToTable("OrderType", (string)null);
@@ -688,25 +824,28 @@ namespace Infrastructure.Migrations
                         {
                             Id = 1,
                             CreatedBy = "",
-                            CreatedTime = new DateTime(2023, 4, 8, 20, 4, 32, 682, DateTimeKind.Utc).AddTicks(6192),
+                            CreatedTime = new DateTime(2023, 11, 11, 17, 40, 8, 270, DateTimeKind.Utc).AddTicks(905),
                             Name = "Sales Quotation",
-                            RowStatus = (short)0
+                            RowStatus = (short)0,
+                            Uid = new Guid("b05aab04-1080-4a5f-aa7f-5eeeb852a4fe")
                         },
                         new
                         {
                             Id = 2,
                             CreatedBy = "",
-                            CreatedTime = new DateTime(2023, 4, 8, 20, 4, 32, 682, DateTimeKind.Utc).AddTicks(6194),
+                            CreatedTime = new DateTime(2023, 11, 11, 17, 40, 8, 270, DateTimeKind.Utc).AddTicks(909),
                             Name = "Sales Order",
-                            RowStatus = (short)0
+                            RowStatus = (short)0,
+                            Uid = new Guid("9a2f599c-aada-4396-b0fa-b0211419e994")
                         },
                         new
                         {
                             Id = 3,
                             CreatedBy = "",
-                            CreatedTime = new DateTime(2023, 4, 8, 20, 4, 32, 682, DateTimeKind.Utc).AddTicks(6196),
+                            CreatedTime = new DateTime(2023, 11, 11, 17, 40, 8, 270, DateTimeKind.Utc).AddTicks(912),
                             Name = "Sales Contract",
-                            RowStatus = (short)0
+                            RowStatus = (short)0,
+                            Uid = new Guid("000e98c1-55fd-4706-8164-6f3269fe756d")
                         });
                 });
 
@@ -744,6 +883,10 @@ namespace Infrastructure.Migrations
                         .ValueGeneratedOnAddOrUpdate()
                         .HasColumnType("rowversion");
 
+                    b.Property<Guid>("Uid")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
                     b.HasKey("Id");
 
                     b.ToTable("PaymentType", (string)null);
@@ -753,26 +896,161 @@ namespace Infrastructure.Migrations
                         {
                             Id = 1,
                             CreatedBy = "",
-                            CreatedTime = new DateTime(2023, 4, 8, 20, 4, 32, 682, DateTimeKind.Utc).AddTicks(6211),
+                            CreatedTime = new DateTime(2023, 11, 11, 17, 40, 8, 270, DateTimeKind.Utc).AddTicks(948),
                             Name = "Cash",
-                            RowStatus = (short)0
+                            RowStatus = (short)0,
+                            Uid = new Guid("cc56d5af-7c4d-41ff-a7b4-5431eea0d549")
                         },
                         new
                         {
                             Id = 2,
                             CreatedBy = "",
-                            CreatedTime = new DateTime(2023, 4, 8, 20, 4, 32, 682, DateTimeKind.Utc).AddTicks(6213),
+                            CreatedTime = new DateTime(2023, 11, 11, 17, 40, 8, 270, DateTimeKind.Utc).AddTicks(952),
                             Name = "Credit",
-                            RowStatus = (short)0
+                            RowStatus = (short)0,
+                            Uid = new Guid("5924cfdf-8765-4a07-a175-da3ec19d5e48")
                         },
                         new
                         {
                             Id = 3,
                             CreatedBy = "",
-                            CreatedTime = new DateTime(2023, 4, 8, 20, 4, 32, 682, DateTimeKind.Utc).AddTicks(6215),
+                            CreatedTime = new DateTime(2023, 11, 11, 17, 40, 8, 270, DateTimeKind.Utc).AddTicks(960),
                             Name = "Split Payment",
-                            RowStatus = (short)0
+                            RowStatus = (short)0,
+                            Uid = new Guid("42bba6fc-e72e-41e0-8df0-8508435dce46")
                         });
+                });
+
+            modelBuilder.Entity("Domain.Entities.PhysicalInventoryDocumentDetail", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int?>("AdjustmentStock")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("AdjustmentTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<decimal?>("AdjustmentValuation")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<string>("CreatedBy")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreatedTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("ModifiedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("ModifiedTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("PIDHeaderId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ProductId")
+                        .HasColumnType("int");
+
+                    b.Property<short>("RowStatus")
+                        .HasColumnType("smallint");
+
+                    b.Property<byte[]>("RowVersion")
+                        .IsConcurrencyToken()
+                        .IsRequired()
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("rowversion");
+
+                    b.Property<Guid>("Uid")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("PIDHeaderId");
+
+                    b.HasIndex("ProductId");
+
+                    b.ToTable("PhysicalInventoryDocumentDetail", (string)null);
+                });
+
+            modelBuilder.Entity("Domain.Entities.PhysicalInventoryDocumentHeader", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime?>("ActualFinishDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("ActualStartDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("CreatedBy")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreatedTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("DocumentDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("DocumentNo")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Evaluator")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsDraft")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("ModifiedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("ModifiedTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Notes")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("PlanFinishDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("PlanStartDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("PostingDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<short>("RowStatus")
+                        .HasColumnType("smallint");
+
+                    b.Property<byte[]>("RowVersion")
+                        .IsConcurrencyToken()
+                        .IsRequired()
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("rowversion");
+
+                    b.Property<Guid>("Uid")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("DocumentNo")
+                        .IsUnique()
+                        .HasFilter("[DocumentNo] IS NOT NULL");
+
+                    b.ToTable("PhysicalInventoryDocumentHeader", (string)null);
                 });
 
             modelBuilder.Entity("Domain.Entities.Product", b =>
@@ -789,6 +1067,9 @@ namespace Infrastructure.Migrations
 
                     b.Property<DateTime>("CreatedTime")
                         .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ModifiedBy")
                         .HasColumnType("nvarchar(max)");
@@ -823,6 +1104,13 @@ namespace Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<Guid>("Uid")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<decimal>("Valuation")
+                        .HasColumnType("decimal(18,2)");
+
                     b.HasKey("Id");
 
                     b.HasIndex("ProductCode")
@@ -835,25 +1123,31 @@ namespace Infrastructure.Migrations
                         {
                             Id = 1,
                             CreatedBy = "",
-                            CreatedTime = new DateTime(2023, 4, 8, 20, 4, 32, 682, DateTimeKind.Utc).AddTicks(6232),
+                            CreatedTime = new DateTime(2023, 11, 11, 17, 40, 8, 270, DateTimeKind.Utc).AddTicks(1113),
+                            Description = "",
                             Name = "Sample Product 1",
                             Price = 10000m,
                             ProductCode = "SAMPLE0001",
                             RowStatus = (short)0,
                             Stock = 100,
-                            Type = "Sample"
+                            Type = "Sample",
+                            Uid = new Guid("8135945d-c40d-4108-afde-823af680385c"),
+                            Valuation = 9000m
                         },
                         new
                         {
                             Id = 2,
                             CreatedBy = "",
-                            CreatedTime = new DateTime(2023, 4, 8, 20, 4, 32, 682, DateTimeKind.Utc).AddTicks(6235),
+                            CreatedTime = new DateTime(2023, 11, 11, 17, 40, 8, 270, DateTimeKind.Utc).AddTicks(1122),
+                            Description = "",
                             Name = "Sample Product 2",
                             Price = 20000m,
                             ProductCode = "SAMPLE0002",
                             RowStatus = (short)0,
                             Stock = 100,
-                            Type = "Sample"
+                            Type = "Sample",
+                            Uid = new Guid("0e868d9d-6558-408e-a4bb-23c0bb429c61"),
+                            Valuation = 15000m
                         });
                 });
 
@@ -882,7 +1176,6 @@ namespace Infrastructure.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Notes")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("OrderId")
@@ -905,6 +1198,10 @@ namespace Infrastructure.Migrations
                         .IsRequired()
                         .ValueGeneratedOnAddOrUpdate()
                         .HasColumnType("rowversion");
+
+                    b.Property<Guid>("Uid")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
 
@@ -938,17 +1235,19 @@ namespace Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<bool>("IsDraft")
+                        .HasColumnType("bit");
+
                     b.Property<string>("ModifiedBy")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime?>("ModifiedTime")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime>("OrderDate")
+                    b.Property<DateTime?>("OrderDate")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("OrderNumber")
-                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<int>("OrderTypeId")
@@ -966,10 +1265,15 @@ namespace Infrastructure.Migrations
                         .ValueGeneratedOnAddOrUpdate()
                         .HasColumnType("rowversion");
 
+                    b.Property<Guid>("Uid")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
                     b.HasKey("Id");
 
                     b.HasIndex("OrderNumber")
-                        .IsUnique();
+                        .IsUnique()
+                        .HasFilter("[OrderNumber] IS NOT NULL");
 
                     b.HasIndex("OrderTypeId");
 
@@ -1048,6 +1352,25 @@ namespace Infrastructure.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("Domain.Entities.PhysicalInventoryDocumentDetail", b =>
+                {
+                    b.HasOne("Domain.Entities.PhysicalInventoryDocumentHeader", "PhysicalInventoryHeader")
+                        .WithMany("PhysicalInventoryDetails")
+                        .HasForeignKey("PIDHeaderId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Domain.Entities.Product", "Product")
+                        .WithMany("PhysicalInventoryDetails")
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.Navigation("PhysicalInventoryHeader");
+
+                    b.Navigation("Product");
+                });
+
             modelBuilder.Entity("Domain.Entities.SalesOrderDetail", b =>
                 {
                     b.HasOne("Domain.Entities.SalesOrderHeader", "OrderHeader")
@@ -1108,8 +1431,15 @@ namespace Infrastructure.Migrations
                     b.Navigation("SalesOrderHeaders");
                 });
 
+            modelBuilder.Entity("Domain.Entities.PhysicalInventoryDocumentHeader", b =>
+                {
+                    b.Navigation("PhysicalInventoryDetails");
+                });
+
             modelBuilder.Entity("Domain.Entities.Product", b =>
                 {
+                    b.Navigation("PhysicalInventoryDetails");
+
                     b.Navigation("SalesOrderDetails");
                 });
 

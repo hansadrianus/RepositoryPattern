@@ -11,7 +11,7 @@ namespace Application.Endpoints.Products.Queries
 {
     public class GetProductsQuery : IRequest<EndpointResult<IEnumerable<ProductViewModel>>>
     {
-        public int? Id { get; set; }
+        public Guid? Uid { get; set; }
         public string? ProductCode { get; set; }
         public string? Name { get; set; }
         public string? Description { get; set; }

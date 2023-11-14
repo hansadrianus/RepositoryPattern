@@ -1,5 +1,6 @@
 ﻿using Application.Interfaces.Persistence;
 using Application.Interfaces.Persistence.SalesOrders;
+using Application.Interfaces.Services;
 using Application.ViewModels;
 using Domain.Entities;
 using Microsoft.EntityFrameworkCore;
@@ -16,7 +17,7 @@ namespace Infrastructure.Repositories.SalesOrders
     {
         private readonly IApplicationContext _context;
 
-        public SalesOrderRepository(IApplicationContext context) : base(context)
+        public SalesOrderRepository(IApplicationContext context, IDistributedCacheService distributedCacheService) : base(context, distributedCacheService)
         {
             _context = context;
         }

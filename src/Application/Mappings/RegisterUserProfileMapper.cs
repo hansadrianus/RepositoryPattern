@@ -13,6 +13,7 @@ namespace Application.Mappings
                 .ReverseMap();
             CreateMap<RegisterCommand, ApplicationUser>()
                 .ForMember(dest => dest.Id, opt => opt.Ignore())
+                .ForMember(dest => dest.Uid, opt => opt.MapFrom(src => Guid.NewGuid()))
                 .ForMember(dest => dest.NormalizedUserName, opt => opt.Ignore())
                 .ForMember(dest => dest.NormalizedEmail, opt => opt.Ignore())
                 .ForMember(dest => dest.TwoFactorEnabled, opt => opt.Ignore())

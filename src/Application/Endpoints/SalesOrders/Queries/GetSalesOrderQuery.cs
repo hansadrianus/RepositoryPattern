@@ -11,7 +11,7 @@ namespace Application.Endpoints.SalesOrders.Queries
 {
     public class GetSalesOrderQuery : IRequest<EndpointResult<IEnumerable<SalesOrderViewModel>>>
     {
-        public int? Id { get; set; }
+        public Guid? Uid { get; set; }
         public string? OrderNumber { get; set; }
         public string? OrderType { get; set; }
         public DateTime? OrderDate { get; set; }

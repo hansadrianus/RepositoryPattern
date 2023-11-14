@@ -9,7 +9,7 @@ namespace Application.ViewModels
 {
     public record SalesOrderViewModel
     {
-        public int Id { get; set; }
+        public Guid Uid { get; set; }
         public string OrderNumber { get; set; }
         public int OrderTypeId { get; set; }
         public DateTime OrderDate { get; set; }
@@ -21,6 +21,7 @@ namespace Application.ViewModels
 
         public record OrderDetailViewModel
         {
+            public Guid Uid { get; set; }
             public int ProductId { get; set; }
             public decimal Price { get; set; }
             public int Quantity { get; set; }

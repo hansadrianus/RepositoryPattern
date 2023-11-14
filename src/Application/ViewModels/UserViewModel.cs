@@ -8,7 +8,7 @@ namespace Application.ViewModels
 {
     public record UserViewModel
     {
-        public int Id { get; set; }
+        public Guid Uid { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string UserName { get; set; }

@@ -20,6 +20,7 @@ namespace Application.Mappings
                 .ReverseMap();
             CreateMap<DraftSalesOrderCommand, SalesOrderHeader>()
                 .ForMember(dest => dest.Id, opt => opt.Ignore())
+                .ForMember(dest => dest.Uid, opt => opt.MapFrom(src => Guid.NewGuid()))
                 .ForMember(dest => dest.OrderNumber, opt => opt.Ignore())
                 .ForMember(dest => dest.OrderDate, opt => opt.Ignore())
                 .ForMember(dest => dest.IsDraft, opt => opt.MapFrom(src => true))
@@ -30,6 +31,7 @@ namespace Application.Mappings
                 .ForMember(dest => dest.RowVersion, opt => opt.Ignore());
             CreateMap<PostSalesOrderCommand, SalesOrderHeader>()
                 .ForMember(dest => dest.Id, opt => opt.Ignore())
+                .ForMember(dest => dest.Uid, opt => opt.MapFrom(src => Guid.NewGuid()))
                 .ForMember(dest => dest.OrderNumber, opt => opt.Ignore())
                 .ForMember(dest => dest.OrderDate, opt => opt.MapFrom(src => DateTime.Now))
                 .ForMember(dest => dest.IsDraft, opt => opt.MapFrom(src => false))
@@ -90,6 +92,8 @@ namespace Application.Mappings
                 .ForMember(dest => dest.ModifiedTime, opt => opt.Ignore())
                 .ForMember(dest => dest.RowVersion, opt => opt.Ignore());
             CreateMap<OrderDetailCommand, SalesOrderDetail>()
+                .ForMember(dest => dest.Id, opt => opt.Ignore())
+                .ForMember(dest => dest.Uid, opt => opt.Ignore())
                 .ForMember(dest => dest.Product, opt => opt.Ignore())
                 .ForMember(dest => dest.CreatedBy, opt => opt.Ignore())
                 .ForMember(dest => dest.CreatedTime, opt => opt.Ignore())

@@ -6,15 +6,16 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers
 {
-    public class ComponentController : ApplicationBaseController
+    public class LanguageController : ApplicationBaseController
     {
         private readonly IMediator _mediator;
 
-        public ComponentController(IMediator mediator)
+        public LanguageController(IMediator mediator)
         {
             _mediator = mediator;
         }
 
+        [HttpGet]
         public async Task<IActionResult> GetLanguageCultures([FromQuery] GetLanguageCultureQuery query)
             => (await _mediator.Send(query)).ToActionResult();
     }

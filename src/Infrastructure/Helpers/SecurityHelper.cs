@@ -39,6 +39,7 @@ namespace Infrastructure.Helpers
             List<Claim> claims = new List<Claim>()
             {
                 new Claim("Id", selectedUser.Id.ToString()),
+                new Claim("Uid", selectedUser.Uid.ToString()),
                 new Claim(ClaimTypes.NameIdentifier, selectedUser.UserName),
                 new Claim("Lcid", lcid)
             };

@@ -50,17 +50,17 @@ namespace Application.Endpoints.Menus.Queries
                     if (existingMenuRole.Any())
                         menuRolesViewModel.Add(new MenuRoleViewModel()
                         {
-                            Id = existingMenuRole.FirstOrDefault().Id,
-                            AppMenuId = menu.Id,
-                            RoleId = role.Id,
+                            Uid = existingMenuRole.FirstOrDefault().Uid,
+                            AppMenuId = menu.Uid,
+                            RoleId = role.Uid,
                             MenuName = menu.MenuName,
                             IsSelected = true
                         });
                     else
                         menuRolesViewModel.Add(new MenuRoleViewModel()
                         {
-                            AppMenuId = menu.Id,
-                            RoleId = role.Id,
+                            AppMenuId = menu.Uid,
+                            RoleId = role.Uid,
                             MenuName = menu.MenuName,
                             IsSelected = false
                         });

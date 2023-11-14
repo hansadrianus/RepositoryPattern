@@ -11,9 +11,9 @@ namespace Application.Endpoints.Menus.Queries
 {
     public class GetMenuRolesQuery : IRequest<EndpointResult<IEnumerable<MenuRoleViewModel>>>
     {
-        public int? AppMenuId { get; set; }
+        public Guid? AppMenuId { get; set; }
         public string? MenuName { get; set; }
-        public int? RoleId { get; set; }
+        public Guid? RoleId { get; set; }
         public bool? IsSelected { get; set; }
         public short? RowStatus { get; set; }
     }

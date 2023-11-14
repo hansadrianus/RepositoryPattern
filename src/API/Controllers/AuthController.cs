@@ -44,12 +44,40 @@ namespace API.Controllers
         public async Task<IActionResult> UserProfileAsync()
         {
             GetUserProfileQuery command = new GetUserProfileQuery();
-            if (int.TryParse(HttpContext.User.FindFirstValue("id"), out int id))
-                command.Id = id;
+            if (Guid.TryParse(HttpContext.User.FindFirstValue("Uid"), out Guid uid))
+                command.Uid = uid;
             else
-                command.Id = 0;
+                command.Uid = null;
 
             return (await _mediator.Send(command)).ToActionResult();
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> GetRolesAsync([FromQuery] GetRoleQuery query)
+            => (await _mediator.Send(query)).ToActionResult();
+
+        [HttpPost]
+        public async Task<IActionResult> CreateRoleAsync([FromBody] AddRoleCommand command)
+            => (await _mediator.Send(command)).ToActionResult();
+
+        [HttpPut("{id}")]
+        public async Task<IActionResult> UpdateRoleAsync(Guid id, [FromBody] UpdateRoleCommand command)
+        {
+            command.Uid = id;
+
+            return (await _mediator.Send(command)).ToActionResult();
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteRoleAsync(Guid id)
+            => (await _mediator.Send(new DeleteRoleCommand() { Uid = id })).ToActionResult();
+
+        [HttpGet("{userId}/GetUserRoles")]
+        public async Task<IActionResult> GetUserRolesAsync(Guid userId, [FromQuery] GetUserRolesQuery query)
+        {
+            query.UserId = userId;
+
+            return (await _mediator.Send(query)).ToActionResult();
         }
     }
 }

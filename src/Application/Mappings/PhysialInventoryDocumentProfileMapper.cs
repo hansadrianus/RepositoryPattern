@@ -20,6 +20,7 @@ namespace Application.Mappings
                 .ReverseMap();
             CreateMap<DraftPhysicalInventoryDocumentCommand, PhysicalInventoryDocumentHeader>()
                 .ForMember(dest => dest.Id, opt => opt.Ignore())
+                .ForMember(dest => dest.Uid, opt => opt.MapFrom(src => Guid.NewGuid()))
                 .ForMember(dest => dest.DocumentNo, opt => opt.Ignore())
                 .ForMember(dest => dest.DocumentDate, opt => opt.MapFrom(src => DateTime.Now))
                 .ForMember(dest => dest.IsDraft, opt => opt.MapFrom(src => true))
@@ -30,6 +31,7 @@ namespace Application.Mappings
                 .ForMember(dest => dest.RowVersion, opt => opt.Ignore());
             CreateMap<PostPhysicalInventoryDocumentCommand, PhysicalInventoryDocumentHeader>()
                 .ForMember(dest => dest.Id, opt => opt.Ignore())
+                .ForMember(dest => dest.Uid, opt => opt.MapFrom(src => Guid.NewGuid()))
                 .ForMember(dest => dest.DocumentNo, opt => opt.Ignore())
                 .ForMember(dest => dest.DocumentDate, opt => opt.MapFrom(src => DateTime.Now))
                 .ForMember(dest => dest.PostingDate, opt => opt.MapFrom(src => DateTime.Now))
@@ -46,6 +48,8 @@ namespace Application.Mappings
                 .ForMember(dest => dest.ModifiedTime, opt => opt.Ignore())
                 .ForMember(dest => dest.RowVersion, opt => opt.Ignore());
             CreateMap<PhysicalInventoryDocumentDetailCommand, PhysicalInventoryDocumentDetail>()
+                .ForMember(dest => dest.Id, opt => opt.Ignore())
+                .ForMember(dest => dest.Uid, opt => opt.Ignore())
                 .ForMember(dest => dest.Product, opt => opt.Ignore())
                 .ForMember(dest => dest.CreatedBy, opt => opt.Ignore())
                 .ForMember(dest => dest.CreatedTime, opt => opt.Ignore())

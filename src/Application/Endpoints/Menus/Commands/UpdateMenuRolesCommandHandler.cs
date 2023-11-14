@@ -14,20 +14,20 @@ using System.Threading.Tasks;
 
 namespace Application.Endpoints.Menus.Commands
 {
-    public class MenuRolesCommandHandler : IRequestHandler<MenuRolesCommand, EndpointResult<MenuRoleViewModel>>
+    public class UpdateMenuRolesCommandHandler : IRequestHandler<UpdateMenuRolesCommand, EndpointResult<MenuRoleViewModel>>
     {
-        private readonly IRequestValidator<MenuRolesCommand> _requestValidator;
+        private readonly IRequestValidator<UpdateMenuRolesCommand> _requestValidator;
         private readonly IRepositoryWrapper _repository;
         private readonly IMapper _mapper;
 
-        public MenuRolesCommandHandler(IRequestValidator<MenuRolesCommand> requestValidator, IRepositoryWrapper repository, IMapper mapper)
+        public UpdateMenuRolesCommandHandler(IRequestValidator<UpdateMenuRolesCommand> requestValidator, IRepositoryWrapper repository, IMapper mapper)
         {
             _requestValidator = requestValidator;
             _repository = repository;
             _mapper = mapper;
         }
 
-        public async Task<EndpointResult<MenuRoleViewModel>> Handle(MenuRolesCommand request, CancellationToken cancellationToken)
+        public async Task<EndpointResult<MenuRoleViewModel>> Handle(UpdateMenuRolesCommand request, CancellationToken cancellationToken)
         {
             var validationErrors = _requestValidator.ValidateRequest(request);
             if (validationErrors.Any())

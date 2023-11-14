@@ -1,5 +1,6 @@
 ﻿using Application.Interfaces.Persistence;
 using Application.Interfaces.Persistence.LanguageCultures;
+using Application.Interfaces.Services;
 using Domain.Entities;
 using System;
 using System.Collections.Generic;
@@ -11,7 +12,7 @@ namespace Infrastructure.Repositories.LanguageCultures
 {
     public class LanguageCultureRepository : RepositoryBase<LanguageCulture>, ILanguageCultureRepository
     {
-        public LanguageCultureRepository(IApplicationContext context) : base(context)
+        public LanguageCultureRepository(IApplicationContext context, IDistributedCacheService distributedCacheService) : base(context, distributedCacheService)
         {
         }
     }

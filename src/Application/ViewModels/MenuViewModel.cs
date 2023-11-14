@@ -8,7 +8,7 @@ namespace Application.ViewModels
 {
     public record MenuViewModel
     {
-        public int Id { get; set; }
+        public Guid Uid { get; set; }
         public string MenuName { get; set; }
         public string MenuController { get; set; }
         public string MenuAction { get; set; }

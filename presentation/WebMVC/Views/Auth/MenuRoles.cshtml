@@ -76,7 +76,7 @@
 
                     $.ajax({
                         type: "GET",
-                        url: "../GetMenus?roleId=" + @Model.Id,
+                        url: "../GetMenus?roleId=" + @Model.Uid,
                         data: filter,
                         dataType: "json"
                     }).done(function (response) {
@@ -97,7 +97,7 @@
 
                     $.ajax({
                         type: "PUT",
-                        url: "../UpdateMenuRoles?roleId=" + @Model.Id,
+                        url: "../UpdateMenuRoles?roleId=" + @Model.Uid,
                         data: item,
                         dataType: "json"
                     }).done(function (response) {

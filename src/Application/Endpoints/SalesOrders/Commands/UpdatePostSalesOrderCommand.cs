@@ -11,7 +11,7 @@ namespace Application.Endpoints.SalesOrders.Commands
 {
     public class UpdatePostSalesOrderCommand : IRequest<EndpointResult<SalesOrderViewModel>>
     {
-        public int? Id { get; set; }
+        public Guid? Uid { get; set; }
         public ICollection<OrderDetailCommand> OrderDetails { get; set; }
     }
 }

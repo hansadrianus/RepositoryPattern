@@ -17,6 +17,7 @@ namespace Infrastructure.Services
         private readonly MethodInfo Uint32EqualsMethod = typeof(double).GetMethod(@"Equals", BindingFlags.Instance | BindingFlags.Public, null, new[] { typeof(double) }, null);
         private readonly MethodInfo Uint64EqualsMethod = typeof(decimal).GetMethod(@"Equals", BindingFlags.Instance | BindingFlags.Public, null, new[] { typeof(decimal) }, null);
         private readonly MethodInfo DateTimeEqualsMethod = typeof(DateTime).GetMethod(@"Equals", BindingFlags.Instance | BindingFlags.Public, null, new[] { typeof(DateTime) }, null);
+        private readonly MethodInfo GuidEqualsMethod = typeof(Guid).GetMethod(@"Equals", BindingFlags.Instance | BindingFlags.Public, null, new[] { typeof(Guid) }, null);
 
         public Expression<Func<TDbType, bool>> BuildPredicate<TDbType, TSearchCriteria>(TSearchCriteria searchCriteria)
         {
@@ -120,6 +121,8 @@ namespace Infrastructure.Services
                             predicate = ApplyUint64Criterion(searchCriteria, searchCriteriaPropertyInfo, dbType, dbFieldMemberInfo, predicate);
                         else if (searchCriteriaPropertyInfo.PropertyType == typeof(DateTime?) || searchCriteriaPropertyInfo.PropertyType == typeof(DateTime))
                             predicate = ApplyDateTimeCriterion(searchCriteria, searchCriteriaPropertyInfo, dbType, dbFieldMemberInfo, predicate);
+                        else if (searchCriteriaPropertyInfo.PropertyType == typeof(Guid?) || searchCriteriaPropertyInfo.PropertyType == typeof(Guid))
+                            predicate = ApplyGuidCriterion(searchCriteria, searchCriteriaPropertyInfo, dbType, dbFieldMemberInfo, predicate);
                     }
                 }
                 catch (Exception ex)
@@ -262,6 +265,21 @@ namespace Infrastructure.Services
             var dbFieldMember = Expression.MakeMemberAccess(dbTypeParameter, dbFieldMemberInfo);
             var criterionConstant = new Expression[] { Expression.Constant(searchDateTime) };
             var expression = GetExpression(dbFieldMember, DateTimeEqualsMethod, criterionConstant, condition);
+            var lambda = Expression.Lambda(expression, dbTypeParameter) as Expression<Func<TDbType, bool>>;
+
+            return predicate.And(lambda);
+        }
+
+        private Expression<Func<TDbType, bool>> ApplyGuidCriterion<TDbType, TSearchCriteria>(TSearchCriteria searchCriteria, PropertyInfo searchCriterionPropertyInfo, Type dbType, MemberInfo dbFieldMemberInfo, Expression<Func<TDbType, bool>> predicate, string condition = "==")
+        {
+            var searchGuid = searchCriterionPropertyInfo.GetValue(searchCriteria) as Guid?;
+            if (searchGuid == null)
+                return predicate;
+
+            var dbTypeParameter = Expression.Parameter(dbType, @"x");
+            var dbFieldMember = Expression.MakeMemberAccess(dbTypeParameter, dbFieldMemberInfo);
+            var criterionConstant = new Expression[] { Expression.Constant(searchGuid) };
+            var expression = GetExpression(dbFieldMember, GuidEqualsMethod, criterionConstant, condition);
             var lambda = Expression.Lambda(expression, dbTypeParameter) as Expression<Func<TDbType, bool>>;
 
             return predicate.And(lambda);

@@ -16,13 +16,15 @@ namespace Application.Endpoints.Products.Commands
         private readonly IRepositoryWrapper _repository;
         private readonly IMapper _mapper;
         private readonly IAutoGenerateNumberService _autoGenerateNumberService;
+        private readonly IDistributedCacheService _distributedCahce;
 
-        public AddProductCommandHandler(IRequestValidator<AddProductCommand> requestValidator, IRepositoryWrapper repository, IMapper mapper, IAutoGenerateNumberService autoGenerateNumberService)
+        public AddProductCommandHandler(IRequestValidator<AddProductCommand> requestValidator, IRepositoryWrapper repository, IMapper mapper, IAutoGenerateNumberService autoGenerateNumberService, IDistributedCacheService distributedCache)
         {
             _requestValidator = requestValidator;
             _repository = repository;
             _mapper = mapper;
             _autoGenerateNumberService = autoGenerateNumberService;
+            _distributedCahce = distributedCache;
         }
 
         public async Task<EndpointResult<ProductViewModel>> Handle(AddProductCommand request, CancellationToken cancellationToken)

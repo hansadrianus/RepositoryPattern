@@ -11,7 +11,7 @@ namespace Application.Endpoints.SalesOrders.Commands
 {
     public class UpdateDraftSalesOrderCommand : IRequest<EndpointResult<SalesOrderViewModel>>
     {
-        public int Id { get; set; }
+        public Guid Uid { get; set; }
         public int OrderTypeId { get; set; }
         public int PaymentTypeId { get; set; }
         public string CustomerName { get; set; }

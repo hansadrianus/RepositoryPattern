@@ -7,14 +7,13 @@ using System.Threading.Tasks;
 
 namespace Application.Endpoints.Menus.Commands
 {
-    public class MenuRolesCommandValidator : AbstractValidator<MenuRolesCommand>
+    public class UpdateMenuRolesCommandValidator : AbstractValidator<UpdateMenuRolesCommand>
     {
-        public MenuRolesCommandValidator()
+        public UpdateMenuRolesCommandValidator()
         {
             RuleFor(x => x.AppMenuId)
                 .NotNull()
-                .NotEmpty()
-                .GreaterThan(0);
+                .NotEmpty();
             RuleFor(x => x.IsSelected)
                 .NotNull();
         }

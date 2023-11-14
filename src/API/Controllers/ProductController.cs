@@ -2,6 +2,7 @@
 using Application.Endpoints.Products.Commands;
 using Application.Endpoints.Products.Queries;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 

@@ -11,5 +11,9 @@ namespace Domain.Entities
 {
     public class ApplicationUserRole : AuditableUserRoleEntity
     {
+        [NotMapped]
+        public virtual ApplicationUser User { get; set; }
+        [NotMapped]
+        public virtual ApplicationRole Role { get; set; }
     }
 }

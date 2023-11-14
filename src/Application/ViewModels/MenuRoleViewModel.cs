@@ -8,9 +8,9 @@ namespace Application.ViewModels
 {
     public record MenuRoleViewModel
     {
-        public int Id { get; set; }
-        public int AppMenuId { get; set; }
-        public int RoleId { get; set; }
+        public Guid Uid { get; set; }
+        public Guid AppMenuId { get; set; }
+        public Guid RoleId { get; set; }
         public string MenuName { get; set; }
         public bool IsSelected { get; set; }
     }

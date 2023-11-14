@@ -18,18 +18,19 @@ namespace Application.Mappings
         {
             CreateMap<AppMenuRole, MenuRoleViewModel>()
                 .ReverseMap();
-            CreateMap<MenuRolesCommand, AppMenuRole>()
+            CreateMap<UpdateMenuRolesCommand, AppMenuRole>()
                 .ForMember(dest => dest.Id, opt => opt.Ignore())
+                .ForMember(dest => dest.Uid, opt => opt.Ignore())
                 .ForMember(dest => dest.CreatedBy, opt => opt.Ignore())
                 .ForMember(dest => dest.CreatedTime, opt => opt.Ignore())
                 .ForMember(dest => dest.ModifiedBy, opt => opt.Ignore())
                 .ForMember(dest => dest.ModifiedTime, opt => opt.Ignore())
                 .ForMember(dest => dest.RowVersion, opt => opt.Ignore());
             CreateMap<GetMenuRolesQuery, GetRoleQuery>()
-                .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.RoleId))
+                .ForMember(dest => dest.Uid, opt => opt.MapFrom(src => src.RoleId))
                 .ForMember(dest => dest.Name, opt => opt.Ignore());
             CreateMap<GetMenuRolesQuery, GetMenuQuery>()
-                .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.AppMenuId))
+                .ForMember(dest => dest.Uid, opt => opt.MapFrom(src => src.AppMenuId))
                 .ForMember(dest => dest.MenuName, opt => opt.MapFrom(src => src.MenuName));
         }
     }

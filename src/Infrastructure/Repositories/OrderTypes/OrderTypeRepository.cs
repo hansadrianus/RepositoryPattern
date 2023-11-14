@@ -1,5 +1,6 @@
 ﻿using Application.Interfaces.Persistence;
 using Application.Interfaces.Persistence.OrderTypes;
+using Application.Interfaces.Services;
 using Domain.Entities;
 using System;
 using System.Collections.Generic;
@@ -11,7 +12,7 @@ namespace Infrastructure.Repositories.OrderTypes
 {
     public class OrderTypeRepository : RepositoryBase<OrderType>, IOrderTypeRepository
     {
-        public OrderTypeRepository(IApplicationContext context) : base(context)
+        public OrderTypeRepository(IApplicationContext context, IDistributedCacheService distributedCacheService) : base(context, distributedCacheService)
         {
         }
     }

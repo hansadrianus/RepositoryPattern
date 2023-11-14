@@ -14,12 +14,14 @@ namespace Application.Endpoints.Products.Queries
         private readonly IRepositoryWrapper _repository;
         private readonly IMapper _mapper;
         private readonly IQueryBuilderService _queryBuilder;
+        private readonly IDistributedCacheService _distributedCache;
 
-        public GetProductsQueryHandler(IRepositoryWrapper repository, IMapper mapper, IQueryBuilderService queryBuilder)
+        public GetProductsQueryHandler(IRepositoryWrapper repository, IMapper mapper, IQueryBuilderService queryBuilder, IDistributedCacheService distributedCache)
         {
             _repository = repository;
             _mapper = mapper;
             _queryBuilder = queryBuilder;
+            _distributedCache = distributedCache;
         }
 
         public async Task<EndpointResult<IEnumerable<ProductViewModel>>> Handle(GetProductsQuery request, CancellationToken cancellationToken)

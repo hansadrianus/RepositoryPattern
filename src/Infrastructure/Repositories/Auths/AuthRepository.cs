@@ -1,5 +1,6 @@
 ﻿using Application.Interfaces.Persistence;
 using Application.Interfaces.Persistence.Auths;
+using Application.Interfaces.Services;
 using Application.ViewModels;
 using Domain.Entities;
 using Infrastructure.Helpers;
@@ -16,7 +17,7 @@ namespace Infrastructure.Repositories.Auths
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly IConfiguration _configuration;
 
-        public AuthRepository(IApplicationContext context, UserManager<ApplicationUser> userManager, IConfiguration configuration) : base(context)
+        public AuthRepository(IApplicationContext context, IDistributedCacheService distributedCacheService, UserManager<ApplicationUser> userManager, IConfiguration configuration) : base(context, distributedCacheService)
         {
             _userManager = userManager;
             _configuration = configuration;

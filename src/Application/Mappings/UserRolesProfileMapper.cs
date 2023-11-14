@@ -25,8 +25,10 @@ namespace Application.Mappings
                 .ForMember(dest => dest.ModifiedBy, opt => opt.Ignore())
                 .ForMember(dest => dest.ModifiedTime, opt => opt.Ignore())
                 .ForMember(dest => dest.RowVersion, opt => opt.Ignore());
+            CreateMap<GetUserRolesQuery, GetUserRolesQuery>()
+                .ForMember(dest => dest.UserId, opt => opt.Ignore());
             CreateMap<GetUserRolesQuery, GetRoleQuery>()
-                .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.RoleId))
+                .ForMember(dest => dest.Uid, opt => opt.MapFrom(src => src.RoleId))
                 .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.RoleName));
         }
     }

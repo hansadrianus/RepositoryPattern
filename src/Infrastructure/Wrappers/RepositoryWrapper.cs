@@ -7,6 +7,7 @@ using Application.Interfaces.Persistence.PaymentTypes;
 using Application.Interfaces.Persistence.PhysicalInventoryDocuments;
 using Application.Interfaces.Persistence.Products;
 using Application.Interfaces.Persistence.SalesOrders;
+using Application.Interfaces.Services;
 using Application.Interfaces.Wrappers;
 using Domain.Entities;
 using Infrastructure.Repositories.AppMenus;
@@ -25,7 +26,9 @@ namespace Infrastructure.Wrappers
     public class RepositoryWrapper : IRepositoryWrapper
     {
         private readonly IApplicationContext _context;
+        private readonly IDistributedCacheService _distributedCacheService;
         private readonly UserManager<ApplicationUser> _userManager;
+        private readonly RoleManager<ApplicationRole> _roleManager;
         private readonly IConfiguration _configuration;
         private IAppMenuRepository _appMenu;
         private IMenuRoleRepository _menuRole;
@@ -39,10 +42,12 @@ namespace Infrastructure.Wrappers
         private ISalesOrderRepository _salesOrder;
         private IPhysicalInventoryDocumentRepository _physicalInventoryDocument;
 
-        public RepositoryWrapper(IApplicationContext context, UserManager<ApplicationUser> userManager, IConfiguration configuration)
+        public RepositoryWrapper(IApplicationContext context, IDistributedCacheService distributedCacheService, UserManager<ApplicationUser> userManager, RoleManager<ApplicationRole> roleManager, IConfiguration configuration)
         {
             _context = context;
+            _distributedCacheService = distributedCacheService;
             _userManager = userManager;
+            _roleManager = roleManager;
             _configuration = configuration;
         }
 
@@ -50,7 +55,7 @@ namespace Infrastructure.Wrappers
         {
             get
             {
-                _appMenu ??= new AppMenuRepository(_context);
+                _appMenu ??= new AppMenuRepository(_context, _distributedCacheService);
                 return _appMenu;
             }
         }
@@ -59,7 +64,7 @@ namespace Infrastructure.Wrappers
         {
             get
             {
-                _menuRole ??= new MenuRoleRepository(_context);
+                _menuRole ??= new MenuRoleRepository(_context, _distributedCacheService);
                 return _menuRole;
             }
         }
@@ -68,7 +73,7 @@ namespace Infrastructure.Wrappers
         {
             get
             {
-                _languageCulture ??= new LanguageCultureRepository(_context);
+                _languageCulture ??= new LanguageCultureRepository(_context, _distributedCacheService);
                 return _languageCulture;
             }
         }
@@ -77,7 +82,7 @@ namespace Infrastructure.Wrappers
         {
             get
             {
-                _auth ??= new AuthRepository(_context, _userManager, _configuration);
+                _auth ??= new AuthRepository(_context, _distributedCacheService, _userManager, _configuration);
                 return _auth;
             }
         }
@@ -86,7 +91,7 @@ namespace Infrastructure.Wrappers
         {
             get
             {
-                _role ??= new RoleRepository(_context);
+                _role ??= new RoleRepository(_context, _distributedCacheService, _roleManager);
                 return _role;
             }
         }
@@ -95,7 +100,7 @@ namespace Infrastructure.Wrappers
         {
             get
             {
-                _userRole ??= new UserRoleRepository(_context);
+                _userRole ??= new UserRoleRepository(_context, _distributedCacheService);
                 return _userRole;
             }
         }
@@ -104,7 +109,7 @@ namespace Infrastructure.Wrappers
         {
             get
             {
-                _orderType ??= new OrderTypeRepository(_context);
+                _orderType ??= new OrderTypeRepository(_context, _distributedCacheService);
                 return _orderType;
             }
         }
@@ -113,7 +118,7 @@ namespace Infrastructure.Wrappers
         {
             get
             {
-                _paymentType ??= new PaymentTypeRepository(_context);
+                _paymentType ??= new PaymentTypeRepository(_context, _distributedCacheService);
                 return _paymentType;
             }
         }
@@ -122,7 +127,7 @@ namespace Infrastructure.Wrappers
         {
             get
             {
-                _product ??= new ProductRepository(_context);
+                _product ??= new ProductRepository(_context, _distributedCacheService);
                 return _product;
             }
         }
@@ -131,7 +136,7 @@ namespace Infrastructure.Wrappers
         {
             get
             {
-                _salesOrder ??= new SalesOrderRepository(_context);
+                _salesOrder ??= new SalesOrderRepository(_context, _distributedCacheService);
                 return _salesOrder;
             }
         }
@@ -140,7 +145,7 @@ namespace Infrastructure.Wrappers
         {
             get
             {
-                _physicalInventoryDocument ??= new PhysicalInventoryDocumentRepository(_context);
+                _physicalInventoryDocument ??= new PhysicalInventoryDocumentRepository(_context, _distributedCacheService);
                 return _physicalInventoryDocument;
             }
         }

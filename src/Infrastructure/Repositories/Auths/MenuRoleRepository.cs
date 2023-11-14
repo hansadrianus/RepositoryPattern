@@ -1,5 +1,6 @@
 ﻿using Application.Interfaces.Persistence;
 using Application.Interfaces.Persistence.Auths;
+using Application.Interfaces.Services;
 using Domain.Entities;
 using System;
 using System.Collections.Generic;
@@ -11,7 +12,7 @@ namespace Infrastructure.Repositories.Auths
 {
     public class MenuRoleRepository : RepositoryBase<AppMenuRole>, IMenuRoleRepository
     {
-        public MenuRoleRepository(IApplicationContext context) : base(context)
+        public MenuRoleRepository(IApplicationContext context, IDistributedCacheService distributedCacheService) : base(context, distributedCacheService)
         {
         }
     }

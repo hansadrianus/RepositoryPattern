@@ -9,10 +9,8 @@ using System.Threading.Tasks;
 
 namespace Application.Endpoints.Auths.Commands
 {
-    public class UserRolesCommand : IRequest<EndpointResult<UserRolesViewModel>>
+    public class DeleteRoleCommand : IRequest<EndpointResult<RoleViewModel>>
     {
-        public Guid? UserId { get; set; }
-        public Guid RoleId { get; set; }
-        public bool IsSelected { get; set; }
+        public Guid Uid { get; set; }
     }
 }

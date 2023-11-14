@@ -29,14 +29,14 @@ namespace WebMVC.Controllers
         public IActionResult Users()
             => View();
 
-        public async Task<IActionResult> UserRoles(int id)
-            => View((await _mediator.Send(new GetUserProfileQuery() { Id = id })).Data.FirstOrDefault());
+        public async Task<IActionResult> UserRoles(Guid id)
+            => View((await _mediator.Send(new GetUserProfileQuery() { Uid = id })).Data.FirstOrDefault());
 
         public IActionResult Roles()
             => View();
 
-        public async Task<IActionResult> MenuRolesAsync(int id)
-            => View((await _mediator.Send(new GetRoleQuery() { Id = id })).Data.FirstOrDefault());
+        public async Task<IActionResult> MenuRolesAsync(Guid id)
+            => View((await _mediator.Send(new GetRoleQuery() { Uid = id })).Data.FirstOrDefault());
         #endregion
 
         #region JSON API Controller
@@ -49,15 +49,15 @@ namespace WebMVC.Controllers
             => Json(await _mediator.Send(command));
 
         [HttpPut]
-        public async Task<IActionResult> UpdateUser(int id, [FromForm] UpdateUserCommand command)
+        public async Task<IActionResult> UpdateUser(Guid id, [FromForm] UpdateUserCommand command)
         {
-            command.Id = id;
+            command.Uid = id;
 
             return Json(await _mediator.Send(command));
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetUserRoles(int id, [FromQuery] GetUserRolesQuery query)
+        public async Task<IActionResult> GetUserRoles(Guid id, [FromQuery] GetUserRolesQuery query)
         {
             query.UserId = id;
 
@@ -65,11 +65,11 @@ namespace WebMVC.Controllers
         }
 
         [HttpPut]
-        public async Task<IActionResult> UpdateUserRoles(int id, [FromForm] UserRolesCommand command)
+        public async Task<IActionResult> UpdateUserRoles(Guid id, [FromForm] UserRolesCommand command)
         {
             command.UserId = id;
             var result = await _mediator.Send(command);
-            var roles = await _mediator.Send(new GetRoleQuery() { Id = result.Data.RoleId });
+            var roles = await _mediator.Send(new GetRoleQuery() { Uid = result.Data.RoleId });
             result.Data.RoleName = roles.Data.FirstOrDefault().Name;
 
             return Json(result);
@@ -84,15 +84,15 @@ namespace WebMVC.Controllers
             => Json(await _mediator.Send(command));
 
         [HttpPut]
-        public async Task<IActionResult> UpdateRole(int id, [FromForm] UpdateRoleCommand command)
+        public async Task<IActionResult> UpdateRole(Guid id, [FromForm] UpdateRoleCommand command)
         {
-            command.Id = id;
+            command.Uid = id;
 
             return Json(await _mediator.Send(command));
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetMenus(int roleId, [FromQuery] GetMenuRolesQuery query)
+        public async Task<IActionResult> GetMenus(Guid roleId, [FromQuery] GetMenuRolesQuery query)
         {
             query.RoleId = roleId;
 
@@ -100,11 +100,11 @@ namespace WebMVC.Controllers
         }
 
         [HttpPut]
-        public async Task<IActionResult> UpdateMenuRoles(int roleId, [FromForm] MenuRolesCommand command)
+        public async Task<IActionResult> UpdateMenuRoles(Guid roleId, [FromForm] UpdateMenuRolesCommand command)
         {
             command.RoleId = roleId;
             var result = await _mediator.Send(command);
-            var menus = await _mediator.Send(new GetMenuQuery() { Id = result.Data.AppMenuId });
+            var menus = await _mediator.Send(new GetMenuQuery() { Uid = result.Data.AppMenuId });
             result.Data.MenuName = menus.Data.FirstOrDefault().MenuName;
 
             return Json(result);

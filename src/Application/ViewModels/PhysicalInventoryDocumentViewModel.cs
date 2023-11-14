@@ -8,7 +8,7 @@ namespace Application.ViewModels
 {
     public record PhysicalInventoryDocumentViewModel
     {
-        public int Id { get; set; }
+        public Guid Uid { get; set; }
         public string DocumentNo { get; set; }
         public DateTime DocumentDate { get; set; }
         public DateTime? PostingDate { get; set; }
@@ -23,6 +23,7 @@ namespace Application.ViewModels
 
         public record PhysicalInventoryDocumentDetailViewModel()
         {
+            public Guid Uid { get; set; }
             public int PIDHeaderId { get; set; }
             public int ProductId { get; set; }
             public decimal? AdjustmentValuation { get; set; }

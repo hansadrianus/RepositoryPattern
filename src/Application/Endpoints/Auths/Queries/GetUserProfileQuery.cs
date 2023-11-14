@@ -11,7 +11,7 @@ namespace Application.Endpoints.Auths.Queries
 {
     public class GetUserProfileQuery : IRequest<EndpointResult<IEnumerable<UserProfileViewModel>>>
     {
-        public int? Id { get; set; }
+        public Guid? Uid { get; set; }
         public string? FirstName { get; set; }
         public string? LastName { get; set; }
         public DateTime? DateOfBirth { get; set; }

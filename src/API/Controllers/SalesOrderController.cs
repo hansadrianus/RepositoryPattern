@@ -35,17 +35,17 @@ namespace API.Controllers
             => (await _mediator.Send(command)).ToActionResult();
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdatePostSalesOrderAsync(int id, [FromBody] UpdatePostSalesOrderCommand command)
+        public async Task<IActionResult> UpdatePostSalesOrderAsync(Guid id, [FromBody] UpdatePostSalesOrderCommand command)
         {
-            command.Id = id;
+            command.Uid = id;
 
             return (await _mediator.Send(command)).ToActionResult();
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateDraftSalesOrderAsync(int id, [FromBody] UpdateDraftSalesOrderCommand command)
+        public async Task<IActionResult> UpdateDraftSalesOrderAsync(Guid id, [FromBody] UpdateDraftSalesOrderCommand command)
         {
-            command.Id = id;
+            command.Uid = id;
 
             return (await _mediator.Send(command)).ToActionResult();
         }

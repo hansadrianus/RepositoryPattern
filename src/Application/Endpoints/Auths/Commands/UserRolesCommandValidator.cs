@@ -13,8 +13,7 @@ namespace Application.Endpoints.Auths.Commands
         {
             RuleFor(x => x.RoleId)
                 .NotNull()
-                .NotEmpty()
-                .GreaterThan(0);
+                .NotEmpty();
             RuleFor(x => x.IsSelected)
                 .NotNull();
         }

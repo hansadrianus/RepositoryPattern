@@ -53,6 +53,7 @@ namespace Infrastructure
             services.AddScoped<IQueryBuilderService, QueryBuilderService>();
             services.AddScoped<IRepositoryWrapper, RepositoryWrapper>();
             services.AddScoped<IAutoGenerateNumberService, AutoGenerateNumberService>();
+            services.AddScoped<IDistributedCacheService, DistributedCacheService>();
 
             return services;
         }

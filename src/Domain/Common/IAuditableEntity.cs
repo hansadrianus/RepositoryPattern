@@ -8,6 +8,7 @@ namespace Domain.Common
 {
     public interface IAuditableEntity
     {
+        Guid Uid { get; set; }
         string CreatedBy { get; set; }
         DateTime CreatedTime { get; set; }
         string? ModifiedBy { get; set; }
