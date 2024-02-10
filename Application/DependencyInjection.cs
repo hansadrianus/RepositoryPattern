@@ -16,7 +16,7 @@ namespace Application
             var thisAssembly = Assembly.GetExecutingAssembly();
             services.AddAutoMapper(thisAssembly);
             services.AddFluentValidation(fv => fv.RegisterValidatorsFromAssembly(thisAssembly));
-            services.AddMediatR(thisAssembly);
+            services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(thisAssembly));
 
             return services;
         }

@@ -2,6 +2,7 @@ using API.Services;
 using Application;
 using Application.Interfaces.Persistence;
 using Application.Interfaces.Services;
+using Asp.Versioning;
 using Domain.Entities;
 using Infrastructure;
 using Infrastructure.Persistence;
