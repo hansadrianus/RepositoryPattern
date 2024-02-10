@@ -1,11 +1,11 @@
-# Clean Repository Pattern with .NET 7
+# Clean Repository Pattern with .NET 8
 
 This solution was adopted from Jason Taylor's clean architecture. While the solution starts there, there are some adjustments with the coding patterns to follow Repository Pattern that help to ease the developers to develop and maintain the application.
 
 ## Technologies
 
-* [ASP.NET Core 7](https://docs.microsoft.com/en-us/aspnet/core/introduction-to-aspnet-core)
-* [Entity Framework Core 7](https://docs.microsoft.com/en-us/ef/core/)
+* [ASP.NET Core 8](https://docs.microsoft.com/en-us/aspnet/core/introduction-to-aspnet-core)
+* [Entity Framework Core 8](https://docs.microsoft.com/en-us/ef/core/)
 * [MediatR](https://github.com/jbogard/MediatR)
 * [AutoMapper](https://automapper.org/)
 * [FluentValidation](https://fluentvalidation.net/)
