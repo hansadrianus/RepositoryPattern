@@ -4,7 +4,7 @@ using Application.Models;
 using Application.Models.Enumerations;
 using Application.ViewModels;
 using AutoMapper;
-using Domain.Entities;
+using Domain.Entities.Auth;
 using MediatR;
 
 namespace Application.Endpoints.Auths.Commands

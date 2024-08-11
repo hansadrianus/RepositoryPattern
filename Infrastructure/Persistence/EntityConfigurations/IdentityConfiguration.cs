@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Domain.Entities;
+using Domain.Entities.Auth;
 
 namespace Infrastructure.Persistence.EntityConfigurations
 {
@@ -21,7 +21,7 @@ namespace Infrastructure.Persistence.EntityConfigurations
     {
         public void Configure(EntityTypeBuilder<ApplicationUser> builder)
         {
-            builder.ToTable("UserLoginInfo");
+            builder.ToTable("UserLoginInfo", "auth");
             builder.HasIndex(q => q.UserName).IsUnique();
             builder.HasIndex(q => q.Email).IsUnique();
             builder.HasMany(q => q.UserRoles).WithOne().HasForeignKey(q => q.UserId).OnDelete(DeleteBehavior.NoAction);
@@ -29,34 +29,34 @@ namespace Infrastructure.Persistence.EntityConfigurations
 
         public void Configure(EntityTypeBuilder<ApplicationRole> builder)
         {
-            builder.ToTable("Role");
+            builder.ToTable("Role", "auth");
             builder.HasIndex(q => q.Name).IsUnique();
             builder.HasMany(q => q.UserRoles).WithOne().HasForeignKey(q => q.RoleId).OnDelete(DeleteBehavior.NoAction);
         }
 
         public void Configure(EntityTypeBuilder<ApplicationUserRole> builder)
         {
-            builder.ToTable("UserRoles");
+            builder.ToTable("UserRoles", "auth");
         }
 
         public void Configure(EntityTypeBuilder<ApplicationUserClaim> builder)
         {
-            builder.ToTable("UserClaims");
+            builder.ToTable("UserClaims", "auth");
         }
 
         public void Configure(EntityTypeBuilder<ApplicationUserLogin> builder)
         {
-            builder.ToTable("UserLogin");
+            builder.ToTable("UserLogin", "auth");
         }
 
         public void Configure(EntityTypeBuilder<ApplicationUserToken> builder)
         {
-            builder.ToTable("UserToken");
+            builder.ToTable("UserToken", "auth");
         }
 
         public void Configure(EntityTypeBuilder<ApplicationRoleClaim> builder)
         {
-            builder.ToTable("RoleClaim");
+            builder.ToTable("RoleClaim", "auth");
         }
     }
 }

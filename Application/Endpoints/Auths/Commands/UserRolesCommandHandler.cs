@@ -10,7 +10,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Application.Models.Enumerations;
-using Domain.Entities;
+using Domain.Entities.Auth;
 
 namespace Application.Endpoints.Auths.Commands
 {

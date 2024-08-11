@@ -1,7 +1,7 @@
 using Application.Endpoints.Auths.Commands;
 using Application.ViewModels;
 using AutoMapper;
-using Domain.Entities;
+using Domain.Entities.Auth;
 
 namespace Application.Mappings
 {

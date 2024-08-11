@@ -3,7 +3,7 @@ using Application.Interfaces.Wrappers;
 using Application.Models;
 using Application.ViewModels;
 using AutoMapper;
-using Domain.Entities;
+using Domain.Entities.Auth;
 using MediatR;
 using Microsoft.AspNetCore.Http.Extensions;
 using System;

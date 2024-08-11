@@ -1,5 +1,5 @@
 ﻿using AutoMapper.Configuration;
-using Domain.Entities;
+using Domain.Entities.Auth;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;

@@ -1,7 +1,7 @@
 ﻿using Application.Interfaces.Persistence;
 using Application.Interfaces.Persistence.Auths;
 using Application.Interfaces.Wrappers;
-using Domain.Entities;
+using Domain.Entities.Auth;
 using Infrastructure.Repositories.Auths;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;

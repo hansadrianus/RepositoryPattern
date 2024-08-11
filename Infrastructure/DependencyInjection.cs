@@ -2,7 +2,7 @@
 using Application.Interfaces.Persistence;
 using Application.Interfaces.Services;
 using Application.Interfaces.Wrappers;
-using Domain.Entities;
+using Domain.Entities.Auth;
 using Infrastructure.Attributes;
 using Infrastructure.Persistence;
 using Infrastructure.Persistence.Configurations;

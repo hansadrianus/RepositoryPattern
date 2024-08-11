@@ -1,7 +1,7 @@
 ﻿using Application.Interfaces.Persistence;
 using Application.Interfaces.Services;
 using Domain.Common;
-using Domain.Entities;
+using Domain.Entities.Auth;
 using Infrastructure.Services;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;

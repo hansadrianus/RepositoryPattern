@@ -2,7 +2,7 @@
 using Application.Endpoints.Auths.Queries;
 using Application.ViewModels;
 using AutoMapper;
-using Domain.Entities;
+using Domain.Entities.Auth;
 using System;
 using System.Collections.Generic;
 using System.Linq;
