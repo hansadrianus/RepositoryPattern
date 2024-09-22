@@ -10,6 +10,7 @@ This solution was adopted from Jason Taylor's clean architecture. While the solu
 * [AutoMapper](https://automapper.org/)
 * [FluentValidation](https://fluentvalidation.net/)
 * [JWT Token](https://jwt.io/)
+* [OpenTelemetry](https://opentelemetry.io/)
 
 ## Overview
 
