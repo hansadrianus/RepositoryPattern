@@ -27,6 +27,7 @@ using Microsoft.OpenApi.Models;
 using OpenTelemetry;
 using OpenTelemetry.Metrics;
 using OpenTelemetry.Trace;
+using Prometheus;
 using System.Configuration;
 using System.Reflection;
 using System.Runtime.InteropServices;
@@ -292,6 +293,7 @@ namespace Infrastructure
 
             app.UseRouting();
             app.UseAntiforgery();
+            app.AddPrometheus();
 
             app.UseEndpoints(endpoints =>
             {
@@ -320,6 +322,14 @@ namespace Infrastructure
             //}
 
             return builder;
+        }
+
+        private static WebApplication AddPrometheus(this WebApplication app)
+        {
+            app.UseMetricServer(5000, "/prometheus");
+            app.UseHttpMetrics();
+
+            return app;
         }
         #endregion
     }
