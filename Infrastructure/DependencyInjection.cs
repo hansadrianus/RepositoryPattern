@@ -28,6 +28,7 @@ using OpenTelemetry;
 using OpenTelemetry.Metrics;
 using OpenTelemetry.Trace;
 using System.Configuration;
+using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Text.RegularExpressions;
 
@@ -37,6 +38,7 @@ namespace Infrastructure
     {
         private static readonly Regex InterfacePattern = new Regex("I(?:.+)DataService", RegexOptions.Compiled);
 
+        #region Public Methods
         public static IHostApplicationBuilder AddDefaultHealthChecks(this IHostApplicationBuilder builder)
         {
             builder.Services.AddHealthChecks()
@@ -74,25 +76,6 @@ namespace Infrastructure
             return services;
         }
 
-        private static IHostApplicationBuilder AddOpenTelemetryExporters(this IHostApplicationBuilder builder)
-        {
-            var useOtlpExporter = !string.IsNullOrWhiteSpace(builder.Configuration["OTEL_EXPORTER_OTLP_ENDPOINT"]);
-
-            if (useOtlpExporter)
-            {
-                builder.Services.AddOpenTelemetry().UseOtlpExporter();
-            }
-
-            // Uncomment the following lines to enable the Azure Monitor exporter (requires the Azure.Monitor.OpenTelemetry.AspNetCore package)
-            //if (!string.IsNullOrEmpty(builder.Configuration["APPLICATIONINSIGHTS_CONNECTION_STRING"]))
-            //{
-            //    builder.Services.AddOpenTelemetry()
-            //       .UseAzureMonitor();
-            //}
-
-            return builder;
-        }
-
         public static IHostApplicationBuilder AddServiceDefaults(this IHostApplicationBuilder builder)
         {
             builder.ConfigureOpenTelemetry();
@@ -122,15 +105,17 @@ namespace Infrastructure
         public static IConfigurationBuilder AddSharedConfiguration(this IConfigurationBuilder configBuilder, IHostEnvironment hostEnvironment)
         {
             var environment = hostEnvironment.EnvironmentName;
+            var assemblyName = Assembly.GetExecutingAssembly().GetName().Name;
+            var projectName = assemblyName.Substring(0, assemblyName.LastIndexOf('.') + 1);
             if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
             {
-                configBuilder.AddJsonFile(Path.Combine(hostEnvironment.ContentRootPath, "..", "Shared", "appsettings.json"), false, true)
-                    .AddJsonFile(Path.Combine(Directory.GetCurrentDirectory(), "..", "Shared", $"appsettings.{environment}.json"), true, true);
+                configBuilder.AddJsonFile(Path.Combine(hostEnvironment.ContentRootPath, "..", $"{projectName}Shared", "appsettings.json"), false, true)
+                    .AddJsonFile(Path.Combine(Directory.GetCurrentDirectory(), "..", $"{projectName}Shared", $"appsettings.{environment}.json"), true, true);
             }
             else
             {
-                configBuilder.AddJsonFile(Path.Combine(hostEnvironment.ContentRootPath, "..", "src", "Shared", "appsettings.json"), false, true)
-                    .AddJsonFile(Path.Combine(Directory.GetCurrentDirectory(), "..", "src", "Shared", $"appsettings.{environment}.json"), true, true);
+                configBuilder.AddJsonFile(Path.Combine(hostEnvironment.ContentRootPath, "..", "src", $"{projectName}Shared", "appsettings.json"), false, true)
+                    .AddJsonFile(Path.Combine(Directory.GetCurrentDirectory(), "..", "src", $"{projectName}Shared", $"appsettings.{environment}.json"), true, true);
             }
 
             return configBuilder;
@@ -315,5 +300,27 @@ namespace Infrastructure
 
             return app;
         }
+        #endregion
+
+        #region Private Methods
+        private static IHostApplicationBuilder AddOpenTelemetryExporters(this IHostApplicationBuilder builder)
+        {
+            var useOtlpExporter = !string.IsNullOrWhiteSpace(builder.Configuration["OTEL_EXPORTER_OTLP_ENDPOINT"]);
+
+            if (useOtlpExporter)
+            {
+                builder.Services.AddOpenTelemetry().UseOtlpExporter();
+            }
+
+            // Uncomment the following lines to enable the Azure Monitor exporter (requires the Azure.Monitor.OpenTelemetry.AspNetCore package)
+            //if (!string.IsNullOrEmpty(builder.Configuration["APPLICATIONINSIGHTS_CONNECTION_STRING"]))
+            //{
+            //    builder.Services.AddOpenTelemetry()
+            //       .UseAzureMonitor();
+            //}
+
+            return builder;
+        }
+        #endregion
     }
 }
