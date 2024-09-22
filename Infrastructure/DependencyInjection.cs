@@ -20,6 +20,7 @@ using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using Microsoft.Identity.Web;
 using Microsoft.OpenApi.Models;
 using OpenTelemetry;
 using OpenTelemetry.Metrics;
@@ -221,6 +222,17 @@ namespace Infrastructure
             {
                 opt.TokenValidationParameters = new TokenValidationConfiguration(configuration).DefaultTokenConfiguration();
             });
+
+            return services;
+        }
+
+        public static IServiceCollection ConfigureMSAL(this IServiceCollection services, IConfiguration configuration)
+        {
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+            .AddMicrosoftIdentityWebApi(options =>
+            {
+                configuration.Bind("AzureAd", options);
+            }, options => { configuration.Bind("AzureAd", options); });
 
             return services;
         }
